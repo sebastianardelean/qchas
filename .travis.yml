@@ -1,7 +1,22 @@
-ghc:
-  - 7.8
-  - 7.6
-  - 7.4
+sudo: false
 
-install:
-  cabal install --only-dependencies --enable-tests
+# Caching so the next build will be fast too.
+cache:
+  directories:
+  - $HOME/.stack
+
+before_install:
+# Download and unpack the stack executable
+- mkdir -p ~/.local/bin
+- export PATH=$HOME/.local/bin:$PATH
+- travis_retry curl -L https://www.stackage.org/stack/linux-x86_64 | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
+
+addons:
+  apt:
+    sources:
+    - hvr-ghc
+    packages:
+    - ghc-7.10.2
+
+script:
+  - stack --no-terminal --skip-ghc-check build
