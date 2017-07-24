@@ -3,15 +3,25 @@ module Main where
 import Test.Tasty
 import Test.Tasty.HUnit
 
+--Library imports
+import Data.Complex
+import Data.List(transpose)
+import Lib
+
+import Utils
+import Qubits
 
 
---test1 = TestCase (assertEqual "for (foo 3)," (1,2) (foo 3))
-test1::TestTree
-test1 = testCase "Dummy test"
-    (assertEqual "for (foo 3)," (1,2) (1,2))
+testQubitZero::TestTree
+testQubitZero=testCase "Test Qubit Zero Values"
+    (assertEqual "for qZero," [1.0 :+ 0.0,0.0 :+ 0.0] (qZero))
+    --[1.0 :+ 0.0,0.0 :+ 0.0])--(qZero))
+
+
+
 
 main = do
-  defaultMain (testGroup "Our Library Tests" [test1])
+  defaultMain (testGroup "Our Library Tests" [testQubitZero])
 
 
 --module Main where

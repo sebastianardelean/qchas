@@ -1,9 +1,9 @@
 module Utils
     ( 
-        Vector,
-        Matrix,
-        complexVector,
-        complexMatrix
+        Vector
+      , Matrix
+      , complexVector
+      , complexMatrix
     ) where
 
 import Data.Complex
