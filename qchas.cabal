@@ -17,6 +17,7 @@ library
   exposed-modules:     Lib
                      , Utils
                      , Qubits
+                     , Gates
   build-depends:       base >= 4.7 && < 5
   default-language:    Haskell2010
 

@@ -14,10 +14,12 @@ import Qubits
 
 import QubitsTest
 import UtilsTest
+import GatesTest
 
 main = do
   defaultMain (testGroup "Unit tests" [
     testQubitZero,testQubitOne,testQubitMinus,testQubitPlus,
-    testComplexVector
+    testComplexVector,
+    testGateX, testGateY,testGateZ,testGateH,testGateControlledPhaseShift,testGateControlledNot
 
     ])
