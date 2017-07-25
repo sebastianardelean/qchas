@@ -22,5 +22,5 @@ script:
   - stack --no-terminal --skip-ghc-check --install-ghc test
 
 after_script:
-  - stack install codecov-haskell
-  - codecov-haskell testQubitZero
+#  - stack install codecov-haskell
+#  - codecov-haskell testQubitZero
