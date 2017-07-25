@@ -30,7 +30,7 @@ executable qchas-exe
 
 test-suite qchas-test
   type:                exitcode-stdio-1.0
-  hs-source-dirs:      test
+  hs-source-dirs:      test/unit
   main-is:             Spec.hs
   build-depends:       base
                      , tasty
