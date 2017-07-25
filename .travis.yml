@@ -20,3 +20,7 @@ addons:
 
 script:
   - stack --no-terminal --skip-ghc-check --install-ghc test
+
+after_script:
+  - cabal install codecov-haskell
+  - codecov-haskell [options] ["Test Qubit Zero Values"]
