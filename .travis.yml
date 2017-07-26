@@ -7,7 +7,7 @@ cache:
 before_install:
 # Download and unpack the stack executable
 - mkdir -p ~/.local/bin
-- sudo apt-get install blas lapack
+- sudo apt-get libblas-dev liblapack-dev
 - export PATH=$HOME/.local/bin:$PATH
 - travis_retry curl -L https://www.stackage.org/stack/linux-x86_64 | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
 
