@@ -1,5 +1,4 @@
-sudo: false
-
+sudo: required
 # Caching so the next build will be fast too.
 cache:
   directories:
@@ -8,9 +7,10 @@ cache:
 before_install:
 # Download and unpack the stack executable
 - mkdir -p ~/.local/bin
+- sudo apt-get install blas lapack
 - export PATH=$HOME/.local/bin:$PATH
 - travis_retry curl -L https://www.stackage.org/stack/linux-x86_64 | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
-- sudo apt-get install blas lapack
+
 addons:
   apt:
     sources:
