@@ -2,9 +2,9 @@ module Main where
 --Library imports
 import Data.Complex
 import Data.List(transpose)
-import Lib
+import Numeric.LinearAlgebra
 
-import Utils
+
 import Qubits
 
 main :: IO ()
