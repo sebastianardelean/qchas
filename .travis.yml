@@ -10,16 +10,13 @@ before_install:
 - mkdir -p ~/.local/bin
 - export PATH=$HOME/.local/bin:$PATH
 - travis_retry curl -L https://www.stackage.org/stack/linux-x86_64 | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
-
+- sudo apt-get install blas lapack
 addons:
   apt:
     sources:
     - hvr-ghc
     packages:
     - ghc-8.0.2
-
-before_script:
-  - stack install hmatrix
 
 script:
   - stack --no-terminal --skip-ghc-check --install-ghc test
