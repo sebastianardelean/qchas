@@ -6,19 +6,19 @@ module Qubits
         ,qMinus
     ) where
 
+import Numeric.LinearAlgebra
 
-import Data.Complex
-import Data.List(transpose)
-import Utils
 
-qZero::Vector(Complex Double)
-qZero=complexVector[1,0]
 
-qOne::Vector(Complex Double)
-qOne=complexVector[0,1]
 
-qPlus::Vector(Complex Double)
-qPlus=complexVector[1/sqrt 2, 1/sqrt 2]
+qZero::Matrix C
+qZero=(2><1)[1,0]::Matrix C
 
-qMinus::Vector(Complex Double)
-qMinus=complexVector[1/sqrt 2, -1/sqrt 2]
+qOne::Matrix C
+qOne=(2><1) [0,1]::Matrix C
+
+qPlus::Matrix C
+qPlus=(2><1) [1/sqrt 2, 1/sqrt 2]::Matrix C
+
+qMinus::Matrix C
+qMinus=(2><1) [1/sqrt 2, -1/sqrt 2]::Matrix C

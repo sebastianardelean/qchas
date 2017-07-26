@@ -3,12 +3,26 @@ module UtilsTest where
 import Test.Tasty
 import Test.Tasty.HUnit
 
-import Data.Complex
-import Data.List(transpose)
 
+import Numeric.LinearAlgebra hiding ( (|>) )
+
+import Qubits
+import Gates
 import Utils
 
 
-testComplexVector::TestTree
-testComplexVector=testCase "Test complexVector function"
-    (assertEqual "Create Complex Vector," [1.0 :+ 0.0,0.0 :+ 0.0] (complexVector[1,0]))
+
+
+testEntangle::TestTree
+testEntangle=testCase "Test Entangle function"
+    (assertEqual "|0>|0>," ((4><1) [ 1.0 :+ 0.0 
+                                  , 0.0 :+ 0.0 
+                                  , 0.0 :+ 0.0 
+                                  , 0.0 :+ 0.0 
+                                  ]:: Matrix C) (entangle qZero qZero))
+
+
+testApplyGate::TestTree
+testApplyGate=testCase "Test |> function"
+    (assertEqual "|0> |> H," ((2><1) [ 0.7071067811865475 :+ 0.0
+                                     , 0.7071067811865475 :+ 0.0 ]::Matrix C) (qZero |> hGate))

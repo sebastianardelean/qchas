@@ -8,7 +8,7 @@ import Data.Complex
 import Data.List(transpose)
 import Lib
 
-import Utils
+
 import Qubits
 
 
@@ -19,7 +19,6 @@ import GatesTest
 main = do
   defaultMain (testGroup "Unit tests" [
     testQubitZero,testQubitOne,testQubitMinus,testQubitPlus,
-    testComplexVector,
-    testGateX, testGateY,testGateZ,testGateH,testGateControlledPhaseShift,testGateControlledNot
-
+    testGateX, testGateY,testGateZ,testGateH,testGateControlledPhaseShift,testGateControlledNot,
+    testEntangle,testApplyGate
     ])
