@@ -18,6 +18,9 @@ addons:
     packages:
     - ghc-8.0.2
 
+before_script:
+  - stack install hmatrix
+
 script:
   - stack --no-terminal --skip-ghc-check --install-ghc test
 
