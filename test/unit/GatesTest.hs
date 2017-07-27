@@ -5,7 +5,7 @@ import Test.Tasty.HUnit
 
 --Library imports
 import Numeric.LinearAlgebra
-import Lib
+
 
 
 import Qubits

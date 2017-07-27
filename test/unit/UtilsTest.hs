@@ -25,4 +25,9 @@ testEntangle=testCase "Test Entangle function"
 testApplyGate::TestTree
 testApplyGate=testCase "Test |> function"
     (assertEqual "|0> |> H," ((2><1) [ 0.7071067811865475 :+ 0.0
+                                     , 0.7071067811865475 :+ 0.0 ]::Matrix C) (apply hGate qZero))
+
+testApplyGateOperator::TestTree
+testApplyGateOperator=testCase "Test |> function"
+    (assertEqual "|0> |> H," ((2><1) [ 0.7071067811865475 :+ 0.0
                                      , 0.7071067811865475 :+ 0.0 ]::Matrix C) (qZero |> hGate))
