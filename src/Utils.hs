@@ -5,7 +5,7 @@
  -License     : BSD3
  -Maintainer  : ardeleanasm@gmail.com
  -Portability : POSIX
- --}
+ -}
 module Utils
     ( 
         entangle
