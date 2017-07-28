@@ -8,13 +8,19 @@
  -}
 module Qubits
     ( 
-         qOne
-        ,qZero
-        ,qPlus
-        ,qMinus
+          qOne
+        , qZero
+        , qPlus
+        , qMinus
+        , Qubit(..)
+--        , qubitState
     ) where
 
 import Numeric.LinearAlgebra
+
+data Qubit=Qubit {
+                   qubitState::(Matrix C) 
+                 } deriving (Eq,Show)
 
 
 
@@ -26,8 +32,10 @@ import Numeric.LinearAlgebra
  [ 1.0 :+ 0.0
  , 0.0 :+ 0.0 ]
  -}
-qZero::Matrix C
-qZero=(2><1)[1,0]::Matrix C
+qZero::Qubit
+qZero=Qubit ((2><1)[1,0]::Matrix C)
+
+    
 
 
 {-|
@@ -38,8 +46,8 @@ qZero=(2><1)[1,0]::Matrix C
  [ 0.0 :+ 0.0
  , 1.0 :+ 0.0 ]
  -}
-qOne::Matrix C
-qOne=(2><1) [0,1]::Matrix C
+qOne::Qubit
+qOne=Qubit ((2><1) [0,1]::Matrix C)
 
 {-|
  -  qPlus function is used to represent a + qubit |+>
@@ -50,8 +58,8 @@ qOne=(2><1) [0,1]::Matrix C
  [ 0.7071067811865475 :+ 0.0
  , 0.7071067811865475 :+ 0.0 ]
  -}
-qPlus::Matrix C
-qPlus=(2><1) [1/sqrt 2, 1/sqrt 2]::Matrix C
+qPlus::Qubit
+qPlus=Qubit ((2><1) [1/sqrt 2, 1/sqrt 2]::Matrix C)
 
 {-|
  -  qMinus function is used to represent a - qubit |->
@@ -62,5 +70,5 @@ qPlus=(2><1) [1/sqrt 2, 1/sqrt 2]::Matrix C
  [       0.7071067811865475 :+ 0.0
  , (-0.7071067811865475) :+ (-0.0) ]
  -}
-qMinus::Matrix C
-qMinus=(2><1) [1/sqrt 2, -1/sqrt 2]::Matrix C
+qMinus::Qubit 
+qMinus=Qubit ((2><1) [1/sqrt 2, -1/sqrt 2]::Matrix C)

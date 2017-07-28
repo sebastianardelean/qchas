@@ -13,24 +13,24 @@ import Gates
 
 testGateX::TestTree
 testGateX=testCase "Test X-Gate correct values"
-    (assertEqual "X-Gate values," ((2><2)[0,1,1,0]::Matrix C) (xGate))
+    (assertEqual "X-Gate values," (Gate (((2><2)[0,1,1,0]::Matrix C))) (xGate))
 
 
 testGateY::TestTree
 testGateY=testCase "Test Y-Gate correct values"
-    (assertEqual "Y-Gate values," ((2><2) [0.0,0.0:+(-1.0),0.0:+1.0,0.0]::Matrix C)  (yGate))
+    (assertEqual "Y-Gate values," (Gate (((2><2) [0.0,0.0:+(-1.0),0.0:+1.0,0.0]::Matrix C)))  (yGate))
 
 
 
 testGateZ::TestTree
 testGateZ=testCase "Test Z-Gate correct values"
-    (assertEqual "Z-Gate values," ((2><2) [1,0,0,-1]::Matrix C) (zGate))
+    (assertEqual "Z-Gate values," (Gate (((2><2) [1,0,0,-1]::Matrix C))) (zGate))
 
 
 
 testGateH::TestTree
 testGateH=testCase "Test H-Gate correct values"
-    (assertEqual "H-Gate values," ((2><2) [1/sqrt 2,1/sqrt 2,1/sqrt 2,(-1)/sqrt 2]::Matrix C) (hGate))
+    (assertEqual "H-Gate values," (Gate (((2><2) [1/sqrt 2,1/sqrt 2,1/sqrt 2,(-1)/sqrt 2]::Matrix C))) (hGate))
 
 
 
@@ -39,13 +39,13 @@ testGateH=testCase "Test H-Gate correct values"
 
 testGateControlledPhaseShift::TestTree
 testGateControlledPhaseShift=testCase "Test Controlled Phase Shift correct values"
-    (assertEqual "Controlled Phase Shift Gate values," ((4><4)[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,-1]::Matrix C)
+    (assertEqual "Controlled Phase Shift Gate values," (Gate (((4><4)[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,-1]::Matrix C)))
      (cPhaseShifGate))
 
 
 
 testGateControlledNot::TestTree
 testGateControlledNot=testCase "Test Controlled Not Shift correct values"
-    (assertEqual "Controlled Phase Not Gate values," ((4><4)[1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0]::Matrix C)
+    (assertEqual "Controlled Phase Not Gate values," (Gate (((4><4)[1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0]::Matrix C)))
         (cNotGate))
 

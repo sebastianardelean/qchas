@@ -16,7 +16,8 @@ module Utils
 import Numeric.LinearAlgebra hiding ( (|>) )
 import Prelude hiding ((<*>),(<+>))
 
-
+import Qubits
+import Gates
 
 {-|
   -  entangle function is used to perform the Kronecker product between two qubits.
@@ -29,8 +30,8 @@ import Prelude hiding ((<*>),(<+>))
  , 0.0 :+ 0.0 ]
 
  -}   
-entangle::Matrix C->Matrix C->Matrix C
-entangle q1 q2=kronecker q1 q2
+entangle::Qubit->Qubit->Qubit
+entangle q1 q2=Qubit (kronecker (qubitState q1) (qubitState q2))
 
 {-|
   -  apply function is used to apply a gate on a qubit
@@ -40,8 +41,10 @@ entangle q1 q2=kronecker q1 q2
  [ 0.7071067811865475 :+ 0.0
  , 0.7071067811865475 :+ 0.0 ]
  -}   
-apply::Matrix C->Matrix C->Matrix C
-apply m v=m <> v
+apply::Gate->Qubit->Qubit
+apply m v=Qubit ((gateMatrix m) <> (qubitState v))
+
+  
 
 
 {-|
@@ -52,5 +55,5 @@ apply m v=m <> v
  [ 0.7071067811865475 :+ 0.0
  , 0.7071067811865475 :+ 0.0 ]
  -}   
-(|>)::Matrix C->Matrix C->Matrix C
+(|>)::Qubit->Gate->Qubit
 (|>)=flip apply
