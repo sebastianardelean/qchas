@@ -18,9 +18,10 @@ module Qubits
 
 import Numeric.LinearAlgebra
 
-data Qubit=Qubit {
-                   qubitState::(Matrix C) 
-                 } deriving (Eq,Show)
+data Qubit=
+    Qubit {
+            qubitState::(Matrix C) -- ^ Qubit constructor accepts a parameter of type Matrix C
+          } deriving (Eq,Show)
 
 
 

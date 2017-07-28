@@ -25,9 +25,10 @@ import Numeric.LinearAlgebra
 import Qubits
 import Prelude hiding ((<*>),(<+>))
 
-data Gate=Gate {
-                 gateMatrix::(Matrix C)
-               } deriving (Eq,Show)
+data Gate=
+  Gate {
+          gateMatrix::(Matrix C) -- ^ Gate constructor accepts a parameter of type Matrix C
+        } deriving (Eq,Show)
 
 {-|
  -  xGate function represent a Pauly X-Gate

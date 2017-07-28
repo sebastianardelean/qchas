@@ -30,7 +30,9 @@ import Gates
  , 0.0 :+ 0.0 ]
 
  -}   
-entangle::Qubit->Qubit->Qubit
+entangle::Qubit   -- ^ first 'Qubit' argument
+        ->Qubit   -- ^ second 'Qubit' argument
+        ->Qubit   -- ^ return value: 'Qubit'
 entangle q1 q2=Qubit (kronecker (qubitState q1) (qubitState q2))
 
 {-|
@@ -41,7 +43,9 @@ entangle q1 q2=Qubit (kronecker (qubitState q1) (qubitState q2))
  [ 0.7071067811865475 :+ 0.0
  , 0.7071067811865475 :+ 0.0 ]
  -}   
-apply::Gate->Qubit->Qubit
+apply::Gate   -- ^ 'Gate' argument
+     ->Qubit  -- ^ 'Qubit' argument 
+     ->Qubit  -- ^ return value: 'Qubit'
 apply m v=Qubit ((gateMatrix m) <> (qubitState v))
 
   
@@ -55,5 +59,7 @@ apply m v=Qubit ((gateMatrix m) <> (qubitState v))
  [ 0.7071067811865475 :+ 0.0
  , 0.7071067811865475 :+ 0.0 ]
  -}   
-(|>)::Qubit->Gate->Qubit
+(|>)::Qubit  -- ^ 'Qubit' argument 
+    ->Gate   -- ^ 'Gate' argument
+    ->Qubit  -- ^ return value: 'Qubit'
 (|>)=flip apply
