@@ -11,6 +11,7 @@ module Utils
         entangle
       , apply
       , (|>)
+      , gateProduct
     ) where
 
 import Numeric.LinearAlgebra hiding ( (|>) )
@@ -63,3 +64,11 @@ apply m v=Qubit ((gateMatrix m) <> (qubitState v))
     ->Gate   -- ^ 'Gate' argument
     ->Qubit  -- ^ return value: 'Qubit'
 (|>)=flip apply
+
+{-|
+  -  gateKronecker function is used to create gates that can be used on multiple qubits
+ -}   
+gateProduct::Gate -- ^ 'Gate' argument
+           ->Gate -- ^ 'Gate' argument
+           ->Gate -- ^ return value: 'Gate'
+gateProduct g1 g2=Gate (kronecker (gateMatrix g1) (gateMatrix g2))

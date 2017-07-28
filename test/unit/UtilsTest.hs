@@ -31,3 +31,9 @@ testApplyGateOperator::TestTree
 testApplyGateOperator=testCase "Test |> function"
     (assertEqual "|0> |> H," (Qubit (((2><1) [ 0.7071067811865475 :+ 0.0
                                      , 0.7071067811865475 :+ 0.0 ]::Matrix C))) (qZero |> hGate))
+
+testMultiplyGate::TestTree
+testMultiplyGate=testCase "Test gateProduct function"
+    (assertEqual "gateProduct zGate zGate" (Gate (((4><4)[1,0,0,0,0,(-1),0,0,0,0,(-1),0,0,0,0,1]::Matrix C))) (gateProduct zGate zGate))
+                                           
+
