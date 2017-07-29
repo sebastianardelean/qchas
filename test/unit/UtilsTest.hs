@@ -34,6 +34,7 @@ testApplyGateOperator=testCase "Test |> function"
 
 testMultiplyGate::TestTree
 testMultiplyGate=testCase "Test gateProduct function"
-    (assertEqual "gateProduct zGate zGate" (Gate (((4><4)[1,0,0,0,0,(-1),0,0,0,0,(-1),0,0,0,0,1]::Matrix C))) (gateProduct zGate zGate))
+    (assertEqual "gateProduct zGate zGate" (Gate (((4><4)
+      [1,0,0,0,0,(-1),0,0,0,0,(-1),0,0,0,0,1]::Matrix C))) (gateProduct zGate zGate))
                                            
 
