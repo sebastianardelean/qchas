@@ -28,4 +28,6 @@ Finally, run the test suite to verify that everything is working correctly:
 $ stack test
 ```
 
+## Documentation
 
+Documentation is available at [Doc](https://ardeleanasm.github.io/qchas/)
