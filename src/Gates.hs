@@ -75,10 +75,6 @@ hGate::Gate
 hGate=Gate ((2><2) [1/sqrt 2,1/sqrt 2,1/sqrt 2,(-1)/sqrt 2]::Matrix C)
 
     
-
---rGate::Double->Matrix(Complex Double)
---rGate t=complexMatrix [[cos t,-sin t],[sin t, cos t]]   
-
 {-|
  -  cPhaseShifGate function represent a Controlled Phase-Shift Gate
  
