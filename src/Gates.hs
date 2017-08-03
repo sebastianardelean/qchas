@@ -28,7 +28,7 @@ import Prelude hiding ((<*>),(<+>))
 
 data Gate=
   Gate {
-          gateMatrix::(Matrix C) -- ^ Gate constructor accepts a parameter of type Matrix C
+          gateMatrix::Matrix C -- ^ Gate constructor accepts a parameter of type Matrix C
         } deriving (Eq,Show)
 
 {-|
