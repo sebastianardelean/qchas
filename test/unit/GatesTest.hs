@@ -49,3 +49,7 @@ testGateControlledNot=testCase "Test Controlled Not Shift correct values"
     (assertEqual "Controlled Phase Not Gate values," (Gate (((4><4)[1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0]::Matrix C)))
         (cNotGate))
 
+testGateSwap::TestTree
+testGateSwap=testCase "Test Swap correct values"
+    (assertEqual "Swap Gate values," (Gate (((4><4)[1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1]::Matrix C)))
+     (swapGate))
