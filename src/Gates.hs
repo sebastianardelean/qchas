@@ -16,6 +16,7 @@ module Gates
       --, rGate
       , cPhaseShifGate
       , cNotGate
+      , swapGate
       , Gate(..)
 --      , gateMatrix
     )where
@@ -100,3 +101,18 @@ cPhaseShifGate=Gate ((4><4)[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,-1]::Matrix C)
  -}
 cNotGate::Gate
 cNotGate=Gate ((4><4)[1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0]::Matrix C)
+
+
+
+{-|
+ -  swapGate function represent a Swap Gate
+ 
+ >>swapGate
+ (4><4)
+ [ 1.0 :+ 0.0, 0.0 :+ 0.0, 0.0 :+ 0.0, 0.0 :+ 0.0
+ , 0.0 :+ 0.0, 0.0 :+ 0.0, 1.0 :+ 0.0, 0.0 :+ 0.0
+ , 0.0 :+ 0.0, 1.0 :+ 0.0, 0.0 :+ 0.0, 0.0 :+ 0.0
+ , 0.0 :+ 0.0, 0.0 :+ 0.0, 0.0 :+ 0.0, 1.0 :+ 0.0 ]
+ -}
+swapGate::Gate 
+swapGate=Gate ((4><4)[1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1]::Matrix C)
