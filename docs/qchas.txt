@@ -3,7 +3,7 @@
 
 
 @package qchas
-@version 0.1.0.0
+@version 1.0.0
 
 
 -- | <ul>
@@ -69,10 +69,10 @@ qPlus :: Qubit
 --   </pre>
 qMinus :: Qubit
 data Qubit
-Qubit :: (Matrix C) -> Qubit
+Qubit :: Matrix C -> Qubit
 
 -- | Qubit constructor accepts a parameter of type Matrix C
-[qubitState] :: Qubit -> (Matrix C)
+[qubitState] :: Qubit -> Matrix C
 instance GHC.Show.Show Qubits.Qubit
 instance GHC.Classes.Eq Qubits.Qubit
 
@@ -162,11 +162,24 @@ cPhaseShifGate :: Gate
 --   0.0, 1.0 :+ 0.0, 0.0 :+ 0.0, 0.0 :+ 0.0 , 0.0 :+ 0.0, 0.0 :+ 0.0, 0.0
 --   :+ 0.0, 1.0 :+ 0.0 , 0.0 :+ 0.0, 0.0 :+ 0.0, 1.0 :+ 0.0, 0.0 :+ 0.0 ]
 cNotGate :: Gate
+
+-- | <ul>
+--   <li>swapGate function represent a Swap Gate</li>
+--   </ul>
+--   
+--   <pre>
+--   &gt;swapGate
+--   </pre>
+--   
+--   (4&gt;&lt;4) [ 1.0 :+ 0.0, 0.0 :+ 0.0, 0.0 :+ 0.0, 0.0 :+ 0.0 , 0.0 :+
+--   0.0, 0.0 :+ 0.0, 1.0 :+ 0.0, 0.0 :+ 0.0 , 0.0 :+ 0.0, 1.0 :+ 0.0, 0.0
+--   :+ 0.0, 0.0 :+ 0.0 , 0.0 :+ 0.0, 0.0 :+ 0.0, 0.0 :+ 0.0, 1.0 :+ 0.0 ]
+swapGate :: Gate
 data Gate
-Gate :: (Matrix C) -> Gate
+Gate :: Matrix C -> Gate
 
 -- | Gate constructor accepts a parameter of type Matrix C
-[gateMatrix] :: Gate -> (Matrix C)
+[gateMatrix] :: Gate -> Matrix C
 instance GHC.Show.Show Gates.Gate
 instance GHC.Classes.Eq Gates.Gate
 
