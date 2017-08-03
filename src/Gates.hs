@@ -92,7 +92,7 @@ cPhaseShifGate=Gate ((4><4)[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,-1]::Matrix C)
 {-|
  -  cNotGate function represent a Controlled-Not Gate
  
- >>cNotGate
+ >>>cNotGate
  (4><4)
  [ 1.0 :+ 0.0, 0.0 :+ 0.0, 0.0 :+ 0.0, 0.0 :+ 0.0
  , 0.0 :+ 0.0, 1.0 :+ 0.0, 0.0 :+ 0.0, 0.0 :+ 0.0
@@ -107,7 +107,7 @@ cNotGate=Gate ((4><4)[1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0]::Matrix C)
 {-|
  -  swapGate function represent a Swap Gate
  
- >>swapGate
+ >>>swapGate
  (4><4)
  [ 1.0 :+ 0.0, 0.0 :+ 0.0, 0.0 :+ 0.0, 0.0 :+ 0.0
  , 0.0 :+ 0.0, 0.0 :+ 0.0, 1.0 :+ 0.0, 0.0 :+ 0.0
