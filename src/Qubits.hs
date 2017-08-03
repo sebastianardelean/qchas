@@ -20,7 +20,7 @@ import Numeric.LinearAlgebra
 
 data Qubit=
     Qubit {
-            qubitState::(Matrix C) -- ^ Qubit constructor accepts a parameter of type Matrix C
+            qubitState::Matrix C -- ^ Qubit constructor accepts a parameter of type Matrix C
           } deriving (Eq,Show)
 
 
