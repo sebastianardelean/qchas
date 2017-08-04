@@ -1,7 +1,6 @@
 # Change Log
 
-## [Unreleased](https://github.com/ardeleanasm/qchas/tree/HEAD)
-
+## [1.0.0](https://github.com/ardeleanasm/qchas/tree/1.0.0) (2017-08-04)
 **Fixed bugs:**
 
 - Configure qchas.cabal [\#2](https://github.com/ardeleanasm/qchas/issues/2)
