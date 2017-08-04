@@ -1,8 +1,7 @@
 # qchas
+---
 
-| Travis CI                                                                                                                                     | Codecov                                                                                                                                              |
-|-----------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [![Build Status](https://travis-ci.org/ardeleanasm/qchas.svg?branch=master)](https://travis-ci.org/ardeleanasm/qchas) |  |
+[![Build Status](https://travis-ci.org/ardeleanasm/qchas.svg?branch=master)](https://travis-ci.org/ardeleanasm/qchas)
 
 
 ## Getting started
