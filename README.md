@@ -1,6 +1,8 @@
 # qchas
 
-[![Build Status](https://travis-ci.org/ardeleanasm/qchas.svg?branch=master)](https://travis-ci.org/ardeleanasm/qchas)
+[![Build Status][travis-badge]][travis]
+[![Hackage][hackage-badge]][hackage]
+[![Hackage Dependencies][hackage-deps-badge]][hackage-deps]
 
 ## Getting started
 
@@ -28,3 +30,11 @@ $ stack test
 ## Documentation
 
 Documentation is available at [Doc](https://ardeleanasm.github.io/qchas/)
+
+
+[travis]:        <https://travis-ci.org/ardeleanasm/qchas>
+[travis-badge]:  <https://travis-ci.org/ardeleanasm/qchas.svg?branch=master>
+[hackage]:       <https://hackage.haskell.org/package/qchas>
+[hackage-badge]: <https://img.shields.io/hackage/v/qchas.svg>
+[hackage-deps-badge]: <https://img.shields.io/hackage-deps/v/qchas.svg>
+[hackage-deps]: <http://packdeps.haskellers.com/feed?needle=qchas>
