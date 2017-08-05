@@ -2,6 +2,10 @@
 -- See Hoogle, http://www.haskell.org/hoogle/
 
 
+-- | A library for implementing Quantum Algorithms
+--   
+--   A library useful for implementing Quantum Algorithms. It contains
+--   definitions of Quantum Gates, Qubits.
 @package qchas
 @version 1.0.0
 
@@ -237,7 +241,13 @@ apply :: Gate -> Qubit -> Qubit
 (|>) :: Qubit -> Gate -> Qubit
 
 -- | <ul>
---   <li>gateKronecker function is used to create gates that can be used on
+--   <li>gateProduct function is used to create gates that can be used on
 --   multiple qubits</li>
 --   </ul>
 gateProduct :: Gate -> Gate -> Gate
+
+-- | <ul>
+--   <li>Kronecker product operator is used to create gates that can be
+--   used on multiple qubits</li>
+--   </ul>
+(<+>) :: Gate -> Gate -> Gate

@@ -38,3 +38,7 @@ testMultiplyGate=testCase "Test gateProduct function"
       [1,0,0,0,0,(-1),0,0,0,0,(-1),0,0,0,0,1]::Matrix C))) (gateProduct zGate zGate))
                                            
 
+testMultiplyGateOperator::TestTree
+testMultiplyGateOperator=testCase "Test Kronecker product operator"
+    (assertEqual "zGate <+> zGate" (Gate (((4><4)
+      [1,0,0,0,0,(-1),0,0,0,0,(-1),0,0,0,0,1]::Matrix C))) (zGate <+> zGate))
