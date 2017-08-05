@@ -3,4 +3,4 @@ module Main where
 import DeutschsAlgorithm
 
 main :: IO ()
-main = testAlgorithm
+main = testDeutschsAlgorithm
