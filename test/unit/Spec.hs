@@ -20,5 +20,5 @@ main = do
   defaultMain (testGroup "Unit tests" [
     testQubitZero,testQubitOne,testQubitMinus,testQubitPlus,
     testGateX, testGateY,testGateZ,testGateH,testGateControlledPhaseShift,testGateControlledNot,
-    testEntangle,testApplyGate,testApplyGateOperator,testMultiplyGate
+    testEntangle,testApplyGate,testApplyGateOperator,testMultiplyGate,testMultiplyGateOperator
     ])

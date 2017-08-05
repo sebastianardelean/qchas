@@ -12,6 +12,7 @@ module Utils
       , apply
       , (|>)
       , gateProduct
+      , (<+>)
     ) where
 
 import Numeric.LinearAlgebra hiding ( (|>) )
@@ -66,9 +67,18 @@ apply m v=Qubit (gateMatrix m <> qubitState v)
 (|>)=flip apply
 
 {-|
-  -  gateKronecker function is used to create gates that can be used on multiple qubits
+  -  gateProduct function is used to create gates that can be used on multiple qubits
  -}   
 gateProduct::Gate -- ^ 'Gate' argument
            ->Gate -- ^ 'Gate' argument
            ->Gate -- ^ return value: 'Gate'
 gateProduct g1 g2=Gate (kronecker (gateMatrix g1) (gateMatrix g2))
+
+
+{-|
+  -  Kronecker product operator is used to create gates that can be used on multiple qubits
+ -} 
+(<+>)::Gate -- ^ 'Gate' argument
+     ->Gate -- ^ 'Gate' argument
+     ->Gate -- ^ return value: 'Gate'
+g1 <+> g2=gateProduct g1 g2
