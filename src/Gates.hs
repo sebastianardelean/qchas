@@ -32,7 +32,7 @@ data Gate=
         } deriving (Eq,Show)
 
 {-|
- -  xGate function represent a Pauly X-Gate
+ -  xGate function represent a Pauli X-Gate
  
  >>>xGate
  (2><2)
@@ -43,7 +43,7 @@ xGate::Gate
 xGate=Gate ((2><2)[0,1,1,0]::Matrix C)
     
 {-|
- -  yGate function represent a Pauly Y-Gate
+ -  yGate function represent a Pauli Y-Gate
  
  >>>yGate
 (2><2)
@@ -54,7 +54,7 @@ yGate::Gate
 yGate=Gate ((2><2) [0.0,0.0:+(-1.0),0.0:+1.0,0.0]::Matrix C)
 
 {-|
- -  zGate function represent a Pauly Z-Gate
+ -  zGate function represent a Pauli Z-Gate
  
  >>>zGate
  (2><2)
