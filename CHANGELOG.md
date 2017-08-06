@@ -1,13 +1,27 @@
 # Change Log
 
-## [1.0.0](https://github.com/ardeleanasm/qchas/tree/1.0.0) (2017-08-04)
-**Fixed bugs:**
+## [Unreleased](https://github.com/ardeleanasm/qchas/tree/HEAD)
 
-- Configure qchas.cabal [\#2](https://github.com/ardeleanasm/qchas/issues/2)
+[Full Changelog](https://github.com/ardeleanasm/qchas/compare/1.0.0...HEAD)
+
+**Implemented enhancements:**
+
+- Measure module [\#25](https://github.com/ardeleanasm/qchas/issues/25)
+- Define \<+\>  operator [\#23](https://github.com/ardeleanasm/qchas/issues/23)
 
 **Closed issues:**
 
-- Static analysis [\#19](https://github.com/ardeleanasm/qchas/issues/19)
+- Update README badges [\#21](https://github.com/ardeleanasm/qchas/issues/21)
+
+**Merged pull requests:**
+
+- Measure [\#27](https://github.com/ardeleanasm/qchas/pull/27) ([ardeleanasm](https://github.com/ardeleanasm))
+- Corrects spelling of Pauli [\#26](https://github.com/ardeleanasm/qchas/pull/26) ([jchildren](https://github.com/jchildren))
+- \#23 defined new operator and updated docs [\#24](https://github.com/ardeleanasm/qchas/pull/24) ([ardeleanasm](https://github.com/ardeleanasm))
+
+## [1.0.0](https://github.com/ardeleanasm/qchas/tree/1.0.0) (2017-08-04)
+**Implemented enhancements:**
+
 - Implement FREDKİN and Toffoli gates [\#17](https://github.com/ardeleanasm/qchas/issues/17)
 - Push Haddock Documentation [\#15](https://github.com/ardeleanasm/qchas/issues/15)
 - Data Types [\#13](https://github.com/ardeleanasm/qchas/issues/13)
@@ -16,6 +30,14 @@
 - Create util functions [\#7](https://github.com/ardeleanasm/qchas/issues/7)
 - Define qubits [\#3](https://github.com/ardeleanasm/qchas/issues/3)
 - setup ci [\#1](https://github.com/ardeleanasm/qchas/issues/1)
+
+**Fixed bugs:**
+
+- Configure qchas.cabal [\#2](https://github.com/ardeleanasm/qchas/issues/2)
+
+**Closed issues:**
+
+- Static analysis [\#19](https://github.com/ardeleanasm/qchas/issues/19)
 
 **Merged pull requests:**
 

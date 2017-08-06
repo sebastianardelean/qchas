@@ -50,19 +50,19 @@ function start_build(){
     echo -e "\nRemoving old dist/ folder...[$(date +"%T")]\n"
     rm -r dist/
 
-    # echo -e "\nCreating changelog...[$(date +"%T")]\n"
-    # github_changelog_generator
+    echo -e "\nCreating changelog...[$(date +"%T")]\n"
+    github_changelog_generator
 
     echo -e "\nGenerating documentation...[$(date +"%T")]\n"
     stack haddock
     echo -e "\nUpdating documentation...[$(date +"%T")]\n"
     copy_documentation
 
-    # echo -e "\nCreating cabal configuration...[$(date +"%T")]\n"
-    # cabal configure
+    echo -e "\nCreating cabal configuration...[$(date +"%T")]\n"
+    cabal configure
 
-    # echo -e "\nCreating cabal distribution package...[$(date +"%T")]\n"
-    # cabal sdist
+    echo -e "\nCreating cabal distribution package...[$(date +"%T")]\n"
+    cabal sdist
 
     }
 
