@@ -5,7 +5,7 @@ NEW_VERSION=0
 ERROR_NUMBER=0;
 
 function print_help(){
-    echo -e "usage: $0 [-g] [-v version]"
+    echo -e "usage: $0 [-g] [-b version]"
     }
 
 #update version
@@ -45,23 +45,23 @@ function start_build(){
         exit 1
     fi
 
-    # echo -e "Start deployment[$(date +"%T")]...\n"
-    # echo -e "\nRemoving old dist/ folder...[$(date +"%T")]\n"
-    # rm -r dist/
+    echo -e "Start deployment[$(date +"%T")]...\n"
+    echo -e "\nRemoving old dist/ folder...[$(date +"%T")]\n"
+    rm -r dist/
 
-    # echo -e "\nCreating changelog...[$(date +"%T")]\n"
-    # github_changelog_generator
+    echo -e "\nCreating changelog...[$(date +"%T")]\n"
+    github_changelog_generator
 
-    # echo -e "\nGenerating documentation...[$(date +"%T")]\n"
-    # stack haddock
-    # echo -e "\nUpdating documentation...[$(date +"%T")]\n"
-    # copy_documentation
+    echo -e "\nGenerating documentation...[$(date +"%T")]\n"
+    stack haddock
+    echo -e "\nUpdating documentation...[$(date +"%T")]\n"
+    copy_documentation
 
-    # echo -e "\nCreating cabal configuration...[$(date +"%T")]\n"
-    # cabal configure
+    echo -e "\nCreating cabal configuration...[$(date +"%T")]\n"
+    cabal configure
 
-    # echo -e "\nCreating cabal distribution package...[$(date +"%T")]\n"
-    # cabal sdist
+    echo -e "\nCreating cabal distribution package...[$(date +"%T")]\n"
+    cabal sdist
 
     }
 
