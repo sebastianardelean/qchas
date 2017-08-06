@@ -7,7 +7,7 @@
 --   A library useful for implementing Quantum Algorithms. It contains
 --   definitions of Quantum Gates, Qubits.
 @package qchas
-@version 1.0.0
+@version 1.0.1.0
 
 
 -- | <ul>

@@ -4,6 +4,7 @@ OLD_VERSION=0
 NEW_VERSION=0
 ERROR_NUMBER=0;
 
+
 function print_help(){
     echo -e "usage: $0 [-g] [-b version]"
     }
@@ -29,9 +30,9 @@ function copy_documentation(){
     rm docs/*.*
     rm -r docs/src
     #copy new documentation
-    cp -r .stack-work/install/x86_64-linux-nopie/lts-8.23/8.0.2/doc/qchas-1.0.0/*.* docs/
+    cp -r .stack-work/install/x86_64-linux-nopie/lts-8.23/8.0.2/doc/qchas-$NEW_VERSION/*.* docs/
     mkdir docs/src
-    cp -r .stack-work/install/x86_64-linux-nopie/lts-8.23/8.0.2/doc/qchas-1.0.0/src/*.* docs/src
+    cp -r .stack-work/install/x86_64-linux-nopie/lts-8.23/8.0.2/doc/qchas-$NEW_VERSION/src/*.* docs/src
 
     }
 
@@ -49,19 +50,19 @@ function start_build(){
     echo -e "\nRemoving old dist/ folder...[$(date +"%T")]\n"
     rm -r dist/
 
-    echo -e "\nCreating changelog...[$(date +"%T")]\n"
-    github_changelog_generator
+    # echo -e "\nCreating changelog...[$(date +"%T")]\n"
+    # github_changelog_generator
 
     echo -e "\nGenerating documentation...[$(date +"%T")]\n"
     stack haddock
     echo -e "\nUpdating documentation...[$(date +"%T")]\n"
     copy_documentation
 
-    echo -e "\nCreating cabal configuration...[$(date +"%T")]\n"
-    cabal configure
+    # echo -e "\nCreating cabal configuration...[$(date +"%T")]\n"
+    # cabal configure
 
-    echo -e "\nCreating cabal distribution package...[$(date +"%T")]\n"
-    cabal sdist
+    # echo -e "\nCreating cabal distribution package...[$(date +"%T")]\n"
+    # cabal sdist
 
     }
 
