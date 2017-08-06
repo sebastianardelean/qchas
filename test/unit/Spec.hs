@@ -20,7 +20,7 @@ import MeasurementPerformerTest
 main = do
   defaultMain (testGroup "Unit tests" [
     testQubitZero,testQubitOne,testQubitMinus,testQubitPlus,
-    testGateX, testGateY,testGateZ,testGateH,testGateControlledPhaseShift,testGateControlledNot,
+    testGateX, testGateY,testGateZ,testGateH,testGateControlledPhaseShift,testGateControlledNot,testGateI,
     testEntangle,testApplyGate,testApplyGateOperator,testMultiplyGate,testMultiplyGateOperator,
     testMeasure
     ])
