@@ -1,6 +1,14 @@
+{-|
+ -Module      : MeasurementPerformer
+ -Description : Definition of qubit measure function
+ -Copyright   : (c) Mihai Sebastian Ardelean, 2017
+ -License     : BSD3
+ -Maintainer  : ardeleanasm@gmail.com
+ -Portability : POSIX
+ -}
 module MeasurementPerformer
     (
-        measureQubit
+        measure
     ) 
     where
 
@@ -14,35 +22,52 @@ import Gates
 import Utils
 
 --Constants used in code
-randomListLength=1000
-randomSeed=(-958036805781772734)
+noOfTests=1000
+randomGeneratorSeed=(-958036805781772734)
 
 
-measureQubit::Qubit->Qubit
-measureQubit q=createQubit  
+{-|
+  -  measure function is used to perform qubit measurement
+  
+  >>>measure circuit
+  Qubit {qubitState = (4><1)
+  [ 0.0 :+ 0.0
+  , 1.0 :+ 0.0
+  , 0.0 :+ 0.0
+  , 0.0 :+ 0.0 ]}
+
+ -} 
+measure::Qubit->Qubit
+measure q=createResultQubit
     where
-        qubitStates=collapseStates q
+        result=map(\c->(realPart (c*conjugate c),0)) (toList . flatten $ qubitState q)
+        qubitStates=collapseQubitState $ runTest (toInteger noOfTests) result
         qubitStatesLength=length qubitStates
-        createQubit=Qubit( (qubitStatesLength><1) qubitStates::Matrix C)
-            
-        
-collapseStates::Qubit->[Complex Double]
-collapseStates q=measure 
+        createResultQubit=Qubit((qubitStatesLength><1) qubitStates::Matrix C)
+
+-- Function is used to collapse qubit state after is measured
+collapseQubitState::[(Double,Integer)]->[Complex Double]
+collapseQubitState result=measure
     where
-        result=map(\c-> realPart (c * conjugate c)) (toList . flatten $ qubitState q) 
         index=elemIndices (maximum result) result
-        measure=let complexList=map(\i->realToFrac i:+0.0) result
-                in [if x==head index then 1.0:+0.0 else 0.0:+0.0 |x<-[0.. (length complexList)-1]]
+        measure=let complexList=map(\i@(f,x)->(realToFrac f:+0.0,x)) result
+                in [if x==head index then 1.0:+0.0 else 0.0:+0.0 | x<-[0.. (length complexList)-1]]
 
---randomList::Int->[Double]
---randomList seed=take randomListLength $ randoms (mkStdGen seed)::[Double]
+-- Function is used to perform the tests on qubits
+runTest::Integer->[(Double,Integer)]->[(Double,Integer)]
+runTest 0 tx=tx
+runTest n tx=do 
+    let randomValue=getRandomValue randomGeneratorSeed  -- generate a random value
+    runTest (n-1) $ selectInterval randomValue tx       -- test qubit states
 
---getRandomValue::Double
---getRandomValue=head $ randomList (randomSeed)
+-- Function will increment the tuple (f,x) for which f is greater than a randomly chosen value
+selectInterval::Double->[(Double,Integer)]->[(Double,Integer)]
+selectInterval randValue list=map (\p@(f, x) -> if f >= randValue then (f, x+1) else p) list
 
 
---intervalCount::Qubit->Integer
---intervalCount q=0
+-- Function used to generate some random values
+getRandomValue::Int->Double
+getRandomValue seed=head (randoms (mkStdGen seed)::[Double])
 
---collapseQubitState::Integer->Qubit->Qubit
---collapseQubitState pos q=qZero
+
+
