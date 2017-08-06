@@ -26,7 +26,9 @@ testGateZ::TestTree
 testGateZ=testCase "Test Z-Gate correct values"
     (assertEqual "Z-Gate values," (Gate (((2><2) [1,0,0,-1]::Matrix C))) (zGate))
 
-
+testGateI::TestTree
+testGateI=testCase "Test Identity Matrix correct values"
+    (assertEqual "I-Gate values," (Gate (((2><2) [1,0,0,1]::Matrix C))) (iGate))
 
 testGateH::TestTree
 testGateH=testCase "Test H-Gate correct values"
