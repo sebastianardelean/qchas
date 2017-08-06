@@ -92,7 +92,7 @@ instance GHC.Classes.Eq Qubits.Qubit
 module Gates
 
 -- | <ul>
---   <li>xGate function represent a Pauly X-Gate</li>
+--   <li>xGate function represent a Pauli X-Gate</li>
 --   </ul>
 --   
 --   <pre>
@@ -104,7 +104,7 @@ module Gates
 xGate :: Gate
 
 -- | <ul>
---   <li>yGate function represent a Pauly Y-Gate</li>
+--   <li>yGate function represent a Pauli Y-Gate</li>
 --   </ul>
 --   
 --   <pre>
@@ -116,7 +116,7 @@ xGate :: Gate
 yGate :: Gate
 
 -- | <ul>
---   <li>zGate function represent a Pauly Z-Gate</li>
+--   <li>zGate function represent a Pauli Z-Gate</li>
 --   </ul>
 --   
 --   <pre>
@@ -251,3 +251,28 @@ gateProduct :: Gate -> Gate -> Gate
 --   used on multiple qubits</li>
 --   </ul>
 (<+>) :: Gate -> Gate -> Gate
+
+
+-- | <ul>
+--   <li>Module : MeasurementPerformer</li>
+--   <li>Description : Definition of qubit measure function</li>
+--   <li>Copyright : (c) Mihai Sebastian Ardelean, 2017</li>
+--   <li>License : BSD3</li>
+--   <li>Maintainer : ardeleanasm@gmail.com</li>
+--   <li>Portability : POSIX</li>
+--   </ul>
+module MeasurementPerformer
+
+-- | <ul>
+--   <li>measure function is used to perform qubit measurement</li>
+--   </ul>
+--   
+--   <pre>
+--   &gt;&gt;&gt; measure circuit
+--   Qubit {qubitState = (4&gt;&lt;1)
+--   [ 0.0 :+ 0.0
+--   , 1.0 :+ 0.0
+--   , 0.0 :+ 0.0
+--   , 0.0 :+ 0.0 ]}
+--   </pre>
+measure :: Qubit -> Qubit
