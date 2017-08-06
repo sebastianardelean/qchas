@@ -19,8 +19,10 @@ library
   exposed-modules:     Utils
                      , Qubits
                      , Gates
+                     , MeasurementPerformer
   build-depends:       base >= 4.7 && < 5
                      , hmatrix
+                     , random
   default-language:    Haskell2010
 
 --executable qchas-exe
@@ -39,6 +41,7 @@ test-suite qchas-test
   other-modules:       GatesTest
                      , QubitsTest
                      , UtilsTest
+                     , MeasurementPerformerTest
   build-depends:       base
                      , tasty
                      , tasty-hunit
