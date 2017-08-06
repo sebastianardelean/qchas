@@ -42,3 +42,5 @@ Documentation is available at [Doc](https://ardeleanasm.github.io/qchas/)
 [hackage-deps]: <http://packdeps.haskellers.com/feed?needle=qchas>
 [stackage-lts-badge]: <http://stackage.org/package/qchas/badge/lts>
 [stackage-nightly-badge]: <http://stackage.org/package/qchas/badge/nightly>
+[stackage-lts]: <http://stackage.org/lts/package/qchas>
+[stackage-nightly]: <http://stackage.org/nightly/package/qchas>
