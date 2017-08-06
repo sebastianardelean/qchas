@@ -41,6 +41,7 @@ test-suite qchas-test
   other-modules:       GatesTest
                      , QubitsTest
                      , UtilsTest
+                     , MeasurementPerformerTest
   build-depends:       base
                      , tasty
                      , tasty-hunit
