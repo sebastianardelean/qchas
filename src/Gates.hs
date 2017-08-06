@@ -13,6 +13,7 @@ module Gates
       , yGate
       , zGate
       , hGate
+      , iGate
       --, rGate
       , cPhaseShifGate
       , cNotGate
@@ -63,6 +64,17 @@ yGate=Gate ((2><2) [0.0,0.0:+(-1.0),0.0:+1.0,0.0]::Matrix C)
  -}
 zGate::Gate
 zGate=Gate ((2><2) [1,0,0,-1]::Matrix C)
+
+{-|
+ -  iGate function represent an Identity Matrix
+ 
+ >>>iGate
+ (2><2)
+ [ 1.0 :+ 0.0, 0.0 :+ 0.0
+ , 0.0 :+ 0.0, 1.0 :+ 0.0 ]
+ -}
+iGate::Gate
+iGate=Gate ((2><2) [1,0,0,1]::Matrix C)
 
 {-|
  -  hGate function represent a Hadamard Gate
