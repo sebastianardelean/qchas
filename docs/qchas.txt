@@ -140,6 +140,18 @@ zGate :: Gate
 hGate :: Gate
 
 -- | <ul>
+--   <li>iGate function represent an Identity Matrix</li>
+--   </ul>
+--   
+--   <pre>
+--   &gt;&gt;&gt; iGate
+--   (2&gt;&lt;2)
+--   [ 1.0 :+ 0.0, 0.0 :+ 0.0
+--   , 0.0 :+ 0.0, 1.0 :+ 0.0 ]
+--   </pre>
+iGate :: Gate
+
+-- | <ul>
 --   <li>cPhaseShifGate function represent a Controlled Phase-Shift
 --   Gate</li>
 --   </ul>
