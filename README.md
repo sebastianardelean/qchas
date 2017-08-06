@@ -3,6 +3,8 @@
 [![Build Status][travis-badge]][travis]
 [![Hackage][hackage-badge]][hackage]
 [![Hackage Dependencies][hackage-deps-badge]][hackage-deps]
+[![Stackage LTS][stackage-lts-badge]][stackage-lts]
+[![Stackage Nightly][stackage-nightly-badge]][stackage-nightly]
 
 ## Getting started
 
@@ -38,3 +40,5 @@ Documentation is available at [Doc](https://ardeleanasm.github.io/qchas/)
 [hackage-badge]: <https://img.shields.io/hackage/v/qchas.svg>
 [hackage-deps-badge]: <https://img.shields.io/hackage-deps/v/qchas.svg>
 [hackage-deps]: <http://packdeps.haskellers.com/feed?needle=qchas>
+[stackage-lts-badge]: <http://stackage.org/package/qchas/badge/lts>
+[stackage-nightly-badge]: <http://stackage.org/package/qchas/badge/nightly>
