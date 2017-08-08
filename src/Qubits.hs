@@ -17,7 +17,6 @@ module Qubits
         , (|>)
         , (|><|)
         , Qubit(..)
---        , qubitState
     ) where
 
 import Numeric.LinearAlgebra hiding ( (|>) )

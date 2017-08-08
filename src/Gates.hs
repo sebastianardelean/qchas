@@ -19,15 +19,14 @@ module Gates
       , cNotGate
       , swapGate
       , (<+>)
-      --, (-)
-      --, (+)
+      , addGate
+      , subGate
       , Gate(..)
---      , gateMatrix
     )where
 
 
 import Numeric.LinearAlgebra
-import Prelude hiding ((<*>),(<+>),(-))
+import Prelude hiding ((<*>),(<+>))
 
 data Gate=
   Gate {
@@ -150,8 +149,19 @@ gateProduct g1 g2=Gate (kronecker (gateMatrix g1) (gateMatrix g2))
 g1 <+> g2=gateProduct g1 g2
 
 
+{-|
+  -  Gate addition, a wrapper function over matrix addition
+ -} 
+addGate::Gate -- ^ 'Gate' argument
+       ->Gate -- ^ 'Gate' argument
+       ->Gate -- ^ return value: 'Gate'
+addGate g1 g2=Gate (gateMatrix g1 + gateMatrix g2)
 
 
-
-
-
+{-|
+  -  Gate subtraction, a wrapper function over matrix subtraction
+ -} 
+subGate::Gate -- ^ 'Gate' argument
+       ->Gate -- ^ 'Gate' argument
+       ->Gate -- ^ return value: 'Gate'
+subGate g1 g2=Gate (gateMatrix g1 - gateMatrix g2)
