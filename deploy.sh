@@ -24,6 +24,9 @@ function extract_version() {
 function set_new_version_number() {
     versionFile=$(ls ./ | grep qchas.*)                            
     sed -i "s/^version:.*$/version:             ${NEW_VERSION}/" $versionFile
+    sed -i "s/^future-release=.*$/future-release=${NEW_VERSION}/" ".github_changelog_generator"
+    sed -i "s/^since-tag=.*$/since-tag=${OLD_VERSION}/" ".github_changelog_generator"
+
     }    
 
 function copy_documentation(){
@@ -38,6 +41,7 @@ function copy_documentation(){
 
 function start_build(){
     NEW_VERSION=$1
+    extract_version
     if [[ $NEW_VERSION =~ ^[0-9]\.[0-9]\.[0-9]\.[0-9]$ ]] 
     then
         set_new_version_number
