@@ -8,7 +8,6 @@ import Numeric.LinearAlgebra hiding ( (|>) )
 
 import Qubits
 import Gates
-import Utils
 import MeasurementPerformer
 
 
@@ -16,7 +15,7 @@ circuit::Qubit
 circuit=algorithm
   where
     oracle=Gate ((4><4) [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]::Matrix C)
-    gateH2=(gateProduct hGate hGate)
+    gateH2=(hGate <+> hGate)
     algorithm=entangle qZero (qZero |> xGate) |> gateH2 |> oracle |> gateH2
 
 

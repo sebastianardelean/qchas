@@ -16,8 +16,7 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Utils
-                     , Qubits
+  exposed-modules:     Qubits
                      , Gates
                      , MeasurementPerformer
   build-depends:       base >= 4.7 && < 5
@@ -42,7 +41,6 @@ test-suite qchas-test
   main-is:             Spec.hs
   other-modules:       GatesTest
                      , QubitsTest
-                     , UtilsTest
                      , MeasurementPerformerTest
   build-depends:       base
                      , tasty

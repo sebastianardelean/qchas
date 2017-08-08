@@ -19,7 +19,6 @@ import Data.List
 
 import Qubits
 import Gates
-import Utils
 
 --Constants used in code
 noOfTests=1000

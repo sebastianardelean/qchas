@@ -7,7 +7,7 @@ import Numeric.LinearAlgebra hiding ( (|>) )
 
 import Gates
 import Qubits
-import Utils
+
 
 
 -- Unitary transformation to represent quantum oracle of a function
@@ -53,7 +53,7 @@ deutsch oracle=do let (result:_)=measure circuit
                     '1' -> putStrLn "Function is balanced"
                     _   -> return()
     where
-        gateHadamardOnTwoQubits=(gateProduct hGate hGate)
+        gateHadamardOnTwoQubits=(hGate <+> hGate)
         circuit=entangle qZero (qZero |> xGate) |> gateHadamardOnTwoQubits |> oracle |> gateHadamardOnTwoQubits
         measure q=let result=map(\c->round (realPart (c * conjugate c))) (toList . flatten $ qubitState q)        
                   in case result of
