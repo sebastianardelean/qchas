@@ -1,55 +1,29 @@
 # Change Log
 
-## [Unreleased](https://github.com/ardeleanasm/qchas/tree/HEAD)
-
-[Full Changelog](https://github.com/ardeleanasm/qchas/compare/1.0.0...HEAD)
+## [1.0.1.0](https://github.com/ardeleanasm/qchas/tree/1.0.1.0) (2017-08-08)
+[Full Changelog](https://github.com/ardeleanasm/qchas/compare/1.0.0...1.0.1.0)
 
 **Implemented enhancements:**
 
+- Implement new operators [\#35](https://github.com/ardeleanasm/qchas/issues/35)
+- Move utils function to Gates and Qubits [\#34](https://github.com/ardeleanasm/qchas/issues/34)
+- Prepare new release with minor version increased [\#28](https://github.com/ardeleanasm/qchas/issues/28)
 - Measure module [\#25](https://github.com/ardeleanasm/qchas/issues/25)
 - Define \<+\>  operator [\#23](https://github.com/ardeleanasm/qchas/issues/23)
+- Implement examples [\#22](https://github.com/ardeleanasm/qchas/issues/22)
 
 **Closed issues:**
 
+- Implement identity Gate [\#31](https://github.com/ardeleanasm/qchas/issues/31)
 - Update README badges [\#21](https://github.com/ardeleanasm/qchas/issues/21)
 
 **Merged pull requests:**
 
+- Identity gate [\#33](https://github.com/ardeleanasm/qchas/pull/33) ([ardeleanasm](https://github.com/ardeleanasm))
+- Examples [\#29](https://github.com/ardeleanasm/qchas/pull/29) ([ardeleanasm](https://github.com/ardeleanasm))
 - Measure [\#27](https://github.com/ardeleanasm/qchas/pull/27) ([ardeleanasm](https://github.com/ardeleanasm))
 - Corrects spelling of Pauli [\#26](https://github.com/ardeleanasm/qchas/pull/26) ([jchildren](https://github.com/jchildren))
 - \#23 defined new operator and updated docs [\#24](https://github.com/ardeleanasm/qchas/pull/24) ([ardeleanasm](https://github.com/ardeleanasm))
-
-## [1.0.0](https://github.com/ardeleanasm/qchas/tree/1.0.0) (2017-08-04)
-**Implemented enhancements:**
-
-- Implement FREDKİN and Toffoli gates [\#17](https://github.com/ardeleanasm/qchas/issues/17)
-- Push Haddock Documentation [\#15](https://github.com/ardeleanasm/qchas/issues/15)
-- Data Types [\#13](https://github.com/ardeleanasm/qchas/issues/13)
-- Use hMatrix for Qubits & gates representation [\#11](https://github.com/ardeleanasm/qchas/issues/11)
-- Create Gates [\#9](https://github.com/ardeleanasm/qchas/issues/9)
-- Create util functions [\#7](https://github.com/ardeleanasm/qchas/issues/7)
-- Define qubits [\#3](https://github.com/ardeleanasm/qchas/issues/3)
-- setup ci [\#1](https://github.com/ardeleanasm/qchas/issues/1)
-
-**Fixed bugs:**
-
-- Configure qchas.cabal [\#2](https://github.com/ardeleanasm/qchas/issues/2)
-
-**Closed issues:**
-
-- Static analysis [\#19](https://github.com/ardeleanasm/qchas/issues/19)
-
-**Merged pull requests:**
-
-- \#19 fixed hlint messages [\#20](https://github.com/ardeleanasm/qchas/pull/20) ([ardeleanasm](https://github.com/ardeleanasm))
-- Controlled gates [\#18](https://github.com/ardeleanasm/qchas/pull/18) ([ardeleanasm](https://github.com/ardeleanasm))
-- \#15 added haddock documentation [\#16](https://github.com/ardeleanasm/qchas/pull/16) ([ardeleanasm](https://github.com/ardeleanasm))
-- Data types [\#14](https://github.com/ardeleanasm/qchas/pull/14) ([ardeleanasm](https://github.com/ardeleanasm))
-- \#11 fixed unit tests and implemented gates with hmatrix [\#12](https://github.com/ardeleanasm/qchas/pull/12) ([ardeleanasm](https://github.com/ardeleanasm))
-- \#9 added quantum gates [\#10](https://github.com/ardeleanasm/qchas/pull/10) ([ardeleanasm](https://github.com/ardeleanasm))
-- \#7 create functions [\#8](https://github.com/ardeleanasm/qchas/pull/8) ([ardeleanasm](https://github.com/ardeleanasm))
-- Tests [\#6](https://github.com/ardeleanasm/qchas/pull/6) ([ardeleanasm](https://github.com/ardeleanasm))
-- \#3 added qubit and utils modules [\#4](https://github.com/ardeleanasm/qchas/pull/4) ([ardeleanasm](https://github.com/ardeleanasm))
 
 
 

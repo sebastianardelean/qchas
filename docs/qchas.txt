@@ -11,77 +11,6 @@
 
 
 -- | <ul>
---   <li>Module : Qubits</li>
---   <li>Description : Definitions of |0&gt;, |1&gt;, |+&gt; and
---   |-&gt;</li>
---   <li>Copyright : (c) Mihai Sebastian Ardelean, 2017</li>
---   <li>License : BSD3</li>
---   <li>Maintainer : ardeleanasm@gmail.com</li>
---   <li>Portability : POSIX</li>
---   </ul>
-module Qubits
-
--- | <ul>
---   <li>qOne function is used to represent a 1 qubit |1&gt;</li>
---   </ul>
---   
---   <pre>
---   &gt;&gt;&gt; qOne
---   (2&gt;&lt;1)
---   [ 0.0 :+ 0.0
---   , 1.0 :+ 0.0 ]
---   </pre>
-qOne :: Qubit
-
--- | <ul>
---   <li>qZero function is used to represent a 0 qubit |0&gt;</li>
---   </ul>
---   
---   <pre>
---   &gt;&gt;&gt; qZero
---   (2&gt;&lt;1)
---   [ 1.0 :+ 0.0
---   , 0.0 :+ 0.0 ]
---   </pre>
-qZero :: Qubit
-
--- | <ul>
---   <li>qPlus function is used to represent a + qubit |+&gt;</li>
---   <li>|+&gt; can be also obtained by applying Hadamard Gate on |0&gt;.
---   See <a>apply</a> for more information</li>
---   </ul>
---   
---   <pre>
---   &gt;&gt;&gt; qPlus
---   (2&gt;&lt;1)
---   [ 0.7071067811865475 :+ 0.0
---   , 0.7071067811865475 :+ 0.0 ]
---   </pre>
-qPlus :: Qubit
-
--- | <ul>
---   <li>qMinus function is used to represent a - qubit |-&gt;</li>
---   <li>Same as |+&gt;, qubit |-&gt; can be obtained by applying Hadamard
---   Gate on |1&gt;. See <a>apply</a> for more information</li>
---   </ul>
---   
---   <pre>
---   &gt;&gt;&gt; qMinus
---   (2&gt;&lt;1)
---   [       0.7071067811865475 :+ 0.0
---   , (-0.7071067811865475) :+ (-0.0) ]
---   </pre>
-qMinus :: Qubit
-data Qubit
-Qubit :: Matrix C -> Qubit
-
--- | Qubit constructor accepts a parameter of type Matrix C
-[qubitState] :: Qubit -> Matrix C
-instance GHC.Show.Show Qubits.Qubit
-instance GHC.Classes.Eq Qubits.Qubit
-
-
--- | <ul>
 --   <li>Module : Gates</li>
 --   <li>Description : Basic Quantum Gates</li>
 --   <li>Copyright : (c) Mihai Sebastian Ardelean, 2017</li>
@@ -193,6 +122,22 @@ cNotGate :: Gate
 --   , 0.0 :+ 0.0, 0.0 :+ 0.0, 0.0 :+ 0.0, 1.0 :+ 0.0 ]
 --   </pre>
 swapGate :: Gate
+
+-- | <ul>
+--   <li>Kronecker product operator is used to create gates that can be
+--   used on multiple qubits</li>
+--   </ul>
+(<+>) :: Gate -> Gate -> Gate
+
+-- | <ul>
+--   <li>Gate addition, a wrapper function over matrix addition</li>
+--   </ul>
+addGate :: Gate -> Gate -> Gate
+
+-- | <ul>
+--   <li>Gate subtraction, a wrapper function over matrix subtraction</li>
+--   </ul>
+subGate :: Gate -> Gate -> Gate
 data Gate
 Gate :: Matrix C -> Gate
 
@@ -203,15 +148,67 @@ instance GHC.Classes.Eq Gates.Gate
 
 
 -- | <ul>
---   <li>Module : Utils</li>
---   <li>Description : Definitions of basic mathematical operations on
---   qubits and gates</li>
+--   <li>Module : Qubits</li>
+--   <li>Description : Definitions of |0&gt;, |1&gt;, |+&gt; and
+--   |-&gt;</li>
 --   <li>Copyright : (c) Mihai Sebastian Ardelean, 2017</li>
 --   <li>License : BSD3</li>
 --   <li>Maintainer : ardeleanasm@gmail.com</li>
 --   <li>Portability : POSIX</li>
 --   </ul>
-module Utils
+module Qubits
+
+-- | <ul>
+--   <li>qOne function is used to represent a 1 qubit |1&gt;</li>
+--   </ul>
+--   
+--   <pre>
+--   &gt;&gt;&gt; qOne
+--   (2&gt;&lt;1)
+--   [ 0.0 :+ 0.0
+--   , 1.0 :+ 0.0 ]
+--   </pre>
+qOne :: Qubit
+
+-- | <ul>
+--   <li>qZero function is used to represent a 0 qubit |0&gt;</li>
+--   </ul>
+--   
+--   <pre>
+--   &gt;&gt;&gt; qZero
+--   (2&gt;&lt;1)
+--   [ 1.0 :+ 0.0
+--   , 0.0 :+ 0.0 ]
+--   </pre>
+qZero :: Qubit
+
+-- | <ul>
+--   <li>qPlus function is used to represent a + qubit |+&gt;</li>
+--   <li>|+&gt; can be also obtained by applying Hadamard Gate on |0&gt;.
+--   See <a>apply</a> for more information</li>
+--   </ul>
+--   
+--   <pre>
+--   &gt;&gt;&gt; qPlus
+--   (2&gt;&lt;1)
+--   [ 0.7071067811865475 :+ 0.0
+--   , 0.7071067811865475 :+ 0.0 ]
+--   </pre>
+qPlus :: Qubit
+
+-- | <ul>
+--   <li>qMinus function is used to represent a - qubit |-&gt;</li>
+--   <li>Same as |+&gt;, qubit |-&gt; can be obtained by applying Hadamard
+--   Gate on |1&gt;. See <a>apply</a> for more information</li>
+--   </ul>
+--   
+--   <pre>
+--   &gt;&gt;&gt; qMinus
+--   (2&gt;&lt;1)
+--   [       0.7071067811865475 :+ 0.0
+--   , (-0.7071067811865475) :+ (-0.0) ]
+--   </pre>
+qMinus :: Qubit
 
 -- | <ul>
 --   <li>entangle function is used to perform the Kronecker product between
@@ -253,16 +250,23 @@ apply :: Gate -> Qubit -> Qubit
 (|>) :: Qubit -> Gate -> Qubit
 
 -- | <ul>
---   <li>gateProduct function is used to create gates that can be used on
---   multiple qubits</li>
+--   <li>|&gt;&lt;| function represents the outer product.</li>
 --   </ul>
-gateProduct :: Gate -> Gate -> Gate
+--   
+--   <pre>
+--   &gt;&gt;&gt; qZero |&gt;&lt;| qZero
+--    (2&gt;&lt;2)
+--    [ 1.0 :+ 0.0, 0.0 :+ 0.0
+--    , 0.0 :+ 0.0, 0.0 :+ 0.0 ]}
+--   </pre>
+(|><|) :: Qubit -> Qubit -> Gate
+data Qubit
+Qubit :: Matrix C -> Qubit
 
--- | <ul>
---   <li>Kronecker product operator is used to create gates that can be
---   used on multiple qubits</li>
---   </ul>
-(<+>) :: Gate -> Gate -> Gate
+-- | Qubit constructor accepts a parameter of type Matrix C
+[qubitState] :: Qubit -> Matrix C
+instance GHC.Show.Show Qubits.Qubit
+instance GHC.Classes.Eq Qubits.Qubit
 
 
 -- | <ul>
