@@ -5,6 +5,10 @@
 [![Hackage Dependencies][hackage-deps-badge]][hackage-deps]
 [![Stackage LTS][stackage-lts-badge]][stackage-lts]
 [![Stackage Nightly][stackage-nightly-badge]][stackage-nightly]
+[![Join Chat][gitter-badge]][gitter]
+
+
+
 
 ## Getting started
 
@@ -44,3 +48,7 @@ Documentation is available at [Doc](https://ardeleanasm.github.io/qchas/)
 [stackage-nightly-badge]: <http://stackage.org/package/qchas/badge/nightly>
 [stackage-lts]: <http://stackage.org/lts/package/qchas>
 [stackage-nightly]: <http://stackage.org/nightly/package/qchas>
+[gitter-badge]: <https://badges.gitter.im/Join%20Chat.svg>
+[gitter]: <https://gitter.im/qchas/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link>
+
+
