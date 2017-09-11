@@ -55,3 +55,7 @@ testApplyGateOperator=testCase "Test |> function"
 testOuterProduct::TestTree
 testOuterProduct=testCase "Test |><| function"
     (assertEqual "|0><0|," (Gate (((2><2)[ 1.0 :+ 0.0, 0.0 :+ 0.0 , 0.0 :+ 0.0, 0.0 :+ 0.0 ]::Matrix C))) (qZero |><| qZero))
+
+testMultiplyWithConstant::TestTree
+testMultiplyWithConstant=testCase "Test `mul` function"
+    (assertEqual "|0> `mul` 5," (Qubit (((2><1)[ 5.0 :+ 0.0, 0.0 :+ 0.0 ]::Matrix C))) (qZero `mul` 5))    

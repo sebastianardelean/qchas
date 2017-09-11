@@ -7,17 +7,18 @@
  -Portability : POSIX
  -}
 module Qubits
-    ( 
-          qOne
-        , qZero
-        , qPlus
-        , qMinus
-        , entangle
-        , apply
-        , (|>)
-        , (|><|)
-        , Qubit(..)
-    ) where
+  ( 
+    qOne
+  , qZero
+  , qPlus
+  , qMinus
+  , entangle
+  , apply
+  , (|>)
+  , (|><|)
+  , mul
+  , Qubit(..)
+  ) where
 
 import Numeric.LinearAlgebra hiding ( (|>) )
 import Gates
@@ -131,7 +132,7 @@ apply m v=Qubit (gateMatrix m <> qubitState v)
   >>>qZero |><| qZero 
  (2><2)
  [ 1.0 :+ 0.0, 0.0 :+ 0.0
- , 0.0 :+ 0.0, 0.0 :+ 0.0 ]}
+ , 0.0 :+ 0.0, 0.0 :+ 0.0 ]
  -}  
 (|><|)::Qubit -- ^ 'Qubit' argument 
       ->Qubit -- ^ 'Qubit' argument 
@@ -141,3 +142,22 @@ q1 |><| q2=outerProduct
         q1Flatten=flatten $ qubitState q1
         q2Flatten=flatten $ qubitState q2
         outerProduct=Gate (q1Flatten `outer` q2Flatten)
+
+{-|
+  -mul function is used to multiply the states with a constant.
+
+ >>>qZero `mul` 5 
+ (2><2)
+ [ 1.0 :+ 0.0, 0.0 :+ 0.0
+ , 0.0 :+ 0.0, 0.0 :+ 0.0 ]
+ -} 
+mul::Qubit -- ^ 'Qubit' argument
+   ->Complex Double -- ^ Constant value
+   ->Qubit -- ^ return value: 'Qubit'
+mul q c=multiplyWithConstant
+  where
+    qFlatten=flatten $ qubitState q
+    result=scale c qFlatten
+    qubitStatesLength=size result
+    multiplyWithConstant=Qubit(reshape 1 result)
+
