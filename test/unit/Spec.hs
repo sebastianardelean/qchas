@@ -4,12 +4,11 @@ import Test.Tasty
 import Test.Tasty.HUnit
 
 --Library imports
-import Data.Complex
-import Data.List(transpose)
 
 
 
-import Qubits
+
+import QC
 
 
 import QubitsTest
@@ -20,6 +19,6 @@ main = do
   defaultMain (testGroup "Unit tests" [
     testQubitZero,testQubitOne,testQubitMinus,testQubitPlus,
     testGateX, testGateY,testGateZ,testGateH,testGateControlledPhaseShift,testGateControlledNot,testGateI,
-    testEntangle,testApplyGate,testApplyGateOperator,testMultiplyGateOperator,
+    testEntangle,testApplyGate,testApplyGateOperator,testMultiplyGateOperator,testMultiplyWithConstant,
     testMeasure,testOuterProduct,testAddGateFunction,testSubGateFunction
     ])

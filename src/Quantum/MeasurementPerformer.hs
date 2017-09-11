@@ -6,7 +6,7 @@
  -Maintainer  : ardeleanasm@gmail.com
  -Portability : POSIX
  -}
-module MeasurementPerformer
+module Quantum.MeasurementPerformer
     (
         measure
     ) 
@@ -17,8 +17,8 @@ import Prelude hiding ((<*>),(<+>))
 import System.Random
 import Data.List
 
-import Qubits
-import Gates
+import Quantum.Qubits
+import Quantum.Gates
 
 --Constants used in code
 noOfTests=1000

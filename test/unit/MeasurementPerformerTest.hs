@@ -4,11 +4,8 @@ import Test.Tasty
 import Test.Tasty.HUnit
 
 
-import Numeric.LinearAlgebra hiding ( (|>) )
+import QC
 
-import Qubits
-import Gates
-import MeasurementPerformer
 
 
 circuit::Qubit
