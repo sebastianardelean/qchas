@@ -7,7 +7,7 @@
  -Portability : POSIX
  -}
 
-module Gates
+module Quantum.Gates
     (
         xGate
       , yGate

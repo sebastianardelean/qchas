@@ -4,12 +4,11 @@ import Test.Tasty
 import Test.Tasty.HUnit
 
 --Library imports
-import Numeric.LinearAlgebra
 
 
 
-import Qubits
-import Gates
+import QC
+
 
 testGateX::TestTree
 testGateX=testCase "Test X-Gate correct values"

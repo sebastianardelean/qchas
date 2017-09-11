@@ -6,11 +6,10 @@ import Test.Tasty.HUnit
 
 --Library imports
 
-import Numeric.LinearAlgebra hiding ( (|>) )
 
 
-import Qubits
-import Gates
+import QC
+
 
 
 

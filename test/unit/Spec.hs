@@ -4,12 +4,11 @@ import Test.Tasty
 import Test.Tasty.HUnit
 
 --Library imports
-import Data.Complex
-import Data.List(transpose)
 
 
 
-import Qubits
+
+import QC
 
 
 import QubitsTest

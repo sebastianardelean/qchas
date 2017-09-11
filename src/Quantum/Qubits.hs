@@ -6,7 +6,7 @@
  -Maintainer  : ardeleanasm@gmail.com
  -Portability : POSIX
  -}
-module Qubits
+module Quantum.Qubits
   ( 
     qOne
   , qZero
@@ -21,7 +21,7 @@ module Qubits
   ) where
 
 import Numeric.LinearAlgebra hiding ( (|>) )
-import Gates
+import Quantum.Gates
 
 data Qubit=
     Qubit {

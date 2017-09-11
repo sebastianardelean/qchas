@@ -16,9 +16,11 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Qubits
-                     , Gates
-                     , MeasurementPerformer
+                     , src/Quantum  
+  exposed-modules:     QC
+                     , Quantum.Qubits
+                     , Quantum.Gates
+                     , Quantum.MeasurementPerformer
   build-depends:       base >= 4.7 && < 5
                      , hmatrix
                      , linear
