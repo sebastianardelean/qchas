@@ -12,8 +12,8 @@ module Quantum.MeasurementPerformer
     ) 
     where
 
-import Numeric.LinearAlgebra hiding ( (|>) )
-import Prelude hiding ((<*>),(<+>))
+import Numeric.LinearAlgebra --hiding ( (|>) )
+import Prelude --hiding ((<*>),(<+>))
 import System.Random
 import Data.List
 

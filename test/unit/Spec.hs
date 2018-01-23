@@ -14,6 +14,9 @@ import QC
 import QubitsTest
 import GatesTest
 import MeasurementPerformerTest
+import GateOperationsTest
+import QubitOperationsTest
+
 
 main = do
   defaultMain (testGroup "Unit tests" [

@@ -5,8 +5,7 @@ module DeutschsAlgorithm
 
 import Numeric.LinearAlgebra hiding ( (|>) )
 
-import Gates
-import Qubits
+import QC
 
 
 
