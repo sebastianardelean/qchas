@@ -17,10 +17,15 @@ cabal-version:       >=1.10
 library
   hs-source-dirs:      src
                      , src/Quantum  
+                     , src/Core
+                     , src/Operations
   exposed-modules:     QC
                      , Quantum.Qubits
                      , Quantum.Gates
                      , Quantum.MeasurementPerformer
+                     , Operations.QuantumOperations
+                     , Core.QOperationsInternal
+                     , Core.MeasureProcessInternal
   build-depends:       base >= 4.7 && < 5
                      , hmatrix
                      , linear
@@ -45,6 +50,7 @@ test-suite qchas-test
   other-modules:       GatesTest
                      , QubitsTest
                      , MeasurementPerformerTest
+                     , QuantumOperations
   build-depends:       base
                      , tasty
                      , tasty-hunit

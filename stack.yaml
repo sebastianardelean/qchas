@@ -15,7 +15,7 @@
 # resolver:
 #  name: custom-snapshot
 #  location: "./custom-snapshot.yaml"
-resolver: lts-8.23
+resolver: lts-9.14
 
 # User packages to be built.
 # Various formats can be used as shown in the example below.
@@ -46,10 +46,9 @@ flags: {}
 
 # Extra package databases containing global packages
 extra-package-dbs: []
-#docker:
-#    enable: true
-#    repo: "fpco/stack-build"
-#    image: "4e3c147fca48"
+docker:
+    enable: false
+    image: "4e3c147fca48"
 # Control whether we use the GHC we find on the path
 # system-ghc: true
 #
