@@ -25,7 +25,7 @@ module Quantum.Gates
 import Numeric.LinearAlgebra
 import Prelude --hiding ((<*>),(<+>))
 
-data Gate=
+newtype Gate=
   Gate {
           gateMatrix::Matrix C -- ^ Gate constructor accepts a parameter of type Matrix C
         } deriving (Eq,Show)
