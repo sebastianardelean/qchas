@@ -25,6 +25,7 @@ library
                      , Quantum.MeasurementPerformer
                      , Operations.QuantumOperations
                      , Core.QOperationsInternal
+                     , Core.MeasureProcessInternal
   build-depends:       base >= 4.7 && < 5
                      , hmatrix
                      , linear
