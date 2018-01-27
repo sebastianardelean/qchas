@@ -1,7 +1,7 @@
 {-|
- -Module      : Gates
- -Description : Basic Quantum Gates
- -Copyright   : (c) Mihai Sebastian Ardelean, 2017
+ -Module      : Operations.QuantumOperations
+ -Description : Quantum Operations
+ -Copyright   : (c) Mihai Sebastian Ardelean, 2018
  -License     : BSD3
  -Maintainer  : ardeleanasm@gmail.com
  -Portability : POSIX
@@ -26,25 +26,76 @@ import Quantum.Gates
 
 
 
-
+-- | Class QubitOperations used to define common operations that can be made with 'Quantum.Qubits.Qubit'
 class QubitOperations a where
+  {-|
+  - entangle function is used to perform the Kronecker product between two qubits.
+  
+  >>>entangle qZero qOne
+  (4><1)
+    [ 0.0 :+ 0.0
+    , 1.0 :+ 0.0
+    , 0.0 :+ 0.0
+    , 0.0 :+ 0.0 ]
+  -} 
   entangle::a->a->a
+
+  {-|
+  -|> function is used to apply a gate on a qubit
+  
+  >>>qZero |> hGate 
+  (2><1)
+    [ 0.7071067811865475 :+ 0.0
+    , 0.7071067811865475 :+ 0.0 ]
+  -}  
   (|>)::a->Gate->a
+
+  {-|
+  -|><| function represents the outer product.
+  
+  >>>qZero |><| qZero 
+  (2><2)
+    [ 1.0 :+ 0.0, 0.0 :+ 0.0
+    , 0.0 :+ 0.0, 0.0 :+ 0.0 ]
+  -}  
   (|><|)::a->a->Gate
+
+  {-|
+  -mul function is used to multiply the states with a constant.
+
+  >>>qZero `mul` 5 
+  (2><2)
+    [ 1.0 :+ 0.0, 0.0 :+ 0.0
+    , 0.0 :+ 0.0, 0.0 :+ 0.0 ]
+  -} 
   (*)::a->Complex Double->a
   
-
+-- | QubitOperations instance for 'Quantum.Qubits.Qubit'
 instance QubitOperations Qubit where
   entangle = entangleTwoQubits 
   (|>)=flip applyGate
   (|><|)=outerProduct
   (*)=multiply
 
-
+-- | Class GateOperations used to define common operations that can be made with 'Quantum.Gates.Gate'
 class GateOperations a where
+  
+  {-|
+  - Kronecker product operator is used to create gates that can be used on multiple qubits
+  -} 
   (<*>)::a->a->a
+
+  {-|
+  - Gate addition, a wrapper function over matrix addition
+  -} 
   (<+>)::a->a->a
+
+  {-|
+  - Gate subtraction, a wrapper function over matrix subtraction
+  -} 
   (<->)::a->a->a
+
+-- | GateOperations instance for 'Quantum.Gates.Gate'
 instance GateOperations Gate where
   (<*>)=kron
   (<+>)=addGate

@@ -1,7 +1,7 @@
 {-|
  -Module      : Gates
  -Description : Basic Quantum Gates
- -Copyright   : (c) Mihai Sebastian Ardelean, 2017
+ -Copyright   : (c) Mihai Sebastian Ardelean, 2018
  -License     : BSD3
  -Maintainer  : ardeleanasm@gmail.com
  -Portability : POSIX

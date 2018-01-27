@@ -1,7 +1,7 @@
 {-|
  -Module      : MeasurementPerformer
  -Description : Definition of qubit measure function
- -Copyright   : (c) Mihai Sebastian Ardelean, 2017
+ -Copyright   : (c) Mihai Sebastian Ardelean, 2018
  -License     : BSD3
  -Maintainer  : ardeleanasm@gmail.com
  -Portability : POSIX
@@ -23,6 +23,8 @@ import Quantum.Gates
 --Constants used in code
 noOfTests=1000
 randomGeneratorSeed=(-958036805781772734)
+
+
 
 
 {-|
