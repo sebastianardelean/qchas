@@ -1,4 +1,4 @@
-module QubitOperationsTest where
+module QuantumOperations where
 
 import Test.Tasty
 import Test.Tasty.HUnit
@@ -6,9 +6,8 @@ import Test.Tasty.HUnit
 --Library imports
 
 
-
+import Prelude hiding ( (|>),(*),(<*>),(<+>),(<->) ) 
 import QC
-
 
 testEntangle::TestTree
 testEntangle=testCase "Test Entangle function"
@@ -19,11 +18,6 @@ testEntangle=testCase "Test Entangle function"
                                   ]:: Matrix C))) (entangle qZero qZero))
 
 
-testApplyGate::TestTree
-testApplyGate=testCase "Test |> function"
-    (assertEqual "|0> |> H," (Qubit (((2><1) [ 0.7071067811865475 :+ 0.0
-                                     , 0.7071067811865475 :+ 0.0 ]::Matrix C))) (apply hGate qZero))
-
 testApplyGateOperator::TestTree
 testApplyGateOperator=testCase "Test |> function"
     (assertEqual "|0> |> H," (Qubit (((2><1) [ 0.7071067811865475 :+ 0.0
@@ -33,8 +27,27 @@ testOuterProduct::TestTree
 testOuterProduct=testCase "Test |><| function"
     (assertEqual "|0><0|," (Gate (((2><2)[ 1.0 :+ 0.0, 0.0 :+ 0.0 , 0.0 :+ 0.0, 0.0 :+ 0.0 ]::Matrix C))) (qZero |><| qZero))
 
+
 testMultiplyWithConstant::TestTree
 testMultiplyWithConstant=testCase "Test `mul` function"
-    (assertEqual "|0> `mul` 5," (Qubit (((2><1)[ 5.0 :+ 0.0, 0.0 :+ 0.0 ]::Matrix C))) (qZero `mul` 5))    
+    (assertEqual "|0> * 5," (Qubit (((2><1)[ 5.0 :+ 0.0, 0.0 :+ 0.0 ]::Matrix C))) (qZero * 5))    
 
+    
+
+testMultiplyGateOperator::TestTree
+testMultiplyGateOperator=testCase "Test Kronecker product operator"
+    (assertEqual "zGate <*> zGate" (Gate (((4><4)
+      [1,0,0,0,0,(-1),0,0,0,0,(-1),0,0,0,0,1]::Matrix C))) (zGate <*> zGate))
+
+
+testAddGateFunction::TestTree
+testAddGateFunction=testCase "Test addition operator"
+    (assertEqual "zGate <+> zGate" (Gate (((2><2)
+      [ 2.0 :+ 0.0,0.0 :+ 0.0, 0.0 :+ 0.0, (-2.0) :+ (-0.0) ]::Matrix C))) (zGate <+> zGate))
+
+    
+testSubGateFunction::TestTree
+testSubGateFunction=testCase "Test subtraction operator"
+    (assertEqual "zGate <-> iGate" (Gate (((2><2)
+      [ 0.0 :+ 0.0,0.0 :+ 0.0, 0.0 :+ 0.0, (-2.0) :+ (-0.0) ]::Matrix C))) (zGate <-> iGate))
     

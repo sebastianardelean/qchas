@@ -8,21 +8,20 @@
  -}
 module Quantum.Qubits
   ( 
-    qOne
+    Qubit(..)
   , qZero
+  , qOne
   , qPlus
   , qMinus
-  , Qubit(..)
   ) where
 
-import Numeric.LinearAlgebra --hiding ( (|>) )
+import Numeric.LinearAlgebra hiding ( (|>) )    
 import Quantum.Gates
 
 data Qubit=
     Qubit {
             qubitState::Matrix C -- ^ Qubit constructor accepts a parameter of type Matrix C
           } deriving (Eq,Show)
-
 
 
 {-|

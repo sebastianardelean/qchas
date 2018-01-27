@@ -13,4 +13,4 @@ module Quantum.QRegister
   ) where
 
 import Numeric.LinearAlgebra --hiding ( (|>) )
-import Quantum.Qubits
+--import Quantum.Qubits

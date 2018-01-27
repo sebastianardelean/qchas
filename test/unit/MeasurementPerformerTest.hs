@@ -3,7 +3,7 @@ module MeasurementPerformerTest where
 import Test.Tasty
 import Test.Tasty.HUnit
 
-
+import Prelude hiding ( (|>),(*),(<*>),(<+>),(<->) ) 
 import QC
 
 
@@ -12,7 +12,7 @@ circuit::Qubit
 circuit=algorithm
   where
     oracle=Gate ((4><4) [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]::Matrix C)
-    gateH2=(hGate <+> hGate)
+    gateH2=(hGate <*> hGate)
     algorithm=entangle qZero (qZero |> xGate) |> gateH2 |> oracle |> gateH2
 
 

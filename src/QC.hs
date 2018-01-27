@@ -2,15 +2,15 @@ module QC(
    module Quantum.Qubits
   ,module Quantum.Gates
   ,module Quantum.MeasurementPerformer
-  ,module Operations.GateOperations
-  ,module Operations.QubitOperations
-  -- Dependencies
+  ,module Operations.QuantumOperations
+   -- Dependencies
   ,module Numeric.LinearAlgebra
   ) where
 
-import Numeric.LinearAlgebra hiding ( (|>) )
+import Numeric.LinearAlgebra hiding ( (|>) )    
+import Prelude hiding ( (|>),(*),(<*>),(<+>),(<->) ) 
 import Quantum.Qubits
 import Quantum.Gates
 import Quantum.MeasurementPerformer
-import Operations.GateOperations
-import Operations.QubitOperations
+import Operations.QuantumOperations
+
