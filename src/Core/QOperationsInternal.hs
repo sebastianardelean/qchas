@@ -5,8 +5,6 @@ module Core.QOperationsInternal
     , outerProduct
     , multiply
     , kron
-    , addGate
-    , subGate
   )where
 
 import Numeric.LinearAlgebra hiding ( (|>) )
@@ -40,10 +38,4 @@ kron g1 g2=Gate (kronecker (gateMatrix g1) (gateMatrix g2))
 
 
 
-addGate::Gate->Gate->Gate
-addGate g1 g2=Gate (gateMatrix g1 + gateMatrix g2)
 
-
- 
-subGate::Gate->Gate->Gate 
-subGate g1 g2=Gate (gateMatrix g1 - gateMatrix g2)
