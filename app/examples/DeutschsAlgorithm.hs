@@ -3,6 +3,7 @@ module DeutschsAlgorithm
         testDeutschsAlgorithm
     )where
 
+import Prelude hiding ( (|>),(<*>),(<+>),(<->) ) 
 import Numeric.LinearAlgebra hiding ( (|>) )
 
 import QC
@@ -52,9 +53,9 @@ deutsch oracle=do let (result:_)=measure circuit
                     '1' -> putStrLn "Function is balanced"
                     _   -> return()
     where
-        gateHadamardOnTwoQubits=(hGate <+> hGate)
+        gateHadamardOnTwoQubits=(hGate <*> hGate)
         circuit=entangle qZero (qZero |> xGate) |> gateHadamardOnTwoQubits |> oracle |> gateHadamardOnTwoQubits
-        measure q=let result=map(\c->round (realPart (c * conjugate c))) (toList . flatten $ qubitState q)        
+        measure q=let result=map(\c->round (realPart (c Prelude.* conjugate c))) (toList . flatten $ qubitState q)        
                   in case result of
                     [0,1,0,0]->"01"
                     [0,0,0,1]->"11"
