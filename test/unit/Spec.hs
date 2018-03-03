@@ -22,5 +22,5 @@ main = do
     testQubitZero,testQubitOne,testQubitMinus,testQubitPlus,
     testGateX, testGateY,testGateZ,testGateH,testGateControlledPhaseShift,testGateControlledNot,testGateI,
     testEntangle,testApplyGateOperator,testMultiplyGateOperator,testMultiplyWithConstant,
-    testMeasure,testOuterProduct,testAddGateFunction,testSubGateFunction
+    testMeasure,testOuterProduct
     ])

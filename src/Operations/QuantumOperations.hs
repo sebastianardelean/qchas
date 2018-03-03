@@ -19,9 +19,7 @@ import Core.QOperationsInternal(entangleTwoQubits
   ,applyGate
   ,outerProduct
   ,multiply
-  ,kron
-  ,addGate
-  ,subGate)
+  ,kron)
 import Quantum.Gates
 
 
@@ -63,9 +61,9 @@ class QubitOperations a where
   {-|
   -mul function is used to multiply the states with a constant.
 
-  >>>qZero `mul` 5 
-  (2><2)
-    [ 1.0 :+ 0.0, 0.0 :+ 0.0
+  >>>qZero * 5 
+  (2><1)
+    [ 5.0 :+ 0.0, 0.0 :+ 0.0
     , 0.0 :+ 0.0, 0.0 :+ 0.0 ]
   -} 
   (*)::a->Complex Double->a
@@ -82,21 +80,19 @@ class GateOperations a where
   
   {-|
   - Kronecker product operator is used to create gates that can be used on multiple qubits
+  
+  >>>hGate <*> hGate
+  (4><4)
+  [ 0.4999999999999999 :+ 0.0,    0.4999999999999999 :+ 0.0,    0.4999999999999999 :+ 0.0,    0.4999999999999999 :+ 0.0
+  , 0.4999999999999999 :+ 0.0, (-0.4999999999999999) :+ 0.0,    0.4999999999999999 :+ 0.0, (-0.4999999999999999) :+ 0.0
+  , 0.4999999999999999 :+ 0.0,    0.4999999999999999 :+ 0.0, (-0.4999999999999999) :+ 0.0, (-0.4999999999999999) :+ 0.0
+  , 0.4999999999999999 :+ 0.0, (-0.4999999999999999) :+ 0.0, (-0.4999999999999999) :+ 0.0,    0.4999999999999999 :+ 0.0 ]}
   -} 
   (<*>)::a->a->a
 
-  {-|
-  - Gate addition, a wrapper function over matrix addition
-  -} 
-  (<+>)::a->a->a
-
-  {-|
-  - Gate subtraction, a wrapper function over matrix subtraction
-  -} 
-  (<->)::a->a->a
 
 -- | GateOperations instance for 'Quantum.Gates.Gate'
 instance GateOperations Gate where
   (<*>)=kron
-  (<+>)=addGate
-  (<->)=subGate
+
+
