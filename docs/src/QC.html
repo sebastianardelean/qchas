@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-comment">{-|
+ -Module      : QC
+ -Description : Quantum Computing
+ -Copyright   : (c) Mihai Sebastian Ardelean, 2018
+ -License     : BSD3
+ -Maintainer  : ardeleanasm@gmail.com
+ -Portability : POSIX
+ 
+ This module is used to import needed modules for Quantum Computing.
+ 
+ -}</span><span>
+</span><a name="line-12"></a><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">QC</span><span class="hs-special">(</span><span>
+</span><a name="line-13"></a><span>   </span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Quantum</span><span class="hs-operator">.</span><span class="hs-identifier">Qubits</span><span>
+</span><a name="line-14"></a><span>  </span><span class="hs-special">,</span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Quantum</span><span class="hs-operator">.</span><span class="hs-identifier">Gates</span><span>
+</span><a name="line-15"></a><span>  </span><span class="hs-special">,</span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Quantum</span><span class="hs-operator">.</span><span class="hs-identifier">MeasurementPerformer</span><span>
+</span><a name="line-16"></a><span>  </span><span class="hs-special">,</span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Operations</span><span class="hs-operator">.</span><span class="hs-identifier">QuantumOperations</span><span>
+</span><a name="line-17"></a><span>   </span><span class="hs-comment">-- Dependencies</span><span>
+</span><a name="line-18"></a><span>  </span><span class="hs-special">,</span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Numeric</span><span class="hs-operator">.</span><span class="hs-identifier">LinearAlgebra</span><span>
+</span><a name="line-19"></a><span>  </span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
+</span><a name="line-20"></a><span>
+</span><a name="line-21"></a><span class="hs-keyword">import</span><span> </span><span class="hs-identifier">Numeric</span><span class="hs-operator">.</span><span class="hs-identifier">LinearAlgebra</span><span> </span><span class="hs-keyword">hiding</span><span> </span><span class="hs-special">(</span><span> </span><span class="hs-special">(</span><span class="hs-operator hs-var">|&gt;</span><span class="hs-special">)</span><span> </span><span class="hs-special">)</span><span>    </span><span>
+</span><a name="line-22"></a><span class="hs-keyword">import</span><span> </span><span class="hs-identifier">Prelude</span><span> </span><span class="hs-keyword">hiding</span><span> </span><span class="hs-special">(</span><span> </span><span class="hs-special">(</span><span class="hs-operator">|&gt;</span><span class="hs-special">)</span><span class="hs-special">,</span><span class="hs-special">(</span><span class="hs-operator hs-var">*</span><span class="hs-special">)</span><span class="hs-special">,</span><span class="hs-special">(</span><span class="hs-operator hs-var">&lt;*&gt;</span><span class="hs-special">)</span><span class="hs-special">,</span><span class="hs-special">(</span><span class="hs-operator">&lt;+&gt;</span><span class="hs-special">)</span><span class="hs-special">,</span><span class="hs-special">(</span><span class="hs-operator">&lt;-&gt;</span><span class="hs-special">)</span><span> </span><span class="hs-special">)</span><span> </span><span>
+</span><a name="line-23"></a><span class="hs-keyword">import</span><span> </span><a href="Quantum.Qubits.html"><span class="hs-identifier">Quantum</span><span class="hs-operator">.</span><span class="hs-identifier">Qubits</span></a><span>
+</span><a name="line-24"></a><span class="hs-keyword">import</span><span> </span><a href="Quantum.Gates.html"><span class="hs-identifier">Quantum</span><span class="hs-operator">.</span><span class="hs-identifier">Gates</span></a><span>
+</span><a name="line-25"></a><span class="hs-keyword">import</span><span> </span><a href="Quantum.MeasurementPerformer.html"><span class="hs-identifier">Quantum</span><span class="hs-operator">.</span><span class="hs-identifier">MeasurementPerformer</span></a><span>
+</span><a name="line-26"></a><span class="hs-keyword">import</span><span> </span><a href="Operations.QuantumOperations.html"><span class="hs-identifier">Operations</span><span class="hs-operator">.</span><span class="hs-identifier">QuantumOperations</span></a><span>
+</span><a name="line-27"></a><span>
+</span><a name="line-28"></a></pre></body></html>

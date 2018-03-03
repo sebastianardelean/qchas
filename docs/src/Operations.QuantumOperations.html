@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-comment">{-|
+ -Module      : Operations.QuantumOperations
+ -Description : Quantum Operations
+ -Copyright   : (c) Mihai Sebastian Ardelean, 2018
+ -License     : BSD3
+ -Maintainer  : ardeleanasm@gmail.com
+ -Portability : POSIX
+ -}</span><span>
+</span><a name="line-9"></a><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Operations</span><span class="hs-operator">.</span><span class="hs-identifier">QuantumOperations</span><span>
+</span><a name="line-10"></a><span>  </span><span class="hs-special">(</span><span> </span><span>
+</span><a name="line-11"></a><span>    </span><a href="Operations.QuantumOperations.html#QubitOperations"><span class="hs-identifier hs-type">QubitOperations</span></a><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
+</span><a name="line-12"></a><span>  </span><span class="hs-special">,</span><span> </span><a href="Operations.QuantumOperations.html#GateOperations"><span class="hs-identifier hs-type">GateOperations</span></a><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
+</span><a name="line-13"></a><span>  </span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
+</span><a name="line-14"></a><span>
+</span><a name="line-15"></a><span class="hs-keyword">import</span><span> </span><span class="hs-identifier">Numeric</span><span class="hs-operator">.</span><span class="hs-identifier">LinearAlgebra</span><span> </span><span class="hs-keyword">hiding</span><span> </span><span class="hs-special">(</span><span> </span><span class="hs-special">(</span><span class="hs-operator hs-var">|&gt;</span><span class="hs-special">)</span><span> </span><span class="hs-special">)</span><span>    </span><span>
+</span><a name="line-16"></a><span>
+</span><a name="line-17"></a><span class="hs-keyword">import</span><span> </span><a href="Quantum.Qubits.html"><span class="hs-identifier">Quantum</span><span class="hs-operator">.</span><span class="hs-identifier">Qubits</span></a><span>
+</span><a name="line-18"></a><span class="hs-keyword">import</span><span> </span><a href="Core.QOperationsInternal.html"><span class="hs-identifier">Core</span><span class="hs-operator">.</span><span class="hs-identifier">QOperationsInternal</span></a><span class="hs-special">(</span><a href="Core.QOperationsInternal.html#entangleTwoQubits"><span class="hs-identifier hs-var">entangleTwoQubits</span></a><span>
+</span><a name="line-19"></a><span>  </span><span class="hs-special">,</span><a href="Core.QOperationsInternal.html#applyGate"><span class="hs-identifier hs-var">applyGate</span></a><span>
+</span><a name="line-20"></a><span>  </span><span class="hs-special">,</span><a href="Core.QOperationsInternal.html#outerProduct"><span class="hs-identifier hs-var">outerProduct</span></a><span>
+</span><a name="line-21"></a><span>  </span><span class="hs-special">,</span><a href="Core.QOperationsInternal.html#multiply"><span class="hs-identifier hs-var">multiply</span></a><span>
+</span><a name="line-22"></a><span>  </span><span class="hs-special">,</span><a href="Core.QOperationsInternal.html#kron"><span class="hs-identifier hs-var">kron</span></a><span class="hs-special">)</span><span>
+</span><a name="line-23"></a><span class="hs-keyword">import</span><span> </span><a href="Quantum.Gates.html"><span class="hs-identifier">Quantum</span><span class="hs-operator">.</span><span class="hs-identifier">Gates</span></a><span>
+</span><a name="line-24"></a><span>
+</span><a name="line-25"></a><span>
+</span><a name="line-26"></a><span>
+</span><a name="line-27"></a><span class="hs-comment">-- | Class QubitOperations used to define common operations that can be made with 'Quantum.Qubits.Qubit'</span><span>
+</span><a name="line-28"></a><span class="hs-keyword">class</span><span> </span><a name="QubitOperations"><a href="Operations.QuantumOperations.html#QubitOperations"><span class="hs-identifier">QubitOperations</span></a></a><span> </span><a name="local-6989586621679049926"><a href="#local-6989586621679049926"><span class="hs-identifier">a</span></a></a><span> </span><span class="hs-keyword">where</span><span>
+</span><a name="line-29"></a><span>  </span><span class="hs-comment">{-|
+  - entangle function is used to perform the Kronecker product between two qubits.
+  
+  &gt;&gt;&gt;entangle qZero qOne
+  (4&gt;&lt;1)
+    [ 0.0 :+ 0.0
+    , 1.0 :+ 0.0
+    , 0.0 :+ 0.0
+    , 0.0 :+ 0.0 ]
+  -}</span><span> </span><span>
+</span><a name="line-39"></a><span>  </span><span class="hs-identifier">entangle</span><span class="hs-glyph">::</span><a href="#local-6989586621679049926"><span class="hs-identifier hs-type">a</span></a><span class="hs-glyph">-&gt;</span><a href="#local-6989586621679049926"><span class="hs-identifier hs-type">a</span></a><span class="hs-glyph">-&gt;</span><a href="#local-6989586621679049926"><span class="hs-identifier hs-type">a</span></a><span>
+</span><a name="line-40"></a><span>
+</span><a name="line-41"></a><span>  </span><span class="hs-comment">{-|
+  -|&gt; function is used to apply a gate on a qubit
+  
+  &gt;&gt;&gt;qZero |&gt; hGate 
+  (2&gt;&lt;1)
+    [ 0.7071067811865475 :+ 0.0
+    , 0.7071067811865475 :+ 0.0 ]
+  -}</span><span>  </span><span>
+</span><a name="line-49"></a><span>  </span><span class="hs-special">(</span><span class="hs-operator">|&gt;</span><span class="hs-special">)</span><span class="hs-glyph">::</span><a href="#local-6989586621679049926"><span class="hs-identifier hs-type">a</span></a><span class="hs-glyph">-&gt;</span><a href="Quantum.Gates.html#Gate"><span class="hs-identifier hs-type">Gate</span></a><span class="hs-glyph">-&gt;</span><a href="#local-6989586621679049926"><span class="hs-identifier hs-type">a</span></a><span>
+</span><a name="line-50"></a><span>
+</span><a name="line-51"></a><span>  </span><span class="hs-comment">{-|
+  -|&gt;&lt;| function represents the outer product.
+  
+  &gt;&gt;&gt;qZero |&gt;&lt;| qZero 
+  (2&gt;&lt;2)
+    [ 1.0 :+ 0.0, 0.0 :+ 0.0
+    , 0.0 :+ 0.0, 0.0 :+ 0.0 ]
+  -}</span><span>  </span><span>
+</span><a name="line-59"></a><span>  </span><span class="hs-special">(</span><span class="hs-operator">|&gt;&lt;|</span><span class="hs-special">)</span><span class="hs-glyph">::</span><a href="#local-6989586621679049926"><span class="hs-identifier hs-type">a</span></a><span class="hs-glyph">-&gt;</span><a href="#local-6989586621679049926"><span class="hs-identifier hs-type">a</span></a><span class="hs-glyph">-&gt;</span><a href="Quantum.Gates.html#Gate"><span class="hs-identifier hs-type">Gate</span></a><span>
+</span><a name="line-60"></a><span>
+</span><a name="line-61"></a><span>  </span><span class="hs-comment">{-|
+  -mul function is used to multiply the states with a constant.
+
+  &gt;&gt;&gt;qZero * 5 
+  (2&gt;&lt;1)
+    [ 5.0 :+ 0.0, 0.0 :+ 0.0
+    , 0.0 :+ 0.0, 0.0 :+ 0.0 ]
+  -}</span><span> </span><span>
+</span><a name="line-69"></a><span>  </span><span class="hs-special">(</span><span class="hs-operator">*</span><span class="hs-special">)</span><span class="hs-glyph">::</span><a href="#local-6989586621679049926"><span class="hs-identifier hs-type">a</span></a><span class="hs-glyph">-&gt;</span><span class="hs-identifier hs-type">Complex</span><span> </span><span class="hs-identifier hs-type">Double</span><span class="hs-glyph">-&gt;</span><a href="#local-6989586621679049926"><span class="hs-identifier hs-type">a</span></a><span>
+</span><a name="line-70"></a><span>  </span><span>
+</span><a name="line-71"></a><span class="hs-comment">-- | QubitOperations instance for 'Quantum.Qubits.Qubit'</span><span>
+</span><a name="line-72"></a><span class="hs-keyword">instance</span><span> </span><a href="Operations.QuantumOperations.html#QubitOperations"><span class="hs-identifier hs-type">QubitOperations</span></a><span> </span><a href="Quantum.Qubits.html#Qubit"><span class="hs-identifier hs-type">Qubit</span></a><span> </span><span class="hs-keyword">where</span><span>
+</span><a name="line-73"></a><span>  </span><a name="local-8214565720323824832"><a href="Operations.QuantumOperations.html#entangle"><span class="hs-identifier">entangle</span></a></a><span> </span><span class="hs-glyph">=</span><span> </span><a href="Core.QOperationsInternal.html#entangleTwoQubits"><span class="hs-identifier hs-var">entangleTwoQubits</span></a><span> </span><span>
+</span><a name="line-74"></a><span>  </span><span class="hs-special">(</span><a name="local-8214565720323824833"><a href="Operations.QuantumOperations.html#%7C%3E"><span class="hs-operator">|&gt;</span></a></a><span class="hs-special">)</span><span class="hs-glyph">=</span><span class="hs-identifier hs-var">flip</span><span> </span><a href="Core.QOperationsInternal.html#applyGate"><span class="hs-identifier hs-var">applyGate</span></a><span>
+</span><a name="line-75"></a><span>  </span><span class="hs-special">(</span><a name="local-8214565720323824834"><a href="Operations.QuantumOperations.html#%7C%3E%3C%7C"><span class="hs-operator">|&gt;&lt;|</span></a></a><span class="hs-special">)</span><span class="hs-glyph">=</span><a href="Core.QOperationsInternal.html#outerProduct"><span class="hs-identifier hs-var">outerProduct</span></a><span>
+</span><a name="line-76"></a><span>  </span><span class="hs-special">(</span><a name="local-8214565720323824835"><a href="Operations.QuantumOperations.html#%2A"><span class="hs-operator">*</span></a></a><span class="hs-special">)</span><span class="hs-glyph">=</span><a href="Core.QOperationsInternal.html#multiply"><span class="hs-identifier hs-var">multiply</span></a><span>
+</span><a name="line-77"></a><span>
+</span><a name="line-78"></a><span class="hs-comment">-- | Class GateOperations used to define common operations that can be made with 'Quantum.Gates.Gate'</span><span>
+</span><a name="line-79"></a><span class="hs-keyword">class</span><span> </span><a name="GateOperations"><a href="Operations.QuantumOperations.html#GateOperations"><span class="hs-identifier">GateOperations</span></a></a><span> </span><a name="local-6989586621679049925"><a href="#local-6989586621679049925"><span class="hs-identifier">a</span></a></a><span> </span><span class="hs-keyword">where</span><span>
+</span><a name="line-80"></a><span>  </span><span>
+</span><a name="line-81"></a><span>  </span><span class="hs-comment">{-|
+  - Kronecker product operator is used to create gates that can be used on multiple qubits
+  
+  &gt;&gt;&gt;hGate &lt;*&gt; hGate
+  (4&gt;&lt;4)
+  [ 0.4999999999999999 :+ 0.0,    0.4999999999999999 :+ 0.0,    0.4999999999999999 :+ 0.0,    0.4999999999999999 :+ 0.0
+  , 0.4999999999999999 :+ 0.0, (-0.4999999999999999) :+ 0.0,    0.4999999999999999 :+ 0.0, (-0.4999999999999999) :+ 0.0
+  , 0.4999999999999999 :+ 0.0,    0.4999999999999999 :+ 0.0, (-0.4999999999999999) :+ 0.0, (-0.4999999999999999) :+ 0.0
+  , 0.4999999999999999 :+ 0.0, (-0.4999999999999999) :+ 0.0, (-0.4999999999999999) :+ 0.0,    0.4999999999999999 :+ 0.0 ]}
+  -}</span><span> </span><span>
+</span><a name="line-91"></a><span>  </span><span class="hs-special">(</span><span class="hs-operator">&lt;*&gt;</span><span class="hs-special">)</span><span class="hs-glyph">::</span><a href="#local-6989586621679049925"><span class="hs-identifier hs-type">a</span></a><span class="hs-glyph">-&gt;</span><a href="#local-6989586621679049925"><span class="hs-identifier hs-type">a</span></a><span class="hs-glyph">-&gt;</span><a href="#local-6989586621679049925"><span class="hs-identifier hs-type">a</span></a><span>
+</span><a name="line-92"></a><span>
+</span><a name="line-93"></a><span>
+</span><a name="line-94"></a><span class="hs-comment">-- | GateOperations instance for 'Quantum.Gates.Gate'</span><span>
+</span><a name="line-95"></a><span class="hs-keyword">instance</span><span> </span><a href="Operations.QuantumOperations.html#GateOperations"><span class="hs-identifier hs-type">GateOperations</span></a><span> </span><a href="Quantum.Gates.html#Gate"><span class="hs-identifier hs-type">Gate</span></a><span> </span><span class="hs-keyword">where</span><span>
+</span><a name="line-96"></a><span>  </span><span class="hs-special">(</span><a name="local-8214565720323824830"><a href="Operations.QuantumOperations.html#%3C%2A%3E"><span class="hs-operator">&lt;*&gt;</span></a></a><span class="hs-special">)</span><span class="hs-glyph">=</span><a href="Core.QOperationsInternal.html#kron"><span class="hs-identifier hs-var">kron</span></a><span>
+</span><a name="line-97"></a><span>
+</span><a name="line-98"></a><span>
+</span><a name="line-99"></a></pre></body></html>

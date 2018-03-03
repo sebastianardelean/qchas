@@ -7,18 +7,18 @@
 --   A library useful for implementing Quantum Algorithms. It contains
 --   definitions of Quantum Gates, Qubits.
 @package qchas
-@version 1.0.1.0
+@version 1.1.0.0
 
 
 -- | <ul>
 --   <li>Module : Gates</li>
 --   <li>Description : Basic Quantum Gates</li>
---   <li>Copyright : (c) Mihai Sebastian Ardelean, 2017</li>
+--   <li>Copyright : (c) Mihai Sebastian Ardelean, 2018</li>
 --   <li>License : BSD3</li>
 --   <li>Maintainer : ardeleanasm@gmail.com</li>
 --   <li>Portability : POSIX</li>
 --   </ul>
-module Gates
+module Quantum.Gates
 
 -- | <ul>
 --   <li>xGate function represent a Pauli X-Gate</li>
@@ -122,53 +122,30 @@ cNotGate :: Gate
 --   , 0.0 :+ 0.0, 0.0 :+ 0.0, 0.0 :+ 0.0, 1.0 :+ 0.0 ]
 --   </pre>
 swapGate :: Gate
-
--- | <ul>
---   <li>Kronecker product operator is used to create gates that can be
---   used on multiple qubits</li>
---   </ul>
-(<+>) :: Gate -> Gate -> Gate
-
--- | <ul>
---   <li>Gate addition, a wrapper function over matrix addition</li>
---   </ul>
-addGate :: Gate -> Gate -> Gate
-
--- | <ul>
---   <li>Gate subtraction, a wrapper function over matrix subtraction</li>
---   </ul>
-subGate :: Gate -> Gate -> Gate
-data Gate
+newtype Gate
 Gate :: Matrix C -> Gate
 
 -- | Gate constructor accepts a parameter of type Matrix C
 [gateMatrix] :: Gate -> Matrix C
-instance GHC.Show.Show Gates.Gate
-instance GHC.Classes.Eq Gates.Gate
+instance GHC.Show.Show Quantum.Gates.Gate
+instance GHC.Classes.Eq Quantum.Gates.Gate
 
 
 -- | <ul>
 --   <li>Module : Qubits</li>
 --   <li>Description : Definitions of |0&gt;, |1&gt;, |+&gt; and
 --   |-&gt;</li>
---   <li>Copyright : (c) Mihai Sebastian Ardelean, 2017</li>
+--   <li>Copyright : (c) Mihai Sebastian Ardelean, 2018</li>
 --   <li>License : BSD3</li>
 --   <li>Maintainer : ardeleanasm@gmail.com</li>
 --   <li>Portability : POSIX</li>
 --   </ul>
-module Qubits
+module Quantum.Qubits
+newtype Qubit
+Qubit :: Matrix C -> Qubit
 
--- | <ul>
---   <li>qOne function is used to represent a 1 qubit |1&gt;</li>
---   </ul>
---   
---   <pre>
---   &gt;&gt;&gt; qOne
---   (2&gt;&lt;1)
---   [ 0.0 :+ 0.0
---   , 1.0 :+ 0.0 ]
---   </pre>
-qOne :: Qubit
+-- | Qubit constructor accepts a parameter of type Matrix C
+[qubitState] :: Qubit -> Matrix C
 
 -- | <ul>
 --   <li>qZero function is used to represent a 0 qubit |0&gt;</li>
@@ -181,6 +158,18 @@ qOne :: Qubit
 --   , 0.0 :+ 0.0 ]
 --   </pre>
 qZero :: Qubit
+
+-- | <ul>
+--   <li>qOne function is used to represent a 1 qubit |1&gt;</li>
+--   </ul>
+--   
+--   <pre>
+--   &gt;&gt;&gt; qOne
+--   (2&gt;&lt;1)
+--   [ 0.0 :+ 0.0
+--   , 1.0 :+ 0.0 ]
+--   </pre>
+qOne :: Qubit
 
 -- | <ul>
 --   <li>qPlus function is used to represent a + qubit |+&gt;</li>
@@ -209,6 +198,30 @@ qPlus :: Qubit
 --   , (-0.7071067811865475) :+ (-0.0) ]
 --   </pre>
 qMinus :: Qubit
+instance GHC.Show.Show Quantum.Qubits.Qubit
+instance GHC.Classes.Eq Quantum.Qubits.Qubit
+
+module Core.QOperationsInternal
+entangleTwoQubits :: Qubit -> Qubit -> Qubit
+applyGate :: Gate -> Qubit -> Qubit
+outerProduct :: Qubit -> Qubit -> Gate
+multiply :: Qubit -> Complex Double -> Qubit
+kron :: Gate -> Gate -> Gate
+
+
+-- | <ul>
+--   <li>Module : Operations.QuantumOperations</li>
+--   <li>Description : Quantum Operations</li>
+--   <li>Copyright : (c) Mihai Sebastian Ardelean, 2018</li>
+--   <li>License : BSD3</li>
+--   <li>Maintainer : ardeleanasm@gmail.com</li>
+--   <li>Portability : POSIX</li>
+--   </ul>
+module Operations.QuantumOperations
+
+-- | Class QubitOperations used to define common operations that can be
+--   made with <a>Qubit</a>
+class QubitOperations a
 
 -- | <ul>
 --   <li>entangle function is used to perform the Kronecker product between
@@ -218,36 +231,24 @@ qMinus :: Qubit
 --   <pre>
 --   &gt;&gt;&gt; entangle qZero qOne
 --   (4&gt;&lt;1)
---    [ 0.0 :+ 0.0
---    , 1.0 :+ 0.0
---    , 0.0 :+ 0.0
---    , 0.0 :+ 0.0 ]
+--     [ 0.0 :+ 0.0
+--     , 1.0 :+ 0.0
+--     , 0.0 :+ 0.0
+--     , 0.0 :+ 0.0 ]
 --   </pre>
-entangle :: Qubit -> Qubit -> Qubit
+entangle :: QubitOperations a => a -> a -> a
 
 -- | <ul>
---   <li>apply function is used to apply a gate on a qubit</li>
---   </ul>
---   
---   <pre>
---   &gt;&gt;&gt; apply hGate qZero
---    (2&gt;&lt;1)
---    [ 0.7071067811865475 :+ 0.0
---    , 0.7071067811865475 :+ 0.0 ]
---   </pre>
-apply :: Gate -> Qubit -> Qubit
-
--- | <ul>
---   <li>|&gt; function have the same effect like <a>apply</a>.</li>
+--   <li>|&gt; function is used to apply a gate on a qubit</li>
 --   </ul>
 --   
 --   <pre>
 --   &gt;&gt;&gt; qZero |&gt; hGate
---    (2&gt;&lt;1)
---    [ 0.7071067811865475 :+ 0.0
---    , 0.7071067811865475 :+ 0.0 ]
+--   (2&gt;&lt;1)
+--     [ 0.7071067811865475 :+ 0.0
+--     , 0.7071067811865475 :+ 0.0 ]
 --   </pre>
-(|>) :: Qubit -> Gate -> Qubit
+(|>) :: QubitOperations a => a -> Gate -> a
 
 -- | <ul>
 --   <li>|&gt;&lt;| function represents the outer product.</li>
@@ -255,29 +256,62 @@ apply :: Gate -> Qubit -> Qubit
 --   
 --   <pre>
 --   &gt;&gt;&gt; qZero |&gt;&lt;| qZero
---    (2&gt;&lt;2)
---    [ 1.0 :+ 0.0, 0.0 :+ 0.0
---    , 0.0 :+ 0.0, 0.0 :+ 0.0 ]}
+--   (2&gt;&lt;2)
+--     [ 1.0 :+ 0.0, 0.0 :+ 0.0
+--     , 0.0 :+ 0.0, 0.0 :+ 0.0 ]
 --   </pre>
-(|><|) :: Qubit -> Qubit -> Gate
-data Qubit
-Qubit :: Matrix C -> Qubit
+(|><|) :: QubitOperations a => a -> a -> Gate
 
--- | Qubit constructor accepts a parameter of type Matrix C
-[qubitState] :: Qubit -> Matrix C
-instance GHC.Show.Show Qubits.Qubit
-instance GHC.Classes.Eq Qubits.Qubit
+-- | <ul>
+--   <li>mul function is used to multiply the states with a constant.</li>
+--   </ul>
+--   
+--   <pre>
+--   &gt;&gt;&gt; qZero * 5
+--   (2&gt;&lt;1)
+--     [ 5.0 :+ 0.0, 0.0 :+ 0.0
+--     , 0.0 :+ 0.0, 0.0 :+ 0.0 ]
+--   </pre>
+(*) :: QubitOperations a => a -> Complex Double -> a
+
+-- | Class GateOperations used to define common operations that can be made
+--   with <a>Gate</a>
+class GateOperations a
+
+-- | <ul>
+--   <li>Kronecker product operator is used to create gates that can be
+--   used on multiple qubits</li>
+--   </ul>
+--   
+--   <pre>
+--   &gt;&gt;&gt; hGate &lt;*&gt; hGate
+--   (4&gt;&lt;4)
+--   [ 0.4999999999999999 :+ 0.0,    0.4999999999999999 :+ 0.0,    0.4999999999999999 :+ 0.0,    0.4999999999999999 :+ 0.0
+--   , 0.4999999999999999 :+ 0.0, (-0.4999999999999999) :+ 0.0,    0.4999999999999999 :+ 0.0, (-0.4999999999999999) :+ 0.0
+--   , 0.4999999999999999 :+ 0.0,    0.4999999999999999 :+ 0.0, (-0.4999999999999999) :+ 0.0, (-0.4999999999999999) :+ 0.0
+--   , 0.4999999999999999 :+ 0.0, (-0.4999999999999999) :+ 0.0, (-0.4999999999999999) :+ 0.0,    0.4999999999999999 :+ 0.0 ]}
+--   </pre>
+(<*>) :: GateOperations a => a -> a -> a
+instance Operations.QuantumOperations.QubitOperations Quantum.Qubits.Qubit
+instance Operations.QuantumOperations.GateOperations Quantum.Gates.Gate
+
+module Core.MeasureProcessInternal
+startMeasurementProcess :: Qubit -> Qubit
 
 
 -- | <ul>
 --   <li>Module : MeasurementPerformer</li>
 --   <li>Description : Definition of qubit measure function</li>
---   <li>Copyright : (c) Mihai Sebastian Ardelean, 2017</li>
+--   <li>Copyright : (c) Mihai Sebastian Ardelean, 2018</li>
 --   <li>License : BSD3</li>
 --   <li>Maintainer : ardeleanasm@gmail.com</li>
 --   <li>Portability : POSIX</li>
 --   </ul>
-module MeasurementPerformer
+module Quantum.MeasurementPerformer
+
+-- | Class MeasurementPerformer used to define measure operation that can
+--   be made with <a>Qubit</a>
+class MeasurementPerformer a
 
 -- | <ul>
 --   <li>measure function is used to perform qubit measurement</li>
@@ -286,9 +320,23 @@ module MeasurementPerformer
 --   <pre>
 --   &gt;&gt;&gt; measure circuit
 --   Qubit {qubitState = (4&gt;&lt;1)
---   [ 0.0 :+ 0.0
---   , 1.0 :+ 0.0
---   , 0.0 :+ 0.0
---   , 0.0 :+ 0.0 ]}
+--     [ 0.0 :+ 0.0
+--     , 1.0 :+ 0.0
+--     , 0.0 :+ 0.0
+--     , 0.0 :+ 0.0 ]}
 --   </pre>
-measure :: Qubit -> Qubit
+measure :: MeasurementPerformer a => a -> a
+instance Quantum.MeasurementPerformer.MeasurementPerformer Quantum.Qubits.Qubit
+
+
+-- | <ul>
+--   <li>Module : QC</li>
+--   <li>Description : Quantum Computing</li>
+--   <li>Copyright : (c) Mihai Sebastian Ardelean, 2018</li>
+--   <li>License : BSD3</li>
+--   <li>Maintainer : ardeleanasm@gmail.com</li>
+--   <li>Portability : POSIX</li>
+--   </ul>
+--   
+--   This module is used to import needed modules for Quantum Computing.
+module QC
