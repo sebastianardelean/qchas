@@ -33,9 +33,9 @@ function copy_documentation(){
     rm docs/*.*
     rm -r docs/src
     #copy new documentation
-    cp -r .stack-work/install/x86_64-linux-nopie/lts-8.23/8.0.2/doc/qchas-$NEW_VERSION/*.* docs/
+    cp -r .stack-work/install/x86_64-linux/lts-12.4/8.4.3/doc/qchas-$NEW_VERSION/*.* docs/
     mkdir docs/src
-    cp -r .stack-work/install/x86_64-linux-nopie/lts-8.23/8.0.2/doc/qchas-$NEW_VERSION/src/*.* docs/src
+    cp -r .stack-work/install/x86_64-linux/lts-12.4/8.4.3/doc/qchas-$NEW_VERSION/src/*.* docs/src
 
     }
 

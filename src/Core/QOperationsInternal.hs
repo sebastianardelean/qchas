@@ -6,7 +6,7 @@ module Core.QOperationsInternal
     , multiply
     , kron
   )where
-
+import Prelude hiding ( (<>) )
 import Numeric.LinearAlgebra hiding ( (|>) )
 import Quantum.Qubits
 import Quantum.Gates
