@@ -6,23 +6,23 @@
  -Maintainer  : ardeleanasm@gmail.com
  -Portability : POSIX
  -}</span><span>
-</span><a name="line-9"></a><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Quantum</span><span class="hs-operator">.</span><span class="hs-identifier">MeasurementPerformer</span><span>
+</span><a name="line-9"></a><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Quantum.MeasurementPerformer</span><span>
 </span><a name="line-10"></a><span>    </span><span class="hs-special">(</span><span>
 </span><a name="line-11"></a><span>      </span><a href="Quantum.MeasurementPerformer.html#MeasurementPerformer"><span class="hs-identifier hs-type">MeasurementPerformer</span></a><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
-</span><a name="line-12"></a><span>    </span><span class="hs-special">)</span><span> </span><span>
+</span><a name="line-12"></a><span>    </span><span class="hs-special">)</span><span>
 </span><a name="line-13"></a><span>    </span><span class="hs-keyword">where</span><span>
 </span><a name="line-14"></a><span>
-</span><a name="line-15"></a><span class="hs-keyword">import</span><span> </span><span class="hs-identifier">Numeric</span><span class="hs-operator">.</span><span class="hs-identifier">LinearAlgebra</span><span> </span><span class="hs-comment">--hiding ( (|&gt;) )</span><span>
+</span><a name="line-15"></a><span class="hs-keyword">import</span><span> </span><span class="hs-identifier">Numeric.LinearAlgebra</span><span> </span><span class="hs-comment">--hiding ( (|&gt;) )</span><span>
 </span><a name="line-16"></a><span class="hs-keyword">import</span><span> </span><span class="hs-identifier">Prelude</span><span> </span><span class="hs-comment">--hiding ((&lt;*&gt;),(&lt;+&gt;))</span><span>
-</span><a name="line-17"></a><span class="hs-keyword">import</span><span> </span><span class="hs-identifier">System</span><span class="hs-operator">.</span><span class="hs-identifier">Random</span><span>
-</span><a name="line-18"></a><span class="hs-keyword">import</span><span> </span><span class="hs-identifier">Data</span><span class="hs-operator">.</span><span class="hs-identifier">List</span><span>
+</span><a name="line-17"></a><span class="hs-keyword">import</span><span> </span><span class="hs-identifier">System.Random</span><span>
+</span><a name="line-18"></a><span class="hs-keyword">import</span><span> </span><span class="hs-identifier">Data.List</span><span>
 </span><a name="line-19"></a><span>
-</span><a name="line-20"></a><span class="hs-keyword">import</span><span> </span><a href="Quantum.Qubits.html"><span class="hs-identifier">Quantum</span><span class="hs-operator">.</span><span class="hs-identifier">Qubits</span></a><span>
-</span><a name="line-21"></a><span class="hs-keyword">import</span><span> </span><a href="Quantum.Gates.html"><span class="hs-identifier">Quantum</span><span class="hs-operator">.</span><span class="hs-identifier">Gates</span></a><span>
-</span><a name="line-22"></a><span class="hs-keyword">import</span><span> </span><a href="Core.MeasureProcessInternal.html"><span class="hs-identifier">Core</span><span class="hs-operator">.</span><span class="hs-identifier">MeasureProcessInternal</span></a><span class="hs-special">(</span><a href="Core.MeasureProcessInternal.html#startMeasurementProcess"><span class="hs-identifier hs-var">startMeasurementProcess</span></a><span class="hs-special">)</span><span>
+</span><a name="line-20"></a><span class="hs-keyword">import</span><span> </span><a href="Quantum.Qubits.html"><span class="hs-identifier">Quantum.Qubits</span></a><span>
+</span><a name="line-21"></a><span class="hs-keyword">import</span><span> </span><a href="Quantum.Gates.html"><span class="hs-identifier">Quantum.Gates</span></a><span>
+</span><a name="line-22"></a><span class="hs-keyword">import</span><span> </span><a href="Core.MeasureProcessInternal.html"><span class="hs-identifier">Core.MeasureProcessInternal</span></a><span class="hs-special">(</span><a href="Core.MeasureProcessInternal.html#startMeasurementProcess"><span class="hs-identifier hs-var">startMeasurementProcess</span></a><span class="hs-special">)</span><span>
 </span><a name="line-23"></a><span>
 </span><a name="line-24"></a><span class="hs-comment">-- | Class MeasurementPerformer used to define measure operation that can be made with 'Quantum.Qubits.Qubit'</span><span>
-</span><a name="line-25"></a><span class="hs-keyword">class</span><span> </span><a name="MeasurementPerformer"><a href="Quantum.MeasurementPerformer.html#MeasurementPerformer"><span class="hs-identifier">MeasurementPerformer</span></a></a><span> </span><a name="local-6989586621679055300"><a href="#local-6989586621679055300"><span class="hs-identifier">a</span></a></a><span> </span><span class="hs-keyword">where</span><span>
+</span><a name="line-25"></a><span class="hs-keyword">class</span><span> </span><a name="MeasurementPerformer"><a href="Quantum.MeasurementPerformer.html#MeasurementPerformer"><span class="hs-identifier">MeasurementPerformer</span></a></a><span> </span><a name="local-6989586621679055530"><a href="#local-6989586621679055530"><span class="hs-identifier">a</span></a></a><span> </span><span class="hs-keyword">where</span><span>
 </span><a name="line-26"></a><span>  </span><span class="hs-comment">{-|
   - measure function is used to perform qubit measurement
   
@@ -32,12 +32,12 @@
     , 1.0 :+ 0.0
     , 0.0 :+ 0.0
     , 0.0 :+ 0.0 ]}
- -}</span><span> </span><span>
-</span><a name="line-36"></a><span>  </span><span class="hs-identifier">measure</span><span class="hs-glyph">::</span><a href="#local-6989586621679055300"><span class="hs-identifier hs-type">a</span></a><span class="hs-glyph">-&gt;</span><a href="#local-6989586621679055300"><span class="hs-identifier hs-type">a</span></a><span>
+ -}</span><span>
+</span><a name="line-36"></a><span>  </span><a name="measure"><a href="Quantum.MeasurementPerformer.html#measure"><span class="hs-identifier">measure</span></a></a><span class="hs-glyph">::</span><a href="#local-6989586621679055530"><span class="hs-identifier hs-type">a</span></a><span class="hs-glyph">-&gt;</span><a href="#local-6989586621679055530"><span class="hs-identifier hs-type">a</span></a><span>
 </span><a name="line-37"></a><span>
 </span><a name="line-38"></a><span class="hs-comment">-- | MeasurementPerformer instance for 'Quantum.Qubits.Qubit'</span><span>
 </span><a name="line-39"></a><span class="hs-keyword">instance</span><span> </span><a href="Quantum.MeasurementPerformer.html#MeasurementPerformer"><span class="hs-identifier hs-type">MeasurementPerformer</span></a><span> </span><a href="Quantum.Qubits.html#Qubit"><span class="hs-identifier hs-type">Qubit</span></a><span> </span><span class="hs-keyword">where</span><span>
-</span><a name="line-40"></a><span>  </span><a name="local-8214565720323830210"><a href="Quantum.MeasurementPerformer.html#measure"><span class="hs-identifier">measure</span></a></a><span class="hs-glyph">=</span><a href="Core.MeasureProcessInternal.html#startMeasurementProcess"><span class="hs-identifier hs-var">startMeasurementProcess</span></a><span>
+</span><a name="line-40"></a><span>  </span><a name="local-8214565720323830440"><a href="Quantum.MeasurementPerformer.html#measure"><span class="hs-identifier">measure</span></a></a><span class="hs-glyph">=</span><a href="Core.MeasureProcessInternal.html#startMeasurementProcess"><span class="hs-identifier hs-var">startMeasurementProcess</span></a><span>
 </span><a name="line-41"></a><span>
 </span><a name="line-42"></a><span>
 </span><a name="line-43"></a><span>

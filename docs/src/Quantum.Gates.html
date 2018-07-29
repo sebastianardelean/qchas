@@ -7,7 +7,7 @@
  -Portability : POSIX
  -}</span><span>
 </span><a name="line-9"></a><span>
-</span><a name="line-10"></a><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Quantum</span><span class="hs-operator">.</span><span class="hs-identifier">Gates</span><span>
+</span><a name="line-10"></a><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Quantum.Gates</span><span>
 </span><a name="line-11"></a><span>    </span><span class="hs-special">(</span><span>
 </span><a name="line-12"></a><span>        </span><a href="Quantum.Gates.html#xGate"><span class="hs-identifier hs-var">xGate</span></a><span>
 </span><a name="line-13"></a><span>      </span><span class="hs-special">,</span><span> </span><a href="Quantum.Gates.html#yGate"><span class="hs-identifier hs-var">yGate</span></a><span>
@@ -22,7 +22,7 @@
 </span><a name="line-22"></a><span>    </span><span class="hs-special">)</span><span class="hs-keyword">where</span><span>
 </span><a name="line-23"></a><span>
 </span><a name="line-24"></a><span>
-</span><a name="line-25"></a><span class="hs-keyword">import</span><span> </span><span class="hs-identifier">Numeric</span><span class="hs-operator">.</span><span class="hs-identifier">LinearAlgebra</span><span>
+</span><a name="line-25"></a><span class="hs-keyword">import</span><span> </span><span class="hs-identifier">Numeric.LinearAlgebra</span><span>
 </span><a name="line-26"></a><span class="hs-keyword">import</span><span> </span><span class="hs-identifier">Prelude</span><span> </span><span class="hs-comment">--hiding ((&lt;*&gt;),(&lt;+&gt;))</span><span>
 </span><a name="line-27"></a><span>
 </span><a name="line-28"></a><span class="hs-keyword">newtype</span><span> </span><a name="Gate"><a href="Quantum.Gates.html#Gate"><span class="hs-identifier">Gate</span></a></a><span class="hs-glyph">=</span><span>
@@ -40,7 +40,7 @@
  -}</span><span>
 </span><a name="line-41"></a><span class="hs-identifier">xGate</span><span class="hs-glyph">::</span><a href="Quantum.Gates.html#Gate"><span class="hs-identifier hs-type">Gate</span></a><span>
 </span><a name="line-42"></a><a name="xGate"><a href="Quantum.Gates.html#xGate"><span class="hs-identifier">xGate</span></a></a><span class="hs-glyph">=</span><a href="Quantum.Gates.html#Gate"><span class="hs-identifier hs-var">Gate</span></a><span> </span><span class="hs-special">(</span><span class="hs-special">(</span><span class="hs-number">2</span><span class="hs-operator hs-var">&gt;&lt;</span><span class="hs-number">2</span><span class="hs-special">)</span><span class="hs-special">[</span><span class="hs-number">0</span><span class="hs-special">,</span><span class="hs-number">1</span><span class="hs-special">,</span><span class="hs-number">1</span><span class="hs-special">,</span><span class="hs-number">0</span><span class="hs-special">]</span><span class="hs-glyph">::</span><span class="hs-identifier hs-type">Matrix</span><span> </span><span class="hs-identifier hs-type">C</span><span class="hs-special">)</span><span>
-</span><a name="line-43"></a><span>    </span><span>
+</span><a name="line-43"></a><span>
 </span><a name="line-44"></a><span class="hs-comment">{-|
  -  yGate function represent a Pauli Y-Gate
  
@@ -85,7 +85,7 @@
 </span><a name="line-85"></a><span class="hs-identifier">hGate</span><span class="hs-glyph">::</span><a href="Quantum.Gates.html#Gate"><span class="hs-identifier hs-type">Gate</span></a><span>
 </span><a name="line-86"></a><a name="hGate"><a href="Quantum.Gates.html#hGate"><span class="hs-identifier">hGate</span></a></a><span class="hs-glyph">=</span><a href="Quantum.Gates.html#Gate"><span class="hs-identifier hs-var">Gate</span></a><span> </span><span class="hs-special">(</span><span class="hs-special">(</span><span class="hs-number">2</span><span class="hs-operator hs-var">&gt;&lt;</span><span class="hs-number">2</span><span class="hs-special">)</span><span> </span><span class="hs-special">[</span><span class="hs-number">1</span><span class="hs-operator hs-var">/</span><span class="hs-identifier hs-var">sqrt</span><span> </span><span class="hs-number">2</span><span class="hs-special">,</span><span class="hs-number">1</span><span class="hs-operator hs-var">/</span><span class="hs-identifier hs-var">sqrt</span><span> </span><span class="hs-number">2</span><span class="hs-special">,</span><span class="hs-number">1</span><span class="hs-operator hs-var">/</span><span class="hs-identifier hs-var">sqrt</span><span> </span><span class="hs-number">2</span><span class="hs-special">,</span><span class="hs-special">(</span><span class="hs-glyph">-</span><span class="hs-number">1</span><span class="hs-special">)</span><span class="hs-operator hs-var">/</span><span class="hs-identifier hs-var">sqrt</span><span> </span><span class="hs-number">2</span><span class="hs-special">]</span><span class="hs-glyph">::</span><span class="hs-identifier hs-type">Matrix</span><span> </span><span class="hs-identifier hs-type">C</span><span class="hs-special">)</span><span>
 </span><a name="line-87"></a><span>
-</span><a name="line-88"></a><span>    </span><span>
+</span><a name="line-88"></a><span>
 </span><a name="line-89"></a><span class="hs-comment">{-|
  -  cPhaseShifGate function represent a Controlled Phase-Shift Gate
  
@@ -124,7 +124,7 @@
  , 0.0 :+ 0.0, 1.0 :+ 0.0, 0.0 :+ 0.0, 0.0 :+ 0.0
  , 0.0 :+ 0.0, 0.0 :+ 0.0, 0.0 :+ 0.0, 1.0 :+ 0.0 ]
  -}</span><span>
-</span><a name="line-127"></a><span class="hs-identifier">swapGate</span><span class="hs-glyph">::</span><a href="Quantum.Gates.html#Gate"><span class="hs-identifier hs-type">Gate</span></a><span> </span><span>
+</span><a name="line-127"></a><span class="hs-identifier">swapGate</span><span class="hs-glyph">::</span><a href="Quantum.Gates.html#Gate"><span class="hs-identifier hs-type">Gate</span></a><span>
 </span><a name="line-128"></a><a name="swapGate"><a href="Quantum.Gates.html#swapGate"><span class="hs-identifier">swapGate</span></a></a><span class="hs-glyph">=</span><a href="Quantum.Gates.html#Gate"><span class="hs-identifier hs-var">Gate</span></a><span> </span><span class="hs-special">(</span><span class="hs-special">(</span><span class="hs-number">4</span><span class="hs-operator hs-var">&gt;&lt;</span><span class="hs-number">4</span><span class="hs-special">)</span><span class="hs-special">[</span><span class="hs-number">1</span><span class="hs-special">,</span><span class="hs-number">0</span><span class="hs-special">,</span><span class="hs-number">0</span><span class="hs-special">,</span><span class="hs-number">0</span><span class="hs-special">,</span><span class="hs-number">0</span><span class="hs-special">,</span><span class="hs-number">0</span><span class="hs-special">,</span><span class="hs-number">1</span><span class="hs-special">,</span><span class="hs-number">0</span><span class="hs-special">,</span><span class="hs-number">0</span><span class="hs-special">,</span><span class="hs-number">1</span><span class="hs-special">,</span><span class="hs-number">0</span><span class="hs-special">,</span><span class="hs-number">0</span><span class="hs-special">,</span><span class="hs-number">0</span><span class="hs-special">,</span><span class="hs-number">0</span><span class="hs-special">,</span><span class="hs-number">0</span><span class="hs-special">,</span><span class="hs-number">1</span><span class="hs-special">]</span><span class="hs-glyph">::</span><span class="hs-identifier hs-type">Matrix</span><span> </span><span class="hs-identifier hs-type">C</span><span class="hs-special">)</span><span>
 </span><a name="line-129"></a><span>
 </span><a name="line-130"></a><span>

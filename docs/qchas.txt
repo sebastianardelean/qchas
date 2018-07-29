@@ -7,7 +7,7 @@
 --   A library useful for implementing Quantum Algorithms. It contains
 --   definitions of Quantum Gates, Qubits.
 @package qchas
-@version 1.1.0.0
+@version 1.1.0.1
 
 
 -- | <ul>
@@ -292,8 +292,8 @@ class GateOperations a
 --   , 0.4999999999999999 :+ 0.0, (-0.4999999999999999) :+ 0.0, (-0.4999999999999999) :+ 0.0,    0.4999999999999999 :+ 0.0 ]}
 --   </pre>
 (<*>) :: GateOperations a => a -> a -> a
-instance Operations.QuantumOperations.QubitOperations Quantum.Qubits.Qubit
 instance Operations.QuantumOperations.GateOperations Quantum.Gates.Gate
+instance Operations.QuantumOperations.QubitOperations Quantum.Qubits.Qubit
 
 module Core.MeasureProcessInternal
 startMeasurementProcess :: Qubit -> Qubit
@@ -340,3 +340,1900 @@ instance Quantum.MeasurementPerformer.MeasurementPerformer Quantum.Qubits.Qubit
 --   
 --   This module is used to import needed modules for Quantum Computing.
 module QC
+
+-- | The phase of a complex number, in the range <tt>(-<a>pi</a>,
+--   <a>pi</a>]</tt>. If the magnitude is zero, then so is the phase.
+phase :: RealFloat a => Complex a -> a
+
+-- | The nonnegative magnitude of a complex number.
+magnitude :: RealFloat a => Complex a -> a
+
+-- | The function <a>polar</a> takes a complex number and returns a
+--   (magnitude, phase) pair in canonical form: the magnitude is
+--   nonnegative, and the phase in the range <tt>(-<a>pi</a>,
+--   <a>pi</a>]</tt>; if the magnitude is zero, then so is the phase.
+polar :: RealFloat a => Complex a -> (a, a)
+
+-- | <tt><a>cis</a> t</tt> is a complex value with magnitude <tt>1</tt> and
+--   phase <tt>t</tt> (modulo <tt>2*<a>pi</a></tt>).
+cis :: Floating a => a -> Complex a
+
+-- | Form a complex number from polar components of magnitude and phase.
+mkPolar :: Floating a => a -> a -> Complex a
+
+-- | The conjugate of a complex number.
+conjugate :: Num a => Complex a -> Complex a
+
+-- | Extracts the imaginary part of a complex number.
+imagPart :: () => Complex a -> a
+
+-- | Extracts the real part of a complex number.
+realPart :: () => Complex a -> a
+
+-- | Complex numbers are an algebraic type.
+--   
+--   For a complex number <tt>z</tt>, <tt><a>abs</a> z</tt> is a number
+--   with the magnitude of <tt>z</tt>, but oriented in the positive real
+--   direction, whereas <tt><a>signum</a> z</tt> has the phase of
+--   <tt>z</tt>, but unit magnitude.
+--   
+--   The <a>Foldable</a> and <a>Traversable</a> instances traverse the real
+--   part first.
+data Complex a
+
+-- | forms a complex number from its real and imaginary rectangular
+--   components.
+(:+) :: !a -> !a -> Complex a
+
+-- | return an orthonormal basis of the range space of a matrix. See also
+--   <a>orthSVD</a>.
+orth :: Field t => Matrix t -> Matrix t
+
+-- | return an orthonormal basis of the null space of a matrix. See also
+--   <a>nullspaceSVD</a>.
+nullspace :: Field t => Matrix t -> Matrix t
+
+-- | Solve a linear system (for square coefficient matrix and several
+--   right-hand sides) using the LU decomposition, returning Nothing for a
+--   singular system. For underconstrained or overconstrained systems use
+--   <a>linearSolveLS</a> or <a>linearSolveSVD</a>.
+--   
+--   <pre>
+--   a = (2&gt;&lt;2)
+--    [ 1.0, 2.0
+--    , 3.0, 5.0 ]
+--   </pre>
+--   
+--   <pre>
+--   b = (2&gt;&lt;3)
+--    [  6.0, 1.0, 10.0
+--    , 15.0, 3.0, 26.0 ]
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; linearSolve a b
+--   Just (2&gt;&lt;3)
+--    [ -1.4802973661668753e-15,     0.9999999999999997, 1.999999999999997
+--    ,       3.000000000000001, 1.6653345369377348e-16, 4.000000000000002 ]
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; let Just x = it
+--   
+--   &gt;&gt;&gt; disp 5 x
+--   2x3
+--   -0.00000  1.00000  2.00000
+--    3.00000  0.00000  4.00000
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; a &lt;&gt; x
+--   (2&gt;&lt;3)
+--    [  6.0, 1.0, 10.0
+--    , 15.0, 3.0, 26.0 ]
+--   </pre>
+linearSolve :: Field t => Matrix t -> Matrix t -> Maybe Matrix t
+
+-- | dense matrix product
+--   
+--   <pre>
+--   &gt;&gt;&gt; let a = (3&gt;&lt;5) [1..]
+--   
+--   &gt;&gt;&gt; a
+--   (3&gt;&lt;5)
+--    [  1.0,  2.0,  3.0,  4.0,  5.0
+--    ,  6.0,  7.0,  8.0,  9.0, 10.0
+--    , 11.0, 12.0, 13.0, 14.0, 15.0 ]
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; let b = (5&gt;&lt;2) [1,3, 0,2, -1,5, 7,7, 6,0]
+--   
+--   &gt;&gt;&gt; b
+--   (5&gt;&lt;2)
+--    [  1.0, 3.0
+--    ,  0.0, 2.0
+--    , -1.0, 5.0
+--    ,  7.0, 7.0
+--    ,  6.0, 0.0 ]
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; a &lt;&gt; b
+--   (3&gt;&lt;2)
+--    [  56.0,  50.0
+--    , 121.0, 135.0
+--    , 186.0, 220.0 ]
+--   </pre>
+(<>) :: Numeric t => Matrix t -> Matrix t -> Matrix t
+infixr 8 <>
+
+-- | Solve a sparse linear system using the conjugate gradient method with
+--   default parameters.
+cgSolve' :: Bool -> R -> R -> Int -> GMatrix -> Vector R -> Vector R -> [CGState]
+
+-- | Solve a sparse linear system using the conjugate gradient method with
+--   default parameters.
+cgSolve :: Bool -> GMatrix -> Vector R -> Vector R
+data CGState
+CGState :: Vector R -> Vector R -> R -> Vector R -> R -> CGState
+
+-- | conjugate gradient
+[cgp] :: CGState -> Vector R
+
+-- | residual
+[cgr] :: CGState -> Vector R
+
+-- | squared norm of residual
+[cgr2] :: CGState -> R
+
+-- | current solution
+[cgx] :: CGState -> Vector R
+
+-- | normalized size of correction
+[cgdx] :: CGState -> R
+
+-- | Wrapper with a phantom integer for statically checked modular
+--   arithmetic.
+data Mod (n :: Nat) t
+type (./.) x (n :: Nat) = Mod n x
+
+-- | Experimental implementation of <a>luSolve</a> for any Fractional
+--   element type, including <a>Mod</a> n <a>I</a> and <a>Mod</a> n
+--   <a>Z</a>.
+--   
+--   <pre>
+--   &gt;&gt;&gt; let a = (2&gt;&lt;2) [1,2,3,5] :: Matrix (Z ./. 13)
+--   (2&gt;&lt;2)
+--    [ 1, 2
+--    , 3, 5 ]
+--   
+--   &gt;&gt;&gt; b
+--   (2&gt;&lt;3)
+--    [ 5, 1, 3
+--    , 8, 6, 3 ]
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; luSolve' (luPacked' a) b
+--   (2&gt;&lt;3)
+--    [ 4,  7, 4
+--    , 7, 10, 6 ]
+--   </pre>
+luSolve' :: (Fractional t, Container Vector t) => LU t -> Matrix t -> Matrix t
+
+-- | Experimental implementation of <a>luPacked</a> for any Fractional
+--   element type, including <a>Mod</a> n <a>I</a> and <a>Mod</a> n
+--   <a>Z</a>.
+--   
+--   <pre>
+--   &gt;&gt;&gt; let m = ident 5 + (5&gt;&lt;5) [0..] :: Matrix (Z ./. 17)
+--   (5&gt;&lt;5)
+--    [  1,  1,  2,  3,  4
+--    ,  5,  7,  7,  8,  9
+--    , 10, 11, 13, 13, 14
+--    , 15, 16,  0,  2,  2
+--    ,  3,  4,  5,  6,  8 ]
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; let (l,u,p,s) = luFact $ luPacked' m
+--   
+--   &gt;&gt;&gt; l
+--   (5&gt;&lt;5)
+--    [  1,  0, 0,  0, 0
+--    ,  6,  1, 0,  0, 0
+--    , 12,  7, 1,  0, 0
+--    ,  7, 10, 7,  1, 0
+--    ,  8,  2, 6, 11, 1 ]
+--   
+--   &gt;&gt;&gt; u
+--   (5&gt;&lt;5)
+--    [ 15, 16,  0,  2,  2
+--    ,  0, 13,  7, 13, 14
+--    ,  0,  0, 15,  0, 11
+--    ,  0,  0,  0, 15, 15
+--    ,  0,  0,  0,  0,  1 ]
+--   </pre>
+luPacked' :: (Container Vector t, Fractional t, Normed Vector t, Num Vector t) => Matrix t -> LU t
+dispShort :: Int -> Int -> Int -> Matrix Double -> IO ()
+dispBlanks :: Int -> Matrix Double -> IO ()
+dispDots :: Int -> Matrix Double -> IO ()
+
+-- | solution of overconstrained homogeneous symmetric linear system
+null1sym :: Herm R -> Vector R
+
+-- | solution of overconstrained homogeneous linear system
+null1 :: Matrix R -> Vector R
+
+-- | outer products of rows
+--   
+--   <pre>
+--   &gt;&gt;&gt; a
+--   (3&gt;&lt;2)
+--    [   1.0,   2.0
+--    ,  10.0,  20.0
+--    , 100.0, 200.0 ]
+--   
+--   &gt;&gt;&gt; b
+--   (3&gt;&lt;3)
+--    [ 1.0, 2.0, 3.0
+--    , 4.0, 5.0, 6.0
+--    , 7.0, 8.0, 9.0 ]
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; rowOuters a (b ||| 1)
+--   (3&gt;&lt;8)
+--    [   1.0,   2.0,   3.0,   1.0,    2.0,    4.0,    6.0,   2.0
+--    ,  40.0,  50.0,  60.0,  10.0,   80.0,  100.0,  120.0,  20.0
+--    , 700.0, 800.0, 900.0, 100.0, 1400.0, 1600.0, 1800.0, 200.0 ]
+--   </pre>
+rowOuters :: Matrix Double -> Matrix Double -> Matrix Double
+
+-- | Matrix of pairwise squared distances of row vectors (using the matrix
+--   product trick in blog.smola.org)
+pairwiseD2 :: Matrix Double -> Matrix Double -> Matrix Double
+
+-- | <pre>
+--   &gt;&gt;&gt; size $ vector [1..10]
+--   10
+--   
+--   &gt;&gt;&gt; size $ (2&gt;&lt;5)[1..10::Double]
+--   (2,5)
+--   </pre>
+size :: Container c t => c t -> IndexOf c
+
+-- | Obtains a vector in the same direction with 2-norm=1
+normalize :: (Normed Vector t, Num Vector t, Field t) => Vector t -> Vector t
+
+-- | Check if the absolute value or complex magnitude is greater than a
+--   given threshold
+--   
+--   <pre>
+--   &gt;&gt;&gt; magnit 1E-6 (1E-12 :: R)
+--   False
+--   
+--   &gt;&gt;&gt; magnit 1E-6 (3+iC :: C)
+--   True
+--   
+--   &gt;&gt;&gt; magnit 0 (3 :: I ./. 5)
+--   True
+--   </pre>
+magnit :: (Element t, Normed Vector t) => R -> t -> Bool
+
+-- | Sum of singular values (Schatten p-norm with p=1)
+norm_nuclear :: Field t => Matrix t -> R
+
+-- | Frobenius norm (Schatten p-norm with p=2)
+norm_Frob :: (Normed Vector t, Element t) => Matrix t -> R
+
+-- | cross product (for three-element vectors)
+cross :: Product t => Vector t -> Vector t -> Vector t
+
+-- | extract columns
+--   
+--   (unicode 0x00bf, inverted question mark, Alt-Gr ?)
+--   
+--   <pre>
+--   &gt;&gt;&gt; (3&gt;&lt;4) [1..] ¿ [3,0]
+--   (3&gt;&lt;2)
+--    [  4.0, 1.0
+--    ,  8.0, 5.0
+--    , 12.0, 9.0 ]
+--   </pre>
+(¿) :: Element t => Matrix t -> [Int] -> Matrix t
+infixl 9 ¿
+
+-- | extract rows
+--   
+--   <pre>
+--   &gt;&gt;&gt; (20&gt;&lt;4) [1..] ? [2,1,1]
+--   (3&gt;&lt;4)
+--    [ 9.0, 10.0, 11.0, 12.0
+--    , 5.0,  6.0,  7.0,  8.0
+--    , 5.0,  6.0,  7.0,  8.0 ]
+--   </pre>
+(?) :: Element t => Matrix t -> [Int] -> Matrix t
+infixl 9 ?
+
+-- | create a single column real matrix from a list
+--   
+--   <pre>
+--   &gt;&gt;&gt; col [7,-2,4]
+--   (3&gt;&lt;1)
+--    [  7.0
+--    , -2.0
+--    ,  4.0 ]
+--   </pre>
+col :: [Double] -> Matrix Double
+
+-- | create a single row real matrix from a list
+--   
+--   <pre>
+--   &gt;&gt;&gt; row [2,3,1,8]
+--   (1&gt;&lt;4)
+--    [ 2.0, 3.0, 1.0, 8.0 ]
+--   </pre>
+row :: [Double] -> Matrix Double
+
+-- | vertical concatenation
+(===) :: Element t => Matrix t -> Matrix t -> Matrix t
+infixl 2 ===
+
+-- | horizontal concatenation
+--   
+--   <pre>
+--   &gt;&gt;&gt; ident 3 ||| konst 7 (3,4)
+--   (3&gt;&lt;7)
+--    [ 1.0, 0.0, 0.0, 7.0, 7.0, 7.0, 7.0
+--    , 0.0, 1.0, 0.0, 7.0, 7.0, 7.0, 7.0
+--    , 0.0, 0.0, 1.0, 7.0, 7.0, 7.0, 7.0 ]
+--   </pre>
+(|||) :: Element t => Matrix t -> Matrix t -> Matrix t
+infixl 3 |||
+
+-- | create a real diagonal matrix from a list
+--   
+--   <pre>
+--   &gt;&gt;&gt; diagl [1,2,3]
+--   (3&gt;&lt;3)
+--    [ 1.0, 0.0, 0.0
+--    , 0.0, 2.0, 0.0
+--    , 0.0, 0.0, 3.0 ]
+--   </pre>
+diagl :: [Double] -> Matrix Double
+
+-- | print a real matrix with given number of digits after the decimal
+--   point
+--   
+--   <pre>
+--   &gt;&gt;&gt; disp 5 $ ident 2 / 3
+--   2x2
+--   0.33333  0.00000
+--   0.00000  0.33333
+--   </pre>
+disp :: Int -> Matrix Double -> IO ()
+
+-- | Create a real matrix.
+--   
+--   <pre>
+--   &gt;&gt;&gt; matrix 5 [1..15]
+--   (3&gt;&lt;5)
+--    [  1.0,  2.0,  3.0,  4.0,  5.0
+--    ,  6.0,  7.0,  8.0,  9.0, 10.0
+--    , 11.0, 12.0, 13.0, 14.0, 15.0 ]
+--   </pre>
+matrix :: Int -> [R] -> Matrix R
+
+-- | Create a real vector.
+--   
+--   <pre>
+--   &gt;&gt;&gt; vector [1..5]
+--   fromList [1.0,2.0,3.0,4.0,5.0]
+--   </pre>
+vector :: [R] -> Vector R
+
+-- | imaginary unit
+iC :: C
+
+-- | p-norm for vectors, operator norm for matrices
+class Normed a
+norm_0 :: Normed a => a -> R
+norm_1 :: Normed a => a -> R
+norm_2 :: Normed a => a -> R
+norm_Inf :: Normed a => a -> R
+
+-- | Alternative indexing function.
+--   
+--   <pre>
+--   &gt;&gt;&gt; vector [1..10] ! 3
+--   4.0
+--   </pre>
+--   
+--   On a matrix it gets the k-th row as a vector:
+--   
+--   <pre>
+--   &gt;&gt;&gt; matrix 5 [1..15] ! 1
+--   fromList [6.0,7.0,8.0,9.0,10.0]
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; matrix 5 [1..15] ! 1 ! 3
+--   9.0
+--   </pre>
+class Indexable c t | c -> t, t -> c
+(!) :: Indexable c t => c -> Int -> t
+
+-- | matrix computation implemented as separated vector operations by rows
+--   and columns.
+separable :: Element t => Vector t -> Vector t -> Matrix t -> Matrix t
+
+-- | 2D convolution
+--   
+--   <pre>
+--   &gt;&gt;&gt; disp 5 $ conv2 (konst 1 (3,3)) (ident 10 :: Matrix Double)
+--   12x12
+--   1  1  1  0  0  0  0  0  0  0  0  0
+--   1  2  2  1  0  0  0  0  0  0  0  0
+--   1  2  3  2  1  0  0  0  0  0  0  0
+--   0  1  2  3  2  1  0  0  0  0  0  0
+--   0  0  1  2  3  2  1  0  0  0  0  0
+--   0  0  0  1  2  3  2  1  0  0  0  0
+--   0  0  0  0  1  2  3  2  1  0  0  0
+--   0  0  0  0  0  1  2  3  2  1  0  0
+--   0  0  0  0  0  0  1  2  3  2  1  0
+--   0  0  0  0  0  0  0  1  2  3  2  1
+--   0  0  0  0  0  0  0  0  1  2  2  1
+--   0  0  0  0  0  0  0  0  0  1  1  1
+--   </pre>
+conv2 :: (Num Matrix a, Product a, Container Vector a) => Matrix a -> Matrix a -> Matrix a
+
+-- | 2D correlation (without padding)
+--   
+--   <pre>
+--   &gt;&gt;&gt; disp 5 $ corr2 (konst 1 (3,3)) (ident 10 :: Matrix Double)
+--   8x8
+--   3  2  1  0  0  0  0  0
+--   2  3  2  1  0  0  0  0
+--   1  2  3  2  1  0  0  0
+--   0  1  2  3  2  1  0  0
+--   0  0  1  2  3  2  1  0
+--   0  0  0  1  2  3  2  1
+--   0  0  0  0  1  2  3  2
+--   0  0  0  0  0  1  2  3
+--   </pre>
+corr2 :: Product a => Matrix a -> Matrix a -> Matrix a
+
+-- | similar to <a>corr</a>, using <a>min</a> instead of (*)
+corrMin :: (Container Vector t, RealElement t, Product t) => Vector t -> Vector t -> Vector t
+
+-- | convolution (<a>corr</a> with reversed kernel and padded input,
+--   equivalent to polynomial product)
+--   
+--   <pre>
+--   &gt;&gt;&gt; conv (fromList[1,1]) (fromList [-1,1])
+--   fromList [-1.0,0.0,1.0]
+--   </pre>
+conv :: (Container Vector t, Product t, Num t) => Vector t -> Vector t -> Vector t
+
+-- | correlation
+--   
+--   <pre>
+--   &gt;&gt;&gt; corr (fromList[1,2,3]) (fromList [1..10])
+--   fromList [14.0,20.0,26.0,32.0,38.0,44.0,50.0,56.0]
+--   </pre>
+corr :: (Container Vector t, Product t) => Vector t -> Vector t -> Vector t
+
+-- | Extract elements from positions given in matrices of rows and columns.
+--   
+--   <pre>
+--   &gt;&gt;&gt; r
+--   (3&gt;&lt;3)
+--    [ 1, 1, 1
+--    , 1, 2, 2
+--    , 1, 2, 3 ]
+--   
+--   &gt;&gt;&gt; c
+--   (3&gt;&lt;3)
+--    [ 0, 1, 5
+--    , 2, 2, 1
+--    , 4, 4, 1 ]
+--   
+--   &gt;&gt;&gt; m
+--   (4&gt;&lt;6)
+--    [  0,  1,  2,  3,  4,  5
+--    ,  6,  7,  8,  9, 10, 11
+--    , 12, 13, 14, 15, 16, 17
+--    , 18, 19, 20, 21, 22, 23 ]
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; remap r c m
+--   (3&gt;&lt;3)
+--    [  6,  7, 11
+--    ,  8, 14, 13
+--    , 10, 16, 19 ]
+--   </pre>
+--   
+--   The indexes are autoconformable.
+--   
+--   <pre>
+--   &gt;&gt;&gt; c'
+--   (3&gt;&lt;1)
+--    [ 1
+--    , 2
+--    , 4 ]
+--   
+--   &gt;&gt;&gt; remap r c' m
+--   (3&gt;&lt;3)
+--    [  7,  7,  7
+--    ,  8, 14, 14
+--    , 10, 16, 22 ]
+--   </pre>
+remap :: Element t => Matrix I -> Matrix I -> Matrix t -> Matrix t
+
+-- | <pre>
+--   &gt;&gt;&gt; m &lt;- randn 4 10
+--   
+--   &gt;&gt;&gt; disp 2 m
+--   4x10
+--   -0.31   0.41   0.43  -0.19  -0.17  -0.23  -0.17  -1.04  -0.07  -1.24
+--    0.26   0.19   0.14   0.83  -1.54  -0.09   0.37  -0.63   0.71  -0.50
+--   -0.11  -0.10  -1.29  -1.40  -1.04  -0.89  -0.68   0.35  -1.46   1.86
+--    1.04  -0.29   0.19  -0.75  -2.20  -0.01   1.06   0.11  -2.09  -1.58
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; disp 2 $ m ?? (All, Pos $ sortIndex (m!1))
+--   4x10
+--   -0.17  -1.04  -1.24  -0.23   0.43   0.41  -0.31  -0.17  -0.07  -0.19
+--   -1.54  -0.63  -0.50  -0.09   0.14   0.19   0.26   0.37   0.71   0.83
+--   -1.04   0.35   1.86  -0.89  -1.29  -0.10  -0.11  -0.68  -1.46  -1.40
+--   -2.20   0.11  -1.58  -0.01   0.19  -0.29   1.04   1.06  -2.09  -0.75
+--   </pre>
+sortIndex :: (Ord t, Element t) => Vector t -> Vector I
+sortVector :: (Ord t, Element t) => Vector t -> Vector t
+
+-- | Compute mean vector and covariance matrix of the rows of a matrix.
+--   
+--   <pre>
+--   &gt;&gt;&gt; meanCov $ gaussianSample 666 1000 (fromList[4,5]) (diagl[2,3])
+--   (fromList [4.010341078059521,5.0197204699640405],
+--   (2&gt;&lt;2)
+--    [     1.9862461923890056, -1.0127225830525157e-2
+--    , -1.0127225830525157e-2,     3.0373954915729318 ])
+--   </pre>
+meanCov :: Matrix Double -> (Vector Double, Herm Double)
+optimiseMult :: Monoid Matrix t => [Matrix t] -> Matrix t
+dot :: Numeric t => Vector t -> Vector t -> t
+
+-- | Least squares solution of a linear system, similar to the \ operator
+--   of Matlab/Octave (based on linearSolveSVD)
+--   
+--   <pre>
+--   a = (3&gt;&lt;2)
+--    [ 1.0,  2.0
+--    , 2.0,  4.0
+--    , 2.0, -1.0 ]
+--   </pre>
+--   
+--   <pre>
+--   v = vector [13.0,27.0,1.0]
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; let x = a &lt;\&gt; v
+--   
+--   &gt;&gt;&gt; x
+--   fromList [3.0799999999999996,5.159999999999999]
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; a #&gt; x
+--   fromList [13.399999999999999,26.799999999999997,1.0]
+--   </pre>
+--   
+--   It also admits multiple right-hand sides stored as columns in a
+--   matrix.
+(<\>) :: (LSDiv c, Field t) => Matrix t -> c t -> c t
+infixl 7 <\>
+
+-- | dense vector-matrix product
+(<#) :: Numeric t => Vector t -> Matrix t -> Vector t
+infixl 8 <#
+
+-- | dense matrix-vector product
+--   
+--   <pre>
+--   &gt;&gt;&gt; let m = (2&gt;&lt;3) [1..]
+--   
+--   &gt;&gt;&gt; m
+--   (2&gt;&lt;3)
+--    [ 1.0, 2.0, 3.0
+--    , 4.0, 5.0, 6.0 ]
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; let v = vector [10,20,30]
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; m #&gt; v
+--   fromList [140.0,320.0]
+--   </pre>
+(#>) :: Numeric t => Matrix t -> Vector t -> Vector t
+infixr 8 #>
+
+-- | An infix synonym for <a>dot</a>
+--   
+--   <pre>
+--   &gt;&gt;&gt; vector [1,2,3,4] &lt;.&gt; vector [-2,0,1,1]
+--   5.0
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; let 𝑖 = 0:+1 :: C
+--   
+--   &gt;&gt;&gt; fromList [1+𝑖,1] &lt;.&gt; fromList [1,1+𝑖]
+--   2.0 :+ 0.0
+--   </pre>
+(<.>) :: Numeric t => Vector t -> Vector t -> t
+infixr 8 <.>
+
+-- | Creates a real vector containing a range of values:
+--   
+--   <pre>
+--   &gt;&gt;&gt; linspace 5 (-3,7::Double)
+--   fromList [-3.0,-0.5,2.0,4.5,7.0]@
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; linspace 5 (8,2+i) :: Vector (Complex Double)
+--   fromList [8.0 :+ 0.0,6.5 :+ 0.25,5.0 :+ 0.5,3.5 :+ 0.75,2.0 :+ 1.0]
+--   </pre>
+--   
+--   Logarithmic spacing can be defined as follows:
+--   
+--   <pre>
+--   logspace n (a,b) = 10 ** linspace n (a,b)
+--   </pre>
+linspace :: (Fractional e, Container Vector e) => Int -> (e, e) -> Vector e
+class LSDiv (c :: * -> *)
+class Build d f (c :: * -> *) e | d -> c, c -> d, f -> e, f -> d, f -> c, c e -> f, d e -> f
+
+-- | <pre>
+--   &gt;&gt;&gt; build 5 (**2) :: Vector Double
+--   fromList [0.0,1.0,4.0,9.0,16.0]
+--   </pre>
+--   
+--   Hilbert matrix of order N:
+--   
+--   <pre>
+--   &gt;&gt;&gt; let hilb n = build (n,n) (\i j -&gt; 1/(i+j+1)) :: Matrix Double
+--   
+--   &gt;&gt;&gt; putStr . dispf 2 $ hilb 3
+--   3x3
+--   1.00  0.50  0.33
+--   0.50  0.33  0.25
+--   0.33  0.25  0.20
+--   </pre>
+build :: Build d f c e => d -> f -> c e
+
+-- | pseudorandom matrix with normal elements
+--   
+--   <pre>
+--   &gt;&gt;&gt; disp 3 =&lt;&lt; randn 3 5
+--   3x5
+--   0.386  -1.141   0.491  -0.510   1.512
+--   0.069  -0.919   1.022  -0.181   0.745
+--   0.313  -0.670  -0.097  -1.575  -0.583
+--   </pre>
+randn :: Int -> Int -> IO Matrix Double
+
+-- | pseudorandom matrix with uniform elements between 0 and 1
+rand :: Int -> Int -> IO Matrix Double
+
+-- | Obtains a matrix whose rows are pseudorandom samples from a
+--   multivariate uniform distribution.
+uniformSample :: Seed -> Int -> [(Double, Double)] -> Matrix Double
+
+-- | Obtains a matrix whose rows are pseudorandom samples from a
+--   multivariate Gaussian distribution.
+gaussianSample :: Seed -> Int -> Vector Double -> Herm Double -> Matrix Double
+
+-- | At your own risk, declare that a matrix is complex Hermitian or real
+--   symmetric for usage in <a>chol</a>, <a>eigSH</a>, etc. Only a
+--   triangular part of the matrix will be used.
+trustSym :: () => Matrix t -> Herm t
+
+-- | Compute the contraction <tt>tr x &lt;&gt; x</tt> of a general matrix.
+mTm :: Numeric t => Matrix t -> Herm t
+
+-- | Compute the complex Hermitian or real symmetric part of a square
+--   matrix (<tt>(x + tr x)/2</tt>).
+sym :: Field t => Matrix t -> Herm t
+
+-- | Extract the general matrix from a <a>Herm</a> structure, forgetting
+--   its symmetric or Hermitian property.
+unSym :: () => Herm t -> Matrix t
+
+-- | Generalized symmetric positive definite eigensystem Av = lBv, for A
+--   and B symmetric, B positive definite.
+geigSH :: Field t => Herm t -> Herm t -> (Vector Double, Matrix t)
+relativeError :: Num a => a -> Double -> a -> a -> Double
+
+-- | Compute the explicit LU decomposition from the compact one obtained by
+--   <a>luPacked</a>.
+luFact :: Numeric t => LU t -> (Matrix t, Matrix t, Matrix t, t)
+
+-- | Matrix square root. Currently it uses a simple iterative algorithm
+--   described in Wikipedia. It only works with invertible matrices that
+--   have a real solution.
+--   
+--   <pre>
+--   m = (2&gt;&lt;2) [4,9
+--              ,0,4] :: Matrix Double
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; sqrtm m
+--   (2&gt;&lt;2)
+--    [ 2.0, 2.25
+--    , 0.0,  2.0 ]
+--   </pre>
+--   
+--   For diagonalizable matrices you can try <a>matFunc</a> <tt>sqrt</tt>:
+--   
+--   <pre>
+--   &gt;&gt;&gt; matFunc sqrt ((2&gt;&lt;2) [1,0,0,-1])
+--   (2&gt;&lt;2)
+--    [ 1.0 :+ 0.0, 0.0 :+ 0.0
+--    , 0.0 :+ 0.0, 0.0 :+ 1.0 ]
+--   </pre>
+sqrtm :: Field t => Matrix t -> Matrix t
+
+-- | Matrix exponential. It uses a direct translation of Algorithm 11.3.1
+--   in Golub &amp; Van Loan, based on a scaled Pade approximation.
+expm :: Field t => Matrix t -> Matrix t
+
+-- | Generic matrix functions for diagonalizable matrices. For instance:
+--   
+--   <pre>
+--   logm = matFunc log
+--   </pre>
+matFunc :: Complex Double -> Complex Double -> Matrix Complex Double -> Matrix Complex Double
+
+-- | Number of linearly independent rows or columns. See also <a>ranksv</a>
+rank :: Field t => Matrix t -> Int
+
+-- | Reciprocal of the 2-norm condition number of a matrix, computed from
+--   the singular values.
+rcond :: Field t => Matrix t -> Double
+haussholder :: Field a => a -> Vector a -> Matrix a
+
+-- | The range space a matrix from its precomputed SVD decomposition.
+orthSVD :: Field t => Either Double Int -> Matrix t -> (Matrix t, Vector Double) -> Matrix t
+
+-- | The nullspace of a matrix from its precomputed SVD decomposition.
+nullspaceSVD :: Field t => Either Double Int -> Matrix t -> (Vector Double, Matrix t) -> Matrix t
+
+-- | 1 + 0.5*peps == 1, 1 + 0.6*peps /= 1
+peps :: RealFloat x => x
+
+-- | Numeric rank of a matrix from its singular values.
+ranksv :: Double -> Int -> [Double] -> Int
+
+-- | <tt>pinvTol r</tt> computes the pseudoinverse of a matrix with
+--   tolerance <tt>tol=r*g*eps*(max rows cols)</tt>, where g is the
+--   greatest singular value.
+--   
+--   <pre>
+--   m = (3&gt;&lt;3) [ 1, 0,    0
+--              , 0, 1,    0
+--              , 0, 0, 1e-10] :: Matrix Double
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; pinv m
+--   1. 0.           0.
+--   0. 1.           0.
+--   0. 0. 10000000000.
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; pinvTol 1E8 m
+--   1. 0. 0.
+--   0. 1. 0.
+--   0. 0. 1.
+--   </pre>
+pinvTol :: Field t => Double -> Matrix t -> Matrix t
+
+-- | Pseudoinverse of a general matrix with default tolerance
+--   (<a>pinvTol</a> 1, similar to GNU-Octave).
+pinv :: Field t => Matrix t -> Matrix t
+
+-- | Inverse of a square matrix. See also <a>invlndet</a>.
+inv :: Field t => Matrix t -> Matrix t
+
+-- | Explicit LU factorization of a general matrix.
+--   
+--   If <tt>(l,u,p,s) = lu m</tt> then <tt>m == p &lt;&gt; l &lt;&gt;
+--   u</tt>, where l is lower triangular, u is upper triangular, p is a
+--   permutation matrix and s is the signature of the permutation.
+lu :: Field t => Matrix t -> (Matrix t, Matrix t, Matrix t, t)
+
+-- | Determinant of a square matrix. To avoid possible overflow or
+--   underflow use <a>invlndet</a>.
+det :: Field t => Matrix t -> t
+
+-- | Joint computation of inverse and logarithm of determinant of a square
+--   matrix.
+invlndet :: Field t => Matrix t -> (Matrix t, (t, t))
+
+-- | Similar to <a>chol</a>, but instead of an error (e.g., caused by a
+--   matrix not positive definite) it returns <a>Nothing</a>.
+mbChol :: Field t => Herm t -> Maybe Matrix t
+
+-- | Cholesky factorization of a positive definite hermitian or symmetric
+--   matrix.
+--   
+--   If <tt>c = chol m</tt> then <tt>c</tt> is upper triangular and <tt>m
+--   == tr c &lt;&gt; c</tt>.
+chol :: Field t => Herm t -> Matrix t
+
+-- | Schur factorization.
+--   
+--   If <tt>(u,s) = schur m</tt> then <tt>m == u &lt;&gt; s &lt;&gt; tr
+--   u</tt>, where u is unitary and s is a Shur matrix. A complex Schur
+--   matrix is upper triangular. A real Schur matrix is upper triangular in
+--   2x2 blocks.
+--   
+--   "Anything that the Jordan decomposition can do, the Schur
+--   decomposition can do better!" (Van Loan)
+schur :: Field t => Matrix t -> (Matrix t, Matrix t)
+
+-- | Hessenberg factorization.
+--   
+--   If <tt>(p,h) = hess m</tt> then <tt>m == p &lt;&gt; h &lt;&gt; tr
+--   p</tt>, where p is unitary and h is in upper Hessenberg form (it has
+--   zero entries below the first subdiagonal).
+hess :: Field t => Matrix t -> (Matrix t, Matrix t)
+
+-- | A version of <a>rq</a> which returns only the <tt>min (rows m) (cols
+--   m)</tt> columns of <tt>r</tt> and rows of <tt>q</tt>.
+thinRQ :: Field t => Matrix t -> (Matrix t, Matrix t)
+
+-- | RQ factorization.
+--   
+--   If <tt>(r,q) = rq m</tt> then <tt>m == r &lt;&gt; q</tt>, where q is
+--   unitary and r is upper triangular. Note: the current implementation is
+--   very slow for large matrices. <a>thinRQ</a> is much faster.
+rq :: Field t => Matrix t -> (Matrix t, Matrix t)
+
+-- | generate a matrix with k orthogonal columns from the compact QR
+--   decomposition obtained by <a>qrRaw</a>.
+qrgr :: Field t => Int -> QR t -> Matrix t
+
+-- | Compute the QR decomposition of a matrix in compact form.
+qrRaw :: Field t => Matrix t -> QR t
+
+-- | A version of <a>qr</a> which returns only the <tt>min (rows m) (cols
+--   m)</tt> columns of <tt>q</tt> and rows of <tt>r</tt>.
+thinQR :: Field t => Matrix t -> (Matrix t, Matrix t)
+
+-- | QR factorization.
+--   
+--   If <tt>(q,r) = qr m</tt> then <tt>m == q &lt;&gt; r</tt>, where q is
+--   unitary and r is upper triangular. Note: the current implementation is
+--   very slow for large matrices. <a>thinQR</a> is much faster.
+qr :: Field t => Matrix t -> (Matrix t, Matrix t)
+
+-- | Eigenvalues (in descending order) of a complex hermitian or real
+--   symmetric matrix.
+eigenvaluesSH :: Field t => Herm t -> Vector Double
+
+-- | Eigenvalues and eigenvectors (as columns) of a complex hermitian or
+--   real symmetric matrix, in descending order.
+--   
+--   If <tt>(s,v) = eigSH m</tt> then <tt>m == v &lt;&gt; diag s &lt;&gt;
+--   tr v</tt>
+--   
+--   <pre>
+--   a = (3&gt;&lt;3)
+--    [ 1.0, 2.0, 3.0
+--    , 2.0, 4.0, 5.0
+--    , 3.0, 5.0, 6.0 ]
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; let (l, v) = eigSH a
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; l
+--   fromList [11.344814282762075,0.17091518882717918,-0.5157294715892575]
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; disp 3 $ v &lt;&gt; diag l &lt;&gt; tr v
+--   3x3
+--   1.000  2.000  3.000
+--   2.000  4.000  5.000
+--   3.000  5.000  6.000
+--   </pre>
+eigSH :: Field t => Herm t -> (Vector Double, Matrix t)
+
+-- | Eigenvalues (not ordered) of a general square matrix.
+eigenvalues :: Field t => Matrix t -> Vector Complex Double
+
+-- | Eigenvalues (not ordered) and eigenvectors (as columns) of a general
+--   square matrix.
+--   
+--   If <tt>(s,v) = eig m</tt> then <tt>m &lt;&gt; v == v &lt;&gt; diag
+--   s</tt>
+--   
+--   <pre>
+--   a = (3&gt;&lt;3)
+--    [ 3, 0, -2
+--    , 4, 5, -1
+--    , 3, 1,  0 ] :: Matrix Double
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; let (l, v) = eig a
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; putStr . dispcf 3 . asRow $ l
+--   1x3
+--   1.925+1.523i  1.925-1.523i  4.151
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; putStr . dispcf 3 $ v
+--   3x3
+--   -0.455+0.365i  -0.455-0.365i   0.181
+--           0.603          0.603  -0.978
+--    0.033+0.543i   0.033-0.543i  -0.104
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; putStr . dispcf 3 $ complex a &lt;&gt; v
+--   3x3
+--   -1.432+0.010i  -1.432-0.010i   0.753
+--    1.160+0.918i   1.160-0.918i  -4.059
+--   -0.763+1.096i  -0.763-1.096i  -0.433
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; putStr . dispcf 3 $ v &lt;&gt; diag l
+--   3x3
+--   -1.432+0.010i  -1.432-0.010i   0.753
+--    1.160+0.918i   1.160-0.918i  -4.059
+--   -0.763+1.096i  -0.763-1.096i  -0.433
+--   </pre>
+eig :: Field t => Matrix t -> (Vector Complex Double, Matrix Complex Double)
+
+-- | Solution of a linear system (for several right hand sides) from a
+--   precomputed LDL factorization obtained by <a>ldlPacked</a>.
+--   
+--   Note: this can be slower than the general solver based on the LU
+--   decomposition.
+ldlSolve :: Field t => LDL t -> Matrix t -> Matrix t
+
+-- | Obtains the LDL decomposition of a matrix in a compact data structure
+--   suitable for <a>ldlSolve</a>.
+ldlPacked :: Field t => Herm t -> LDL t
+
+-- | Least squared error solution of an overconstrained linear system, or
+--   the minimum norm solution of an underconstrained system. For
+--   rank-deficient systems use <a>linearSolveSVD</a>.
+linearSolveLS :: Field t => Matrix t -> Matrix t -> Matrix t
+
+-- | Minimum norm solution of a general linear least squares problem Ax=B
+--   using the SVD. Admits rank-deficient systems but it is slower than
+--   <a>linearSolveLS</a>. The effective rank of A is determined by
+--   treating as zero those singular valures which are less than <a>eps</a>
+--   times the largest singular value.
+linearSolveSVD :: Field t => Matrix t -> Matrix t -> Matrix t
+
+-- | Solve a tridiagonal linear system. Suppose you wish to solve
+--   &lt;math&gt; where
+--   
+--   &lt;math&gt;
+--   
+--   then
+--   
+--   <pre>
+--   dL =  fromList [3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0]
+--   d  =  fromList [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+--   dU =  fromList [4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0]
+--   
+--   b = (9&gt;&lt;3)
+--       [
+--         1.0,   1.0,   1.0,
+--         1.0,  -1.0,   2.0,
+--         1.0,   1.0,   3.0,
+--         1.0,  -1.0,   4.0,
+--         1.0,   1.0,   5.0,
+--         1.0,  -1.0,   6.0,
+--         1.0,   1.0,   7.0,
+--         1.0,  -1.0,   8.0,
+--         1.0,   1.0,   9.0
+--       ]
+--   
+--   x = triDiagSolve dL d dU b
+--   </pre>
+triDiagSolve :: Field t => Vector t -> Vector t -> Vector t -> Matrix t -> Matrix t
+
+-- | Solve a triangular linear system. If <a>Upper</a> is specified then
+--   all elements below the diagonal are ignored; if <a>Lower</a> is
+--   specified then all elements above the diagonal are ignored.
+triSolve :: Field t => UpLo -> Matrix t -> Matrix t -> Matrix t
+
+-- | Solve a symmetric or Hermitian positive definite linear system using a
+--   precomputed Cholesky decomposition obtained by <a>chol</a>.
+cholSolve :: Field t => Matrix t -> Matrix t -> Matrix t
+
+-- | Solution of a linear system (for several right hand sides) from the
+--   precomputed LU factorization obtained by <a>luPacked</a>.
+luSolve :: Field t => LU t -> Matrix t -> Matrix t
+
+-- | Obtains the LU decomposition of a matrix in a compact data structure
+--   suitable for <a>luSolve</a>.
+luPacked :: Field t => Matrix t -> LU t
+
+-- | Singular values and all left singular vectors (as columns).
+leftSV :: Field t => Matrix t -> (Matrix t, Vector Double)
+
+-- | Singular values and all right singular vectors (as columns).
+rightSV :: Field t => Matrix t -> (Vector Double, Matrix t)
+
+-- | <tt>compactSVDTol r</tt> is similar to <a>compactSVD</a> (for which
+--   <tt>r=1</tt>), but uses tolerance <tt>tol=r*g*eps*(max rows cols)</tt>
+--   to distinguish nonzero singular values, where <tt>g</tt> is the
+--   greatest singular value. If <tt>g&lt;r*eps</tt>, then only one
+--   singular value is returned.
+compactSVDTol :: Field t => Double -> Matrix t -> (Matrix t, Vector Double, Matrix t)
+
+-- | Similar to <a>thinSVD</a>, returning only the nonzero singular values
+--   and the corresponding singular vectors.
+--   
+--   <pre>
+--   a = (5&gt;&lt;3)
+--    [  1.0,  2.0,  3.0
+--    ,  4.0,  5.0,  6.0
+--    ,  7.0,  8.0,  9.0
+--    , 10.0, 11.0, 12.0
+--    , 13.0, 14.0, 15.0 ] :: Matrix Double
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; let (u,s,v) = compactSVD a
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; disp 3 u
+--   5x2
+--   -0.101   0.768
+--   -0.249   0.488
+--   -0.396   0.208
+--   -0.543  -0.072
+--   -0.690  -0.352
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; s
+--   fromList [35.18264833189422,1.4769076999800903]
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; disp 3 u
+--   5x2
+--   -0.101   0.768
+--   -0.249   0.488
+--   -0.396   0.208
+--   -0.543  -0.072
+--   -0.690  -0.352
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; disp 3 $ u &lt;&gt; diag s &lt;&gt; tr v
+--   5x3
+--    1.000   2.000   3.000
+--    4.000   5.000   6.000
+--    7.000   8.000   9.000
+--   10.000  11.000  12.000
+--   13.000  14.000  15.000
+--   </pre>
+compactSVD :: Field t => Matrix t -> (Matrix t, Vector Double, Matrix t)
+
+-- | Singular values only.
+singularValues :: Field t => Matrix t -> Vector Double
+
+-- | A version of <a>svd</a> which returns only the <tt>min (rows m) (cols
+--   m)</tt> singular vectors of <tt>m</tt>.
+--   
+--   If <tt>(u,s,v) = thinSVD m</tt> then <tt>m == u &lt;&gt; diag s
+--   &lt;&gt; tr v</tt>.
+--   
+--   <pre>
+--   a = (5&gt;&lt;3)
+--    [  1.0,  2.0,  3.0
+--    ,  4.0,  5.0,  6.0
+--    ,  7.0,  8.0,  9.0
+--    , 10.0, 11.0, 12.0
+--    , 13.0, 14.0, 15.0 ] :: Matrix Double
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; let (u,s,v) = thinSVD a
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; disp 3 u
+--   5x3
+--   -0.101   0.768   0.614
+--   -0.249   0.488  -0.503
+--   -0.396   0.208  -0.405
+--   -0.543  -0.072  -0.140
+--   -0.690  -0.352   0.433
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; s
+--   fromList [35.18264833189422,1.4769076999800903,1.089145439970417e-15]
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; disp 3 v
+--   3x3
+--   -0.519  -0.751   0.408
+--   -0.576  -0.046  -0.816
+--   -0.632   0.659   0.408
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; disp 3 $ u &lt;&gt; diag s &lt;&gt; tr v
+--   5x3
+--    1.000   2.000   3.000
+--    4.000   5.000   6.000
+--    7.000   8.000   9.000
+--   10.000  11.000  12.000
+--   13.000  14.000  15.000
+--   </pre>
+thinSVD :: Field t => Matrix t -> (Matrix t, Vector Double, Matrix t)
+
+-- | Full singular value decomposition.
+--   
+--   <pre>
+--   a = (5&gt;&lt;3)
+--    [  1.0,  2.0,  3.0
+--    ,  4.0,  5.0,  6.0
+--    ,  7.0,  8.0,  9.0
+--    , 10.0, 11.0, 12.0
+--    , 13.0, 14.0, 15.0 ] :: Matrix Double
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; let (u,s,v) = svd a
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; disp 3 u
+--   5x5
+--   -0.101   0.768   0.614   0.028  -0.149
+--   -0.249   0.488  -0.503   0.172   0.646
+--   -0.396   0.208  -0.405  -0.660  -0.449
+--   -0.543  -0.072  -0.140   0.693  -0.447
+--   -0.690  -0.352   0.433  -0.233   0.398
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; s
+--   fromList [35.18264833189422,1.4769076999800903,1.089145439970417e-15]
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; disp 3 v
+--   3x3
+--   -0.519  -0.751   0.408
+--   -0.576  -0.046  -0.816
+--   -0.632   0.659   0.408
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; let d = diagRect 0 s 5 3
+--   
+--   &gt;&gt;&gt; disp 3 d
+--   5x3
+--   35.183  0.000  0.000
+--    0.000  1.477  0.000
+--    0.000  0.000  0.000
+--    0.000  0.000  0.000
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; disp 3 $ u &lt;&gt; d &lt;&gt; tr v
+--   5x3
+--    1.000   2.000   3.000
+--    4.000   5.000   6.000
+--    7.000   8.000   9.000
+--   10.000  11.000  12.000
+--   13.000  14.000  15.000
+--   </pre>
+svd :: Field t => Matrix t -> (Matrix t, Vector Double, Matrix t)
+
+-- | Generic linear algebra functions for double precision real and complex
+--   matrices.
+--   
+--   (Single precision data can be converted using <a>single</a> and
+--   <a>double</a>).
+class (Numeric t, Convert t, Normed Matrix t, Normed Vector t, Floating t, Linear t Vector, Linear t Matrix, Additive Vector t, Additive Matrix t, RealOf t ~ Double) => Field t
+
+-- | LU decomposition of a matrix in a compact format.
+data LU t
+LU :: Matrix t -> [Int] -> LU t
+
+-- | LDL decomposition of a complex Hermitian or real symmetric matrix in a
+--   compact format.
+data LDL t
+LDL :: Matrix t -> [Int] -> LDL t
+
+-- | QR decomposition of a matrix in compact form. (The orthogonal matrix
+--   is not explicitly formed.)
+data QR t
+QR :: Matrix t -> Vector t -> QR t
+
+-- | A matrix that, by construction, it is known to be complex Hermitian or
+--   real symmetric.
+--   
+--   It can be created using <a>sym</a>, <a>mTm</a>, or <a>trustSym</a>,
+--   and the matrix can be extracted using <a>unSym</a>.
+data Herm t
+toDense :: AssocMatrix -> Matrix Double
+
+-- | general matrix - vector product
+--   
+--   <pre>
+--   &gt;&gt;&gt; let m = mkSparse [((0,999),1.0),((1,1999),2.0)]
+--   
+--   &gt;&gt;&gt; m !#&gt; vector [1..2000]
+--   fromList [1000.0,4000.0]
+--   </pre>
+(!#>) :: GMatrix -> Vector Double -> Vector Double
+infixr 8 !#>
+mkDiagR :: Int -> Int -> Vector Double -> GMatrix
+mkSparse :: AssocMatrix -> GMatrix
+mkDense :: Matrix Double -> GMatrix
+type AssocMatrix = [((Int, Int), Double)]
+
+-- | General matrix with specialized internal representations for dense,
+--   sparse, diagonal, banded, and constant elements.
+--   
+--   <pre>
+--   &gt;&gt;&gt; let m = mkSparse [((0,999),1.0),((1,1999),2.0)]
+--   
+--   &gt;&gt;&gt; m
+--   SparseR {gmCSR = CSR {csrVals = fromList [1.0,2.0],
+--                         csrCols = fromList [1000,2000],
+--                         csrRows = fromList [1,2,3],
+--                         csrNRows = 2,
+--                         csrNCols = 2000},
+--                         nRows = 2,
+--                         nCols = 2000}
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; let m = mkDense (mat 2 [1..4])
+--   
+--   &gt;&gt;&gt; m
+--   Dense {gmDense = (2&gt;&lt;2)
+--    [ 1.0, 2.0
+--    , 3.0, 4.0 ], nRows = 2, nCols = 2}
+--   </pre>
+data GMatrix
+
+-- | creates the identity matrix of given dimension
+ident :: (Num a, Element a) => Int -> Matrix a
+
+-- | Creates a square matrix with a given diagonal.
+diag :: (Num a, Element a) => Vector a -> Matrix a
+
+-- | Kronecker product of two matrices.
+--   
+--   <pre>
+--   m1=(2&gt;&lt;3)
+--    [ 1.0,  2.0, 0.0
+--    , 0.0, -1.0, 3.0 ]
+--   m2=(4&gt;&lt;3)
+--    [  1.0,  2.0,  3.0
+--    ,  4.0,  5.0,  6.0
+--    ,  7.0,  8.0,  9.0
+--    , 10.0, 11.0, 12.0 ]
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; kronecker m1 m2
+--   (8&gt;&lt;9)
+--    [  1.0,  2.0,  3.0,   2.0,   4.0,   6.0,  0.0,  0.0,  0.0
+--    ,  4.0,  5.0,  6.0,   8.0,  10.0,  12.0,  0.0,  0.0,  0.0
+--    ,  7.0,  8.0,  9.0,  14.0,  16.0,  18.0,  0.0,  0.0,  0.0
+--    , 10.0, 11.0, 12.0,  20.0,  22.0,  24.0,  0.0,  0.0,  0.0
+--    ,  0.0,  0.0,  0.0,  -1.0,  -2.0,  -3.0,  3.0,  6.0,  9.0
+--    ,  0.0,  0.0,  0.0,  -4.0,  -5.0,  -6.0, 12.0, 15.0, 18.0
+--    ,  0.0,  0.0,  0.0,  -7.0,  -8.0,  -9.0, 21.0, 24.0, 27.0
+--    ,  0.0,  0.0,  0.0, -10.0, -11.0, -12.0, 30.0, 33.0, 36.0 ]
+--   </pre>
+kronecker :: Product t => Matrix t -> Matrix t -> Matrix t
+
+-- | Outer product of two vectors.
+--   
+--   <pre>
+--   &gt;&gt;&gt; fromList [1,2,3] `outer` fromList [5,2,3]
+--   (3&gt;&lt;3)
+--    [  5.0, 2.0, 3.0
+--    , 10.0, 4.0, 6.0
+--    , 15.0, 6.0, 9.0 ]
+--   </pre>
+outer :: Product t => Vector t -> Vector t -> Matrix t
+
+-- | unconjugated dot product
+udot :: Product e => Vector e -> Vector e -> e
+
+-- | Modify a structure using an update function
+--   
+--   <pre>
+--   &gt;&gt;&gt; accum (ident 5) (+) [((1,1),5),((0,3),3)] :: Matrix Double
+--   (5&gt;&lt;5)
+--    [ 1.0, 0.0, 0.0, 3.0, 0.0
+--    , 0.0, 6.0, 0.0, 0.0, 0.0
+--    , 0.0, 0.0, 1.0, 0.0, 0.0
+--    , 0.0, 0.0, 0.0, 1.0, 0.0
+--    , 0.0, 0.0, 0.0, 0.0, 1.0 ]
+--   </pre>
+--   
+--   computation of histogram:
+--   
+--   <pre>
+--   &gt;&gt;&gt; accum (konst 0 7) (+) (map (flip (,) 1) [4,5,4,1,5,2,5]) :: Vector Double
+--   fromList [0.0,1.0,1.0,0.0,2.0,3.0,0.0]
+--   </pre>
+accum :: Container c e => c e -> e -> e -> e -> [(IndexOf c, e)] -> c e
+
+-- | Create a structure from an association list
+--   
+--   <pre>
+--   &gt;&gt;&gt; assoc 5 0 [(3,7),(1,4)] :: Vector Double
+--   fromList [0.0,4.0,0.0,7.0,0.0]
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; assoc (2,3) 0 [((0,2),7),((1,0),2*i-3)] :: Matrix (Complex Double)
+--   (2&gt;&lt;3)
+--    [    0.0 :+ 0.0, 0.0 :+ 0.0, 7.0 :+ 0.0
+--    , (-3.0) :+ 2.0, 0.0 :+ 0.0, 0.0 :+ 0.0 ]
+--   </pre>
+assoc :: Container c e => IndexOf c -> e -> [(IndexOf c, e)] -> c e
+
+-- | Find index of elements which satisfy a predicate
+--   
+--   <pre>
+--   &gt;&gt;&gt; find (&gt;0) (ident 3 :: Matrix Double)
+--   [(0,0),(1,1),(2,2)]
+--   </pre>
+find :: Container c e => e -> Bool -> c e -> [IndexOf c]
+
+-- | Element by element version of <tt>case compare a b of {LT -&gt; l; EQ
+--   -&gt; e; GT -&gt; g}</tt>.
+--   
+--   Arguments with any dimension = 1 are automatically expanded:
+--   
+--   <pre>
+--   &gt;&gt;&gt; cond ((1&gt;&lt;4)[1..]) ((3&gt;&lt;1)[1..]) 0 100 ((3&gt;&lt;4)[1..]) :: Matrix Double
+--   (3&gt;&lt;4)
+--   [ 100.0,   2.0,   3.0,  4.0
+--   ,   0.0, 100.0,   7.0,  8.0
+--   ,   0.0,   0.0, 100.0, 12.0 ]
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; let chop x = cond (abs x) 1E-6 0 0 x
+--   </pre>
+cond :: (Ord e, Container c e, Container c x) => c e -> c e -> c x -> c x -> c x -> c x
+
+-- | A more efficient implementation of <tt>cmap (\x -&gt; if x&gt;0 then 1
+--   else 0)</tt>
+--   
+--   <pre>
+--   &gt;&gt;&gt; step $ linspace 5 (-1,1::Double)
+--   5 |&gt; [0.0,0.0,0.0,1.0,1.0]
+--   </pre>
+step :: (Ord e, Container c e) => c e -> c e
+
+-- | the product of elements
+prodElements :: Container c e => c e -> e
+
+-- | the sum of elements
+sumElements :: Container c e => c e -> e
+
+-- | value of maximum element
+maxElement :: Container c e => c e -> e
+
+-- | value of minimum element
+minElement :: Container c e => c e -> e
+
+-- | index of maximum element
+maxIndex :: Container c e => c e -> IndexOf c
+
+-- | index of minimum element
+minIndex :: Container c e => c e -> IndexOf c
+
+-- | generic indexing function
+--   
+--   <pre>
+--   &gt;&gt;&gt; vector [1,2,3] `atIndex` 1
+--   2.0
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; matrix 3 [0..8] `atIndex` (2,0)
+--   6.0
+--   </pre>
+atIndex :: Container c e => c e -> IndexOf c -> e
+
+-- | like <a>fmap</a> (cannot implement instance Functor because of Element
+--   class constraint)
+cmap :: (Element b, Container c e) => e -> b -> c e -> c b
+toZ :: Container c e => c e -> c Z
+fromZ :: Container c e => c Z -> c e
+toInt :: Container c e => c e -> c I
+
+-- | <pre>
+--   &gt;&gt;&gt; fromInt ((2&gt;&lt;2) [0..3]) :: Matrix (Complex Double)
+--   (2&gt;&lt;2)
+--   [ 0.0 :+ 0.0, 1.0 :+ 0.0
+--   , 2.0 :+ 0.0, 3.0 :+ 0.0 ]
+--   </pre>
+fromInt :: Container c e => c I -> c e
+
+-- | <a>mod</a> for integer arrays
+--   
+--   <pre>
+--   &gt;&gt;&gt; cmod 3 (range 5)
+--   fromList [0,1,2,0,1]
+--   </pre>
+cmod :: (Integral e, Container c e) => e -> c e -> c e
+arctan2 :: (Fractional e, Container c e) => c e -> c e -> c e
+
+-- | complex conjugate
+conj :: Container c e => c e -> c e
+
+-- | create a structure with a single element
+--   
+--   <pre>
+--   &gt;&gt;&gt; let v = fromList [1..3::Double]
+--   
+--   &gt;&gt;&gt; v / scalar (norm2 v)
+--   fromList [0.2672612419124244,0.5345224838248488,0.8017837257372732]
+--   </pre>
+scalar :: Container c e => e -> c e
+
+-- | Basic element-by-element functions for numeric containers
+class Element e => Container (c :: * -> *) e
+class Konst e d (c :: * -> *) | d -> c, c -> d
+
+-- | <pre>
+--   &gt;&gt;&gt; konst 7 3 :: Vector Float
+--   fromList [7.0,7.0,7.0]
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; konst i (3::Int,4::Int)
+--   (3&gt;&lt;4)
+--    [ 0.0 :+ 1.0, 0.0 :+ 1.0, 0.0 :+ 1.0, 0.0 :+ 1.0
+--    , 0.0 :+ 1.0, 0.0 :+ 1.0, 0.0 :+ 1.0, 0.0 :+ 1.0
+--    , 0.0 :+ 1.0, 0.0 :+ 1.0, 0.0 :+ 1.0, 0.0 :+ 1.0 ]
+--   </pre>
+konst :: Konst e d c => e -> d -> c e
+class (Container Vector t, Container Matrix t, Konst t Int Vector, Konst t (Int, Int) Matrix, CTrans t, Product t, Additive Vector t, Additive Matrix t, Linear t Vector, Linear t Matrix) => Numeric t
+
+-- | Matrix product and related functions
+class (Num e, Element e) => Product e
+class Convert t
+real :: (Convert t, Complexable c) => c RealOf t -> c t
+complex :: (Convert t, Complexable c) => c t -> c ComplexOf t
+single :: (Convert t, Complexable c) => c t -> c SingleOf t
+double :: (Convert t, Complexable c) => c t -> c DoubleOf t
+toComplex :: (Convert t, Complexable c, RealElement t) => (c t, c t) -> c Complex t
+fromComplex :: (Convert t, Complexable c, RealElement t) => c Complex t -> (c t, c t)
+type ComplexOf x = Complex RealOf x
+class Transposable m mt | m -> mt, mt -> m
+
+-- | conjugate transpose
+tr :: Transposable m mt => m -> mt
+
+-- | transpose
+tr' :: Transposable m mt => m -> mt
+class Additive c
+add :: Additive c => c -> c -> c
+class Linear t (c :: * -> *)
+scale :: Linear t c => t -> c t -> c t
+class Testable t
+checkT :: Testable t => t -> (Bool, IO ())
+ioCheckT :: Testable t => t -> IO (Bool, IO ())
+data UpLo
+Lower :: UpLo
+Upper :: UpLo
+
+-- | Supported real types
+class (Element t, Element Complex t, RealFloat t) => RealElement t
+
+-- | Structures that may contain complex numbers
+class Complexable (c :: * -> *)
+
+-- | Fully partition a matrix into blocks of the same size. If the
+--   dimensions are not a multiple of the given size the last blocks will
+--   be smaller.
+toBlocksEvery :: Element t => Int -> Int -> Matrix t -> [[Matrix t]]
+
+-- | Partition a matrix into blocks with the given numbers of rows and
+--   columns. The remaining rows and columns are discarded.
+toBlocks :: Element t => [Int] -> [Int] -> Matrix t -> [[Matrix t]]
+
+-- | creates matrix by repetition of a matrix a given number of rows and
+--   columns
+--   
+--   <pre>
+--   &gt;&gt;&gt; repmat (ident 2) 2 3
+--   (4&gt;&lt;6)
+--    [ 1.0, 0.0, 1.0, 0.0, 1.0, 0.0
+--    , 0.0, 1.0, 0.0, 1.0, 0.0, 1.0
+--    , 1.0, 0.0, 1.0, 0.0, 1.0, 0.0
+--    , 0.0, 1.0, 0.0, 1.0, 0.0, 1.0 ]
+--   </pre>
+repmat :: Element t => Matrix t -> Int -> Int -> Matrix t
+fromArray2D :: Storable e => Array (Int, Int) e -> Matrix e
+
+-- | creates a 1-column matrix from a vector
+--   
+--   <pre>
+--   &gt;&gt;&gt; asColumn (fromList [1..5])
+--   (5&gt;&lt;1)
+--    [ 1.0
+--    , 2.0
+--    , 3.0
+--    , 4.0
+--    , 5.0 ]
+--   </pre>
+asColumn :: Storable a => Vector a -> Matrix a
+
+-- | creates a 1-row matrix from a vector
+--   
+--   <pre>
+--   &gt;&gt;&gt; asRow (fromList [1..5])
+--    (1&gt;&lt;5)
+--     [ 1.0, 2.0, 3.0, 4.0, 5.0 ]
+--   </pre>
+asRow :: Storable a => Vector a -> Matrix a
+
+-- | Creates a <a>Matrix</a> from a list of lists (considered as rows).
+--   
+--   <pre>
+--   &gt;&gt;&gt; fromLists [[1,2],[3,4],[5,6]]
+--   (3&gt;&lt;2)
+--    [ 1.0, 2.0
+--    , 3.0, 4.0
+--    , 5.0, 6.0 ]
+--   </pre>
+fromLists :: Element t => [[t]] -> Matrix t
+dropColumns :: Element t => Int -> Matrix t -> Matrix t
+takeColumns :: Element t => Int -> Matrix t -> Matrix t
+dropRows :: Element t => Int -> Matrix t -> Matrix t
+takeRows :: Element t => Int -> Matrix t -> Matrix t
+
+-- | Create a matrix from a list of elements
+--   
+--   <pre>
+--   &gt;&gt;&gt; (2&gt;&lt;3) [2, 4, 7+2*iC,   -3, 11, 0]
+--   (2&gt;&lt;3)
+--    [       2.0 :+ 0.0,  4.0 :+ 0.0, 7.0 :+ 2.0
+--    , (-3.0) :+ (-0.0), 11.0 :+ 0.0, 0.0 :+ 0.0 ]
+--   </pre>
+--   
+--   The input list is explicitly truncated, so that it can safely be used
+--   with lists that are too long (like infinite lists).
+--   
+--   <pre>
+--   &gt;&gt;&gt; (2&gt;&lt;3)[1..]
+--   (2&gt;&lt;3)
+--    [ 1.0, 2.0, 3.0
+--    , 4.0, 5.0, 6.0 ]
+--   </pre>
+--   
+--   This is the format produced by the instances of Show (Matrix a), which
+--   can also be used for input.
+(><) :: Storable a => Int -> Int -> [a] -> Matrix a
+
+-- | extracts the diagonal from a rectangular matrix
+takeDiag :: Element t => Matrix t -> Vector t
+
+-- | creates a rectangular diagonal matrix:
+--   
+--   <pre>
+--   &gt;&gt;&gt; diagRect 7 (fromList [10,20,30]) 4 5 :: Matrix Double
+--   (4&gt;&lt;5)
+--    [ 10.0,  7.0,  7.0, 7.0, 7.0
+--    ,  7.0, 20.0,  7.0, 7.0, 7.0
+--    ,  7.0,  7.0, 30.0, 7.0, 7.0
+--    ,  7.0,  7.0,  7.0, 7.0, 7.0 ]
+--   </pre>
+diagRect :: Storable t => t -> Vector t -> Int -> Int -> Matrix t
+
+-- | Reverse columns
+fliprl :: Element t => Matrix t -> Matrix t
+
+-- | Reverse rows
+flipud :: Element t => Matrix t -> Matrix t
+
+-- | create a block diagonal matrix
+--   
+--   <pre>
+--   &gt;&gt;&gt; disp 2 $ diagBlock [konst 1 (2,2), konst 2 (3,5), col [5,7]]
+--   7x8
+--   1  1  0  0  0  0  0  0
+--   1  1  0  0  0  0  0  0
+--   0  0  2  2  2  2  2  0
+--   0  0  2  2  2  2  2  0
+--   0  0  2  2  2  2  2  0
+--   0  0  0  0  0  0  0  5
+--   0  0  0  0  0  0  0  7
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; diagBlock [(0&gt;&lt;4)[], konst 2 (2,3)]  :: Matrix Double
+--   (2&gt;&lt;7)
+--    [ 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 2.0
+--    , 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 2.0 ]
+--   </pre>
+diagBlock :: (Element t, Num t) => [Matrix t] -> Matrix t
+
+-- | Create a matrix from blocks given as a list of lists of matrices.
+--   
+--   Single row-column components are automatically expanded to match the
+--   corresponding common row and column:
+--   
+--   <pre>
+--   disp = putStr . dispf 2
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; disp $ fromBlocks [[ident 5, 7, row[10,20]], [3, diagl[1,2,3], 0]]
+--   8x10
+--   1  0  0  0  0  7  7  7  10  20
+--   0  1  0  0  0  7  7  7  10  20
+--   0  0  1  0  0  7  7  7  10  20
+--   0  0  0  1  0  7  7  7  10  20
+--   0  0  0  0  1  7  7  7  10  20
+--   3  3  3  3  3  1  0  0   0   0
+--   3  3  3  3  3  0  2  0   0   0
+--   3  3  3  3  3  0  0  3   0   0
+--   </pre>
+fromBlocks :: Element t => [[Matrix t]] -> Matrix t
+
+-- | General matrix slicing.
+--   
+--   <pre>
+--   &gt;&gt;&gt; m
+--   (4&gt;&lt;5)
+--    [  0,  1,  2,  3,  4
+--    ,  5,  6,  7,  8,  9
+--    , 10, 11, 12, 13, 14
+--    , 15, 16, 17, 18, 19 ]
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; m ?? (Take 3, DropLast 2)
+--   (3&gt;&lt;3)
+--    [  0,  1,  2
+--    ,  5,  6,  7
+--    , 10, 11, 12 ]
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; m ?? (Pos (idxs[2,1]), All)
+--   (2&gt;&lt;5)
+--    [ 10, 11, 12, 13, 14
+--    ,  5,  6,  7,  8,  9 ]
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; m ?? (PosCyc (idxs[-7,80]), Range 4 (-2) 0)
+--   (2&gt;&lt;3)
+--    [ 9, 7, 5
+--    , 4, 2, 0 ]
+--   </pre>
+(??) :: Element t => Matrix t -> (Extractor, Extractor) -> Matrix t
+infixl 9 ??
+
+-- | Specification of indexes for the operator <a>??</a>.
+data Extractor
+All :: Extractor
+Range :: Int -> Int -> Int -> Extractor
+Pos :: Vector I -> Extractor
+PosCyc :: Vector I -> Extractor
+Take :: Int -> Extractor
+TakeLast :: Int -> Extractor
+Drop :: Int -> Extractor
+DropLast :: Int -> Extractor
+loadMatrix' :: FilePath -> IO Maybe Matrix Double
+
+-- | load a matrix from an ASCII file formatted as a 2D table.
+loadMatrix :: FilePath -> IO Matrix Double
+
+-- | Pretty print a complex matrix with at most n decimal digits.
+dispcf :: Int -> Matrix Complex Double -> String
+
+-- | Tool to display matrices with latex syntax.
+--   
+--   <pre>
+--   &gt;&gt;&gt; latexFormat "bmatrix" (dispf 2 $ ident 2)
+--   "\\begin{bmatrix}\n1  &amp;  0\n\\\\\n0  &amp;  1\n\\end{bmatrix}"
+--   </pre>
+latexFormat :: String -> String -> String
+
+-- | Show a matrix with a given number of decimal places.
+--   
+--   <pre>
+--   &gt;&gt;&gt; dispf 2 (1/3 + ident 3)
+--   "3x3\n1.33  0.33  0.33\n0.33  1.33  0.33\n0.33  0.33  1.33\n"
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; putStr . dispf 2 $ (3&gt;&lt;4)[1,1.5..]
+--   3x4
+--   1.00  1.50  2.00  2.50
+--   3.00  3.50  4.00  4.50
+--   5.00  5.50  6.00  6.50
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; putStr . unlines . tail . lines . dispf 2 . asRow $ linspace 10 (0,1)
+--   0.00  0.11  0.22  0.33  0.44  0.56  0.67  0.78  0.89  1.00
+--   </pre>
+dispf :: Int -> Matrix Double -> String
+
+-- | Show a matrix with "autoscaling" and a given number of decimal places.
+--   
+--   <pre>
+--   &gt;&gt;&gt; putStr . disps 2 $ 120 * (3&gt;&lt;4) [1..]
+--   3x4  E3
+--    0.12  0.24  0.36  0.48
+--    0.60  0.72  0.84  0.96
+--    1.08  1.20  1.32  1.44
+--   </pre>
+disps :: Int -> Matrix Double -> String
+
+-- | Creates a string from a matrix given a separator and a function to
+--   show each entry. Using this function the user can easily define any
+--   desired display function:
+--   
+--   <pre>
+--   import Text.Printf(printf)
+--   </pre>
+--   
+--   <pre>
+--   disp = putStr . format "  " (printf "%.2f")
+--   </pre>
+format :: Element t => String -> t -> String -> Matrix t -> String
+
+-- | save a matrix as a 2D ASCII table
+saveMatrix :: FilePath -> String -> Matrix Double -> IO ()
+
+-- | reference to a rectangular slice of a matrix (no data copy)
+subMatrix :: Element a => (Int, Int) -> (Int, Int) -> Matrix a -> Matrix a
+
+-- | Creates a matrix from a vector by grouping the elements in rows with
+--   the desired number of columns. (GNU-Octave groups by columns. To do it
+--   you can define <tt>reshapeF r = tr' . reshape r</tt> where r is the
+--   desired number of rows.)
+--   
+--   <pre>
+--   &gt;&gt;&gt; reshape 4 (fromList [1..12])
+--   (3&gt;&lt;4)
+--    [ 1.0,  2.0,  3.0,  4.0
+--    , 5.0,  6.0,  7.0,  8.0
+--    , 9.0, 10.0, 11.0, 12.0 ]
+--   </pre>
+reshape :: Storable t => Int -> Vector t -> Matrix t
+
+-- | Creates a list of vectors from the columns of a matrix
+toColumns :: Element t => Matrix t -> [Vector t]
+
+-- | Creates a matrix from a list of vectors, as columns
+fromColumns :: Element t => [Vector t] -> Matrix t
+
+-- | extracts the rows of a matrix as a list of vectors
+toRows :: Element t => Matrix t -> [Vector t]
+
+-- | Create a matrix from a list of vectors. All vectors must have the same
+--   dimension, or dimension 1, which is are automatically expanded.
+fromRows :: Element t => [Vector t] -> Matrix t
+
+-- | the inverse of <a>fromLists</a>
+toLists :: Element t => Matrix t -> [[t]]
+
+-- | Creates a vector by concatenation of rows. If the matrix is
+--   ColumnMajor, this operation requires a transpose.
+--   
+--   <pre>
+--   &gt;&gt;&gt; flatten (ident 3)
+--   fromList [1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0]
+--   </pre>
+flatten :: Element t => Matrix t -> Vector t
+cols :: () => Matrix t -> Int
+rows :: () => Matrix t -> Int
+
+-- | Matrix representation suitable for BLAS/LAPACK computations.
+data Matrix t
+
+-- | Supported matrix elements.
+class Storable a => Element a
+
+-- | <pre>
+--   &gt;&gt;&gt; range 5
+--   fromList [0,1,2,3,4]
+--   </pre>
+range :: Int -> Vector I
+roundVector :: Vector Double -> Vector Double
+
+-- | Obtains a vector of pseudorandom elements (use randomIO to get a
+--   random seed).
+randomVector :: Seed -> RandDist -> Int -> Vector Double
+type Seed = Int
+data RandDist
+
+-- | uniform distribution in [0,1)
+Uniform :: RandDist
+
+-- | normal distribution with mean zero and standard deviation one
+Gaussian :: RandDist
+
+-- | Extract consecutive subvectors of the given sizes.
+--   
+--   <pre>
+--   &gt;&gt;&gt; takesV [3,4] (linspace 10 (1,10::Double))
+--   [fromList [1.0,2.0,3.0],fromList [4.0,5.0,6.0,7.0]]
+--   </pre>
+takesV :: Storable t => [Int] -> Vector t -> [Vector t]
+
+-- | concatenate a list of vectors
+--   
+--   <pre>
+--   &gt;&gt;&gt; vjoin [fromList [1..5::Double], konst 1 3]
+--   fromList [1.0,2.0,3.0,4.0,5.0,1.0,1.0,1.0]
+--   </pre>
+vjoin :: Storable t => [Vector t] -> Vector t
+
+-- | takes a number of consecutive elements from a Vector
+--   
+--   <pre>
+--   &gt;&gt;&gt; subVector 2 3 (fromList [1..10])
+--   fromList [3.0,4.0,5.0]
+--   </pre>
+subVector :: Storable t => Int -> Int -> Vector t -> Vector t
+
+-- | Create a vector of indexes, useful for matrix extraction using '(??)'
+idxs :: [Int] -> Vector I
+toList :: Storable a => Vector a -> [a]
+type I = CInt
+type Z = Int64
+type R = Double
+type C = Complex Double
+
+-- | <a>Storable</a>-based vectors
+data Vector a
+
+-- | <i>O(n)</i> Convert a list to a vector
+fromList :: Storable a => [a] -> Vector a

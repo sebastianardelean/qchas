@@ -6,8 +6,8 @@
  -Maintainer  : ardeleanasm@gmail.com
  -Portability : POSIX
  -}</span><span>
-</span><a name="line-9"></a><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Quantum</span><span class="hs-operator">.</span><span class="hs-identifier">Qubits</span><span>
-</span><a name="line-10"></a><span>  </span><span class="hs-special">(</span><span> </span><span>
+</span><a name="line-9"></a><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Quantum.Qubits</span><span>
+</span><a name="line-10"></a><span>  </span><span class="hs-special">(</span><span>
 </span><a name="line-11"></a><span>    </span><a href="Quantum.Qubits.html#Qubit"><span class="hs-identifier hs-type">Qubit</span></a><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
 </span><a name="line-12"></a><span>  </span><span class="hs-special">,</span><span> </span><a href="Quantum.Qubits.html#qZero"><span class="hs-identifier hs-var">qZero</span></a><span>
 </span><a name="line-13"></a><span>  </span><span class="hs-special">,</span><span> </span><a href="Quantum.Qubits.html#qOne"><span class="hs-identifier hs-var">qOne</span></a><span>
@@ -15,8 +15,8 @@
 </span><a name="line-15"></a><span>  </span><span class="hs-special">,</span><span> </span><a href="Quantum.Qubits.html#qMinus"><span class="hs-identifier hs-var">qMinus</span></a><span>
 </span><a name="line-16"></a><span>  </span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
 </span><a name="line-17"></a><span>
-</span><a name="line-18"></a><span class="hs-keyword">import</span><span> </span><span class="hs-identifier">Numeric</span><span class="hs-operator">.</span><span class="hs-identifier">LinearAlgebra</span><span> </span><span class="hs-keyword">hiding</span><span> </span><span class="hs-special">(</span><span> </span><span class="hs-special">(</span><span class="hs-operator hs-var">|&gt;</span><span class="hs-special">)</span><span> </span><span class="hs-special">)</span><span>    </span><span>
-</span><a name="line-19"></a><span class="hs-keyword">import</span><span> </span><a href="Quantum.Gates.html"><span class="hs-identifier">Quantum</span><span class="hs-operator">.</span><span class="hs-identifier">Gates</span></a><span>
+</span><a name="line-18"></a><span class="hs-keyword">import</span><span> </span><span class="hs-identifier">Numeric.LinearAlgebra</span><span> </span><span class="hs-keyword">hiding</span><span> </span><span class="hs-special">(</span><span> </span><span class="hs-special">(</span><span class="hs-operator hs-var">|&gt;</span><span class="hs-special">)</span><span> </span><span class="hs-special">)</span><span>
+</span><a name="line-19"></a><span class="hs-keyword">import</span><span> </span><a href="Quantum.Gates.html"><span class="hs-identifier">Quantum.Gates</span></a><span>
 </span><a name="line-20"></a><span>
 </span><a name="line-21"></a><span class="hs-keyword">newtype</span><span> </span><a name="Qubit"><a href="Quantum.Qubits.html#Qubit"><span class="hs-identifier">Qubit</span></a></a><span class="hs-glyph">=</span><span>
 </span><a name="line-22"></a><span>    </span><a name="Qubit"><a href="Quantum.Qubits.html#Qubit"><span class="hs-identifier">Qubit</span></a></a><span> </span><span class="hs-special">{</span><span>
@@ -35,7 +35,7 @@
 </span><a name="line-35"></a><span class="hs-identifier">qZero</span><span class="hs-glyph">::</span><a href="Quantum.Qubits.html#Qubit"><span class="hs-identifier hs-type">Qubit</span></a><span>
 </span><a name="line-36"></a><a name="qZero"><a href="Quantum.Qubits.html#qZero"><span class="hs-identifier">qZero</span></a></a><span class="hs-glyph">=</span><a href="Quantum.Qubits.html#Qubit"><span class="hs-identifier hs-var">Qubit</span></a><span> </span><span class="hs-special">(</span><span class="hs-special">(</span><span class="hs-number">2</span><span class="hs-operator hs-var">&gt;&lt;</span><span class="hs-number">1</span><span class="hs-special">)</span><span class="hs-special">[</span><span class="hs-number">1</span><span class="hs-special">,</span><span class="hs-number">0</span><span class="hs-special">]</span><span class="hs-glyph">::</span><span class="hs-identifier hs-type">Matrix</span><span> </span><span class="hs-identifier hs-type">C</span><span class="hs-special">)</span><span>
 </span><a name="line-37"></a><span>
-</span><a name="line-38"></a><span>    </span><span>
+</span><a name="line-38"></a><span>
 </span><a name="line-39"></a><span>
 </span><a name="line-40"></a><span>
 </span><a name="line-41"></a><span class="hs-comment">{-|
@@ -70,7 +70,7 @@
  [       0.7071067811865475 :+ 0.0
  , (-0.7071067811865475) :+ (-0.0) ]
  -}</span><span>
-</span><a name="line-73"></a><span class="hs-identifier">qMinus</span><span class="hs-glyph">::</span><a href="Quantum.Qubits.html#Qubit"><span class="hs-identifier hs-type">Qubit</span></a><span> </span><span>
+</span><a name="line-73"></a><span class="hs-identifier">qMinus</span><span class="hs-glyph">::</span><a href="Quantum.Qubits.html#Qubit"><span class="hs-identifier hs-type">Qubit</span></a><span>
 </span><a name="line-74"></a><a name="qMinus"><a href="Quantum.Qubits.html#qMinus"><span class="hs-identifier">qMinus</span></a></a><span class="hs-glyph">=</span><a href="Quantum.Qubits.html#Qubit"><span class="hs-identifier hs-var">Qubit</span></a><span> </span><span class="hs-special">(</span><span class="hs-special">(</span><span class="hs-number">2</span><span class="hs-operator hs-var">&gt;&lt;</span><span class="hs-number">1</span><span class="hs-special">)</span><span> </span><span class="hs-special">[</span><span class="hs-number">1</span><span class="hs-operator hs-var">/</span><span class="hs-identifier hs-var">sqrt</span><span> </span><span class="hs-number">2</span><span class="hs-special">,</span><span> </span><span class="hs-glyph">-</span><span class="hs-number">1</span><span class="hs-operator hs-var">/</span><span class="hs-identifier hs-var">sqrt</span><span> </span><span class="hs-number">2</span><span class="hs-special">]</span><span class="hs-glyph">::</span><span class="hs-identifier hs-type">Matrix</span><span> </span><span class="hs-identifier hs-type">C</span><span class="hs-special">)</span><span>
 </span><a name="line-75"></a><span>
 </span><a name="line-76"></a></pre></body></html>
